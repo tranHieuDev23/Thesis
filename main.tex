@@ -887,15 +887,19 @@ Như có thể thấy trong hình \ref{figure_ycbcr}, kênh Y lưu trữ toàn b
     \label{figure_ycbcr}
 \end{figure}
 
-Tuy nhiên, phương án này khiến ta không thể chỉnh sửa được độ sáng hay độ tương phản của ảnh, do các đặc điểm này bị ảnh hưởng chủ yếu bởi kênh Y. Điều này khiến cho kết quả đầu ra thiếu đi độ tương phản của ảnh thật.
+Tuy nhiên, phương án này khiến ta không thể chỉnh sửa được độ sáng hay độ tương phản của ảnh, do các đặc điểm này được quyết định chủ yếu bởi kênh Y. Điều này khiến cho chất lượng ảnh đầu ra không tốt bằng chất lượng ảnh thực tế.
 
 \subsection{PatchGAN}
 
-PatchGAN được để xuất trong
+Thông thường, discriminator của GAN cho ra một kết quả phân loại thật/giả duy nhất cho toàn bộ ảnh. Thiết kế này hoạt động khá tốt trong phần lớn trường hợp, khi ta cần phải quan sát toàn bộ ảnh để có thể đưa ra kết quả đúng. Tuy nhiên, lượng dữ liệu đầu vào lớn có thể kiến model bỏ qua các chi tiết lỗi nhỏ như nhiễu hay nổ màu, khiến cho chất lượng ảnh đầu ra giảm.
+
+Trong trường hợp của bài toán đổi màu ảnh nội soi, ta không cần phải sử dụng toàn bộ ảnh để phân loại thật - giả: chỉ cần dựa trên màu sắc và độ tương phản, ta có thể đoán được chế độ màu của ảnh. Lợi dụng đặc điểm này, ta có thể sử dụng discriminator PatchGAN để giảm bớt các chi tiết lỗi nhỏ.
+
+PatchGAN là mô hình discriminator được để xuất trong nghiên cứu Pix2pix của các nhà khoa học thuộc trường Đại học California. PatchGAN sử dụng mạng convolutional để phân loại ảnh theo từng mảng (patch) nhỏ. Kết quả trung bình của tất cả các mảng sẽ được sử dụng làm kết quả phân loại cuối cùng. Vì làm việc vùng ảnh nhỏ, PatchGAN nhạy cảm với các tiểu tiết bị lỗi trên ảnh hơn các mô hình discriminator cơ bản.
 
 \section{Kiến trúc cụ thể}
 
-\subsection{Generator Network}
+\subsection{Generator}
 
 \subsection{Style Encoder}
 
