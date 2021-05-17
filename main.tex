@@ -30,6 +30,7 @@
 \usepackage{caption}
 \usepackage{subcaption}
 \usepackage{adjustbox}
+\usepackage{diagbox}
 
 \definecolor{mGreen}{rgb}{0,0.6,0}
 \definecolor{mGray}{rgb}{0.5,0.5,0.5}
@@ -485,7 +486,7 @@ Tốc độ học của thuật toán xuống đồi ảnh hưởng trực tiế
     \caption{Ảnh hưởng của việc lựa chọn tốc độ học đối với việc huấn luyện mô hình. Từ trái qua: mô hình có tốc độ học quá nhỏ, hội tụ chậm; mô hình có tốc độ học vừa phải; mô hình có tốc độ học quá lớn, dẫn tới không thể hội tụ.}
 \end{figure}
 
-Trên thực tế, các bộ dữ liệu được dùng để tối ưu mô hình học máy có thể có kích cỡ lên tới hàng triệu, hàng chục triệu phần tử. Khả năng tính toán của phần cứng hiện tại không cho phép ta trực tiếp tính gradient cho toàn bộ bộ dữ liệu cùng một lúc. Thay vào đó, ta chia bộ dữ liệu thành các lô (batch) nhỏ, vừa bộ nhớ để tính toán. Gradient lúc này được lấy theo trung bình của lô, thay vì của toàn bộ bộ dữ liệu - điều này khiến cho lời giải không thể di chuyển thẳng theo hướng gradient thực, giá trị hàm thiệt hại không giảm liên tục, và thuật toán có thể không hội tụ chặt tới cực tiểu địa phương. Tuy nhiên, quá trình tối ưu theo lô nhìn chung vẫn thực hiện tốt nhiệm vụ tối ưu mô hình.
+Trên thực tế, các bộ dữ liệu được dùng để tối ưu mô hình học máy có thể có kích cỡ lên tới hàng triệu, hàng chục triệu phần tử. Khả năng tính toán của phần cứng hiện tại không cho phép ta trực tiếp tính gradient cho toàn bộ bộ dữ liệu cùng một lúc. Thay vào đó, ta chia bộ dữ liệu thành các lô (batch) nhỏ, vừa bộ nhớ để tính toán. Gradient lúc này được lấy theo trung bình của lô, thay vì của toàn bộ bộ dữ liệu - điều này khiến cho lời giải không thể di chuyển thẳng theo hướng gradient thực, giá trị hàm thiệt hại không giảm liên tục, và thuật toán có thể không hội tụ chặt tới cực tiểu địa phương. Tuy nhiên, thuật toán tối ưu theo lô nhìn chung vẫn thực hiện tốt nhiệm vụ tối ưu mô hình.
 
 \subsubsection{Các thuật toán tối ưu cải tiến}
 
@@ -1249,9 +1250,7 @@ Bước 5 cho phép ảnh lọt vừa kích thước đầu vào của mô hình
 
 \section{Môi trường luyện tập}
 
-Mô hình StarGAN v2 được cài đặt bằng ngôn ngữ Python 3.6.9, sử dụng thư viện Pytorch. Mã nguồn của mô hình được lưu trữ tại địa chỉ \href{https://github.com/tranHieuDev23/StarGAN-v2}{github.com/tranHieuDev23/StarGAN-v2}.
-
-Mô hình được tối ưu qua 40 nghìn bước lặp trên một GPU Nvidia GeForce RTX 3090 trong khoảng thời gian 1 ngày. Các hệ số được sử dụng cho quá trình luyện tập bao gồm:
+Chương trình huấn luyện mô hình StarGAN v2 được cài đặt bằng ngôn ngữ Python 3.6.9, sử dụng thư viện Pytorch. Chương trình sử dụng thuật toán tối ưu Adam theo lô, mỗi lô có 4 ảnh, chạy qua 50 nghìn bước lặp trên một GPU Nvidia GeForce RTX 3090 trong khoảng thời gian 2 ngày. Các hệ số được sử dụng cho quá trình luyện tập bao gồm:
 \begin{itemize}
     \item $ \lambda_{sty} = \lambda_{ds} = \lambda_{cyc} = \lambda_{reg} = 1 $
     \item Learning rate cho generator, Style Encoder và discriminator bằng $ 10^{-4} $.
@@ -1260,7 +1259,24 @@ Mô hình được tối ưu qua 40 nghìn bước lặp trên một GPU Nvidia 
     \item Hệ số weight decay bằng $ 10^{-4} $.
 \end{itemize}
 
+Mã nguồn của chương trình luyện tập mô hình được lưu trữ tại địa chỉ \\\href{https://github.com/tranHieuDev23/StarGAN-v2}{github.com/tranHieuDev23/StarGAN-v2}.
+
 \section{Đánh giá chất lượng}
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{c | c | c | c | c}
+        Ảnh gốc   & \includegraphics[width=0.185\textwidth]{transform/BLI_original.jpeg} & \includegraphics[width=0.185\textwidth]{transform/FICE_original.jpeg} & \includegraphics[width=0.185\textwidth]{transform/LCI_original.jpeg} & \includegraphics[width=0.185\textwidth]{transform/WLI_original.jpeg} \\
+        \hline
+        Sang BLI  &                                                                      & \includegraphics[width=0.185\textwidth]{transform/FICE2BLI.jpeg}      & \includegraphics[width=0.185\textwidth]{transform/LCI2BLI.jpeg}      & \includegraphics[width=0.185\textwidth]{transform/WLI2BLI.jpeg}      \\
+        \hline
+        Sang FICE & \includegraphics[width=0.185\textwidth]{transform/BLI2FICE.jpeg}     &                                                                       & \includegraphics[width=0.185\textwidth]{transform/LCI2FICE.jpeg}     & \includegraphics[width=0.185\textwidth]{transform/WLI2FICE.jpeg}     \\
+        \hline
+        Sang LCI  & \includegraphics[width=0.185\textwidth]{transform/BLI2LCI.jpeg}      & \includegraphics[width=0.185\textwidth]{transform/FICE2LCI.jpeg}      &                                                                      & \includegraphics[width=0.185\textwidth]{transform/WLI2LCI.jpeg}      \\
+        \hline
+        Sang WLI  & \includegraphics[width=0.185\textwidth]{transform/BLI2WLI.jpeg}      & \includegraphics[width=0.185\textwidth]{transform/FICE2WLI.jpeg}      & \includegraphics[width=0.185\textwidth]{transform/LCI2WLI.jpeg}      &                                                                      \\
+    \end{tabular}
+\end{table}
 
 \chapter{Ứng dụng thực tế - áp dụng vào hệ thống Polyp-Labeler}
 \label{application-polyp-labeler}
