@@ -29,6 +29,7 @@
 \usepackage{ragged2e}
 \usepackage{caption}
 \usepackage{subcaption}
+\usepackage{adjustbox}
 
 \definecolor{mGreen}{rgb}{0,0.6,0}
 \definecolor{mGray}{rgb}{0.5,0.5,0.5}
@@ -484,6 +485,8 @@ Tốc độ học của thuật toán xuống đồi ảnh hưởng trực tiế
     \caption{Ảnh hưởng của việc lựa chọn tốc độ học đối với việc huấn luyện mô hình. Từ trái qua: mô hình có tốc độ học quá nhỏ, hội tụ chậm; mô hình có tốc độ học vừa phải; mô hình có tốc độ học quá lớn, dẫn tới không thể hội tụ.}
 \end{figure}
 
+Trên thực tế, các bộ dữ liệu được dùng để tối ưu mô hình học máy có thể có kích cỡ lên tới hàng triệu, hàng chục triệu phần tử. Khả năng tính toán của phần cứng hiện tại không cho phép ta trực tiếp tính gradient cho toàn bộ bộ dữ liệu cùng một lúc. Thay vào đó, ta chia bộ dữ liệu thành các lô (batch) nhỏ, vừa bộ nhớ để tính toán. Gradient lúc này được lấy theo trung bình của lô, thay vì của toàn bộ bộ dữ liệu - điều này khiến cho lời giải không thể di chuyển thẳng theo hướng gradient thực, giá trị hàm thiệt hại không giảm liên tục, và thuật toán có thể không hội tụ chặt tới cực tiểu địa phương. Tuy nhiên, quá trình tối ưu theo lô nhìn chung vẫn thực hiện tốt nhiệm vụ tối ưu mô hình.
+
 \subsubsection{Các thuật toán tối ưu cải tiến}
 
 Thuật toán xuống đồi cổ điện sẽ gặp khó khăn nếu hàm mục tiêu chịu ảnh hưởng bởi một số biến nhiều hơn các biến khác khác, do giá trị lời giải phải liên tục di chuyển qua lại trong vùng "thung lũng", thay vì tập trung vào hướng đi có tốc độ giảm lớn nhất. Để khắc phục nhược điểm này, Ning Qian đề xuất kĩ thuật momentum (quán tính) \cite{QIAN1999145} - không sử dụng trực tiếp gradient, thay vào đó cập nhật lời giải hiện tại bằng vector:
@@ -545,6 +548,7 @@ Hai mạng này được tối ưu song song để chống lại nhau - Output c
 \end{figure}
 
 \subsection{Luyện tập mô hình GAN}
+\label{gan}
 
 Quá trình luyện tập GAN liên tục hoán đổi giữa hai bước:
 \begin{enumerate}
@@ -803,6 +807,7 @@ Nhóm nghiên cứu Clova AI đưa ra ví dụ về việc sinh ảnh mới củ
 \end{itemize}
 
 \subsection{Không gian màu YCbCr}
+\label{ycbcr-colorspace}
 
 Giống như CycleGAN và StarGAN phiên bản 1, generator của StarGAN v2 lấy cảm hứng từ mạng autoencoder: ảnh nguyên bản được đưa qua qua một loạt các lớp convolutional để nén thành dữ liệu nén có kích thước nhỏ, sau đó đi qua một loạt các lớp convolutional để giải nén thành ảnh đầu ra. Quá trình nén dữ liệu từ không gian nhiều chiều xuống không gian ít chiều hơn dù có tốt tới đâu cũng không tránh khỏi mất mát thông tin, khiến cho ảnh đầu ra không thể giống hệt ảnh đầu vào. Sai số này không phải là vấn đề lớn đối với bài toán sinh ảnh người và vật, song lại là không thể chấp nhận được đối với các lĩnh vực cần độ chính xác cao như chẩn đoán nội soi.
 
@@ -890,41 +895,380 @@ Như có thể thấy trong hình \ref{figure_ycbcr}, kênh Y lưu trữ toàn b
 Tuy nhiên, phương án này khiến ta không thể chỉnh sửa được độ sáng hay độ tương phản của ảnh, do các đặc điểm này được quyết định chủ yếu bởi kênh Y. Điều này khiến cho chất lượng ảnh đầu ra không tốt bằng chất lượng ảnh thực tế.
 
 \subsection{PatchGAN}
+\label{patchgan}
 
 Thông thường, discriminator của GAN cho ra một kết quả phân loại thật/giả duy nhất cho toàn bộ ảnh. Thiết kế này hoạt động khá tốt trong phần lớn trường hợp, khi ta cần phải quan sát toàn bộ ảnh để có thể đưa ra kết quả đúng. Tuy nhiên, lượng dữ liệu đầu vào lớn có thể kiến model bỏ qua các chi tiết lỗi nhỏ như nhiễu hay nổ màu, khiến cho chất lượng ảnh đầu ra giảm.
 
 Trong trường hợp của bài toán đổi màu ảnh nội soi, ta không cần phải sử dụng toàn bộ ảnh để phân loại thật - giả: chỉ cần dựa trên màu sắc và độ tương phản, ta có thể đoán được chế độ màu của ảnh. Lợi dụng đặc điểm này, ta có thể sử dụng discriminator PatchGAN để giảm bớt các chi tiết lỗi nhỏ.
 
-PatchGAN là mô hình discriminator được để xuất trong nghiên cứu Pix2pix của các nhà khoa học thuộc trường Đại học California. PatchGAN sử dụng mạng convolutional để phân loại ảnh theo từng mảng (patch) nhỏ. Kết quả trung bình của tất cả các mảng sẽ được sử dụng làm kết quả phân loại cuối cùng. Vì làm việc vùng ảnh nhỏ, PatchGAN nhạy cảm với các tiểu tiết bị lỗi trên ảnh hơn các mô hình discriminator cơ bản.
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}[H]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{figure36.jpg}
+        \caption{Sử dụng discriminator gốc}
+    \end{subfigure}
+    \begin{subfigure}[H]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{figure35.jpg}
+        \caption{Sử dụng PatchGAN}
+    \end{subfigure}
+    \caption{So sánh kết quả chuyển đổi ảnh nội soi BLI sang WLI của mô hình StarGAN v2 sử dụng discriminator gốc và sử dụng discriminator PatchGAN. Discriminator gốc bỏ qua các điểm đốm xanh ở góc trên bên phải, trong khi PatchGAN bắt và loại bỏ được lỗi này.}
+\end{figure}
 
-\section{Kiến trúc cụ thể}
+PatchGAN là mô hình discriminator được để xuất trong nghiên cứu Pix2pix của các nhà khoa học thuộc trường Đại học California. PatchGAN sử dụng mạng convolutional để phân loại ảnh theo từng mảng (patch) nhỏ. Kết quả trung bình của tất cả các mảng sẽ được sử dụng làm kết quả phân loại cuối cùng.
 
-\subsection{Generator}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{figure37.png}
+    \caption{Minh họa mạng discriminator PatchGAN. Đầu ra của lớp convolutional cuối cùng có kích thước $ C_y \times W_y \times W_y $, trong đó $ C_y $ bằng với số lớp ảnh của bài toán. Mỗi một ô trên dữ liệu đầu ra này tương ứng với kết quả phân loại một vùng nhỏ trên ảnh gốc.}
+\end{figure}
 
-\subsection{Style Encoder}
+Vì làm việc vùng ảnh nhỏ, PatchGAN nhạy cảm với các tiểu tiết bị lỗi trên ảnh hơn các mạng discriminator bình thường, đặc biệt là khi kích thước ảnh lớn, lượng dữ liệu toàn cục nhiều.
 
-\subsection{Mapping Network}
+\section{Thiết kế các thành phần mạng nơ-ron}
 
-\subsection{Discriminator}
+\subsection{Các khối mạng đặc biệt}
+
+\subsubsection{Instance Normalization}
+
+Ioffe và Szegedy đề xuất sử dụng lớp Batch Normalization \cite{DBLP:journals/corr/IoffeS15} để chuẩn hóa phân bố xác suất giá trị đầu vào của các lớp mạng học sâu. Công thức của lớp Batch Normalization có dạng:
+$$ BN(x) = \gamma \times \cfrac{x - \mu(x)}{\phi(x)} + \beta $$
+với $ \gamma $ và $ \beta $ là các tham số cần học, tương ứng với phương sai và giá trị kì vọng của phân bố xác suất mới. $ \mu(x) $ và $ \phi(x) $ là phương sai và giá trị kì vọng của lô dữ liệu đầu vào:
+\begin{align*}
+    \mu_c(x)  & = \cfrac{1}{NHW} \sum_{n = 1}^{N} \sum_{h = 1}^{H} \sum_{w = 1}^{W} x_{nchw}                       \\
+    \phi_c(x) & = \sqrt{\cfrac{1}{NHW} \sum_{n = 1}^{N} \sum_{h = 1}^{H} \sum_{w = 1}^{W} (x_{nchw} - \mu_c(x))^2}
+\end{align*}
+
+Mục đích thiết kế ban đầu của lớp Batch Normalization là để tăng tốc độ học của mạng nơ-ron. Tuy nhiên, các nghiên cứu về sau chỉ ra lớp Batch Normalization cũng có thể được áp dụng vào việc chuyển đổi phong cách ảnh, bằng cách chuyển phân bố xác suất phong cách của ảnh gốc sang phong cách ảnh mục tiêu \cite{radford2015unsupervised}. Với cùng tư tưởng đó, Ulyanov và cộng sự cho ra đời lớp mạng Instance normalization \cite{DBLP:journals/corr/UlyanovVL16}, có nhiệm vụ thay đổi phân bố của từng cá thể dữ liệu thay vì thay đổi cả lô:
+\begin{align*}
+    \mu_{nc}(x)  & = \cfrac{1}{HW} \sum_{h = 1}^{H} \sum_{w = 1}^{W} x_{nchw}                     \\
+    \phi_{nc}(x) & = \sqrt{\cfrac{1}{HW} \sum_{h = 1}^{H} \sum_{w = 1}^{W} (x_{nchw} - \mu(x))^2}
+\end{align*}
+
+Bằng cách học các bộ trọng số $ y $ và $ \beta $, lớp Instance Normalization có thể thực hiện biến đổi từ một phong cách (phân bố xác suất) này sang một phong cách (phân bố xác suất) khác.
+
+\subsubsection{Adaptive Instance Normalization}
+
+Adaptive Instance Normalization hay AdaIN là phiên bản cải tiến của Instance Normalization, cho phép biến đổi ảnh sang phong cách bất kì, quyết định bởi vector phong cách. Thay vì học trực tiếp một phân bố xác suất cố định, AdaIN học công thức biến đổi từ vector phong cách sang phân bố xác suất của nó:
+\begin{align*}
+    \gamma(s) & = W_{\gamma}s + b_{\gamma}                                \\
+    \beta(s)  & = W_{\beta}s + b_{\beta}                                  \\
+    BN(x)     & = \gamma(s) \times \cfrac{x - \mu(x)}{\phi(x)} + \beta(s)
+\end{align*}
+
+\subsubsection{Khối mạng Residual}
+
+Như đã chỉ ra trong chương 2, quá trình luyện tập mô hình học máy có giám sát tương ứng với việc tìm ước lượng hàm $ \hat{f}(x) $ gần nhất so với quan hệ thực tế $ f(x) $. Gọi $ \hat{F}_n(x) $ là tập hợp tất cả các hàm $ \hat{f}(x) $ mà mô hình $ n $ lớp mạng có thể biểu diễn. Khi số lượng lớp mạng gia tăng, độ phức tạp của ước lượng hàm cũng tăng lên tương ứng. Nếu:
+\begin{equation}
+    \hat{F}_{n-1}(x) \subseteq \hat{F}_n(x)
+    \label{eq:res}
+\end{equation}
+ta hiểu là không gian hàm mở rộng cùng với số lớp mạng, gia tăng khả năng $ \hat{f}(x) $ tiếp cận với $ f(x) $.
+
+Tuy nhiên, trên thực tế điều này có thể không xảy ra - miền $ \hat{F}_n(x) $ có thể không chứa $ \hat{F}_{n-1}(x) $, và các hàm thuộc $ \hat{F}_n(x) $ có thể không tiến tới $ f(x) $ như kì vọng. Nếu mạng nơ-ron có thể học được hàm đồng nhất $ f(x) = x $ một cách đơn giản, ta đảm bảo điều kiện \ref{eq:res}, dẫn tới việc không gian hàm luôn mở rộng khi số lượng lớp mạng gia tăng. Đây chính là tư tưởng đằng sau mô hình mạng Residual, được đề xuất bởi He và cộng sự vào năm 2015 \cite{he2015deep}.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\linewidth]{figure33.png}
+    \caption{Thiết kế của một khối Residual cơ bản.}
+\end{figure}
+
+Mạng Residual cơ bản sử dụng các khối Residual, mỗi khối bao gồm một phép biến đổi tuyến tính $ z_1 = W_1x $, một trọng số tổng hợp $ W_2 $ và hai hàm kích hoạt ReLU $ f_1(x) $, $ f_2(x) $. Khối Residual tổng hợp giá trị đầu vào $ x $ với kết quả đã kích hoạt của phép biến đổi tuyến tính để cho ra kết quả cuối cùng:
+\begin{align*}
+    z_1 & = W_1x       \\
+    a_1 & = f_1(z_1)   \\
+    z_2 & = W_1z_1 + x \\
+    y   & = f_2(z_2)
+\end{align*}
+
+Trong trường hợp cần phải học hàm đồng nhất, khối Residual chỉ cần tối ưu trọng số $ W_2 $ về 0. Khi đó, nếu tất cả các thành phần của $ x $ đều dương, ta có $ y = f_2(f_1(x)) = x $.
+
+Tổng quát hơn, ta có thể bổ sung thêm một ma trận trọng số $ W_3 $ để tổng hợp các thành phần của $ x $ với các trọng số khác nhau.
+$$ y = f_2(z_2 + W_3x) $$
+
+Trường hợp kích thước của $ x $ và $ y $ khác nhau, ta cần sử dụng $ W_3 $ để nén $ x $ về kích cỡ của $ y $.
+
+Trong mô hình StarGAN v2, khối Residual được sử dụng trong generator, discriminator và style encoder để nén và giải nén dữ liệu ảnh. Điểm khác biệt duy nhất giữa khối mạng nén và giải nén nằm ở lớp pooling và normalization - khối nén sử dụng Average Pooling để giảm một nửa kích cỡ dữ liệu và Instance Normalization để chuẩn hóa, trong khi khối giải nén sử dụng Nearest Interpolation để gấp đôi kích cỡ dữ liệu và AdaIN để chuyển đổi phong cách.
+
+Kiến trúc cụ thể của một khối Residual được mô tả dưới đây:
+
+\begin{table}[H]
+    \centering
+    \begin{subtable}[H]{.48\textwidth}
+        \begin{adjustbox}{width=\textwidth}
+            \begin{tabular}{c c c}
+                Lớp mạng        & Hàm kích hoạt & Đầu ra                                          \\
+                \hline
+                Input           &               & $ C \times W \times W $                         \\
+                \hline
+                \textbf{\textit{Nhánh chính}}                                                     \\
+                Instance Norm   & Leaky ReLU    & $ C \times W \times W $                         \\
+                Conv3x3         &               & $ C \times W  \times W $                        \\
+                Average Pooling &               & $ C \times \cfrac{W}{2}  \times \cfrac{W}{2} $  \\
+                Instance Norm   & Leaky ReLU    & $ C \times \cfrac{W}{2}  \times \cfrac{W}{2} $  \\
+                Conv3x3         &               & $ C' \times \cfrac{W}{2}  \times \cfrac{W}{2} $ \\
+                \hline
+                \textbf{\textit{Nhánh phụ}}                                                       \\
+                Conv1x1         &               & $ C' \times W  \times W $                       \\
+                Average Pooling &               & $ C \times \cfrac{W}{2}  \times \cfrac{W}{2} $  \\
+                \hline
+                \textbf{\textit{Tổng hợp}}                                                        \\
+                Add             &               & $ C' \times \cfrac{W}{2}  \times \cfrac{W}{2} $ \\
+            \end{tabular}
+        \end{adjustbox}
+    \end{subtable}
+    \begin{subtable}[H]{.48\textwidth}
+        \begin{adjustbox}{width=\textwidth}
+            \begin{tabular}{c c c}
+                Lớp mạng    & Hàm kích hoạt & Đầu ra                      \\
+                \hline
+                Input       &               & $ C \times W \times W $     \\
+                \hline
+                \textbf{\textit{Nhánh chính}}                             \\
+                AdaIN       & Leaky ReLU    & $ C \times W \times W $     \\
+                Interpolate &               & $ C \times 2W  \times 2W $  \\
+                Conv3x3     &               & $ C' \times 2W  \times 2W $ \\
+                AdaIN       & Leaky ReLU    & $ C' \times 2W \times 2W $  \\
+                Conv3x3     &               & $ C' \times 2W  \times 2W $ \\
+                \hline
+                \textbf{\textit{Nhánh phụ}}                               \\
+                Interpolate &               & $ C \times 2W  \times 2W $  \\
+                Conv1x1     &               & $ C' \times 2W  \times 2W $ \\
+                \hline
+                \textbf{\textit{Tổng hợp}}                                \\
+                Add         &               & $ C' \times 2W  \times 2W $ \\
+            \end{tabular}
+        \end{adjustbox}
+    \end{subtable}
+    \caption{Kiến trúc một khối Residual trong mô hình StarGAN v2.}
+\end{table}
+
+\subsection{Kiến trúc các mạng thành phần}
+
+\subsubsection{Generator}
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{c c c}
+        Lớp mạng          & Hàm kích hoạt & Đầu ra                         \\
+        \hline
+        Input             &               & $ 3 \times 1024 \times 1024 $  \\
+        Conv1x1           &               & $ 32 \times 1024 \times 1024 $ \\
+        Residual nén      &               & $ 64 \times 512 \times 512 $   \\
+        Residual nén      &               & $ 128 \times 256 \times 256 $  \\
+        Residual nén      &               & $ 256 \times 128 \times 128 $  \\
+        Residual nén      &               & $ 512 \times 64 \times 64 $    \\
+        Residual nén      &               & $ 512 \times 32 \times 32 $    \\
+        Residual nén      &               & $ 512 \times 16 \times 16 $    \\
+        Residual nén      &               & $ 512 \times 16 \times 16 $    \\
+        Residual nén      &               & $ 512 \times 16 \times 16 $    \\
+        Residual giải nén &               & $ 512 \times 16 \times 16 $    \\
+        Residual giải nén &               & $ 512 \times 16 \times 16 $    \\
+        Residual giải nén &               & $ 512 \times 32 \times 32 $    \\
+        Residual giải nén &               & $ 512 \times 64 \times 64 $    \\
+        Residual giải nén &               & $ 256 \times 128 \times 128 $  \\
+        Residual giải nén &               & $ 128 \times 256 \times 256 $  \\
+        Residual giải nén &               & $ 64 \times 512 \times 512 $   \\
+        Residual giải nén &               & $ 32 \times 1024 \times 1024 $ \\
+        Instance Norm     & Leaky ReLU    & $ 32 \times 1024 \times 1024 $ \\
+        Conv1x1           &               & $ 2 \times 1024 \times 1024 $  \\
+    \end{tabular}
+    \caption{Kiến trúc của mạng generator}
+\end{table}
+
+Generator được xây dựng theo phong cách của mạng autoencoder: Đầu tiên, ảnh gốc ở không gian màu YCbCr kích cỡ $ 1024 \times 1024 $ được đưa vào một loạt các khối Residual để nén xuống thành dữ liệu nén có kích thước $ 16 \times 16 $. Sau đó, dữ liệu nén này lại được đi qua các khối Residual để giải nén và kết hợp cùng với vector phong cách để cho ra ảnh mới, có kích thước bằng với ảnh ban đầu. Như đã nói ở mục \ref{ycbcr-colorspace}, generator chỉ sinh mới hai kênh Cb và Cr để ghép với kênh Y của ảnh gốc.
+
+\subsubsection{Style Encoder}
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{c c c}
+        Lớp mạng        & Hàm kích hoạt & Đầu ra                         \\
+        \hline
+        Input           &               & $ 3 \times 1024 \times 1024 $  \\
+        \hline
+        \textbf{\textit{Phần chung}}                                     \\
+        Conv1x1         &               & $ 32 \times 1024 \times 1024 $ \\
+        Residual nén    &               & $ 64 \times 512 \times 512 $   \\
+        Residual nén    &               & $ 128 \times 256 \times 256 $  \\
+        Residual nén    &               & $ 256 \times 128 \times 128 $  \\
+        Residual nén    &               & $ 512 \times 64 \times 64 $    \\
+        Residual nén    &               & $ 512 \times 32 \times 32 $    \\
+        Residual nén    &               & $ 512 \times 16 \times 16 $    \\
+        Residual nén    &               & $ 512 \times 8 \times 8 $      \\
+        Residual nén    & Leaky ReLU    & $ 512 \times 4 \times 4 $      \\
+        Conv4x4         & Leaky ReLU    & $ 512 \times 1 \times 1 $      \\
+        \hline
+        \textbf{\textit{Phần riêng}}                                     \\
+        Fully Connected &               & 128
+    \end{tabular}
+    \caption{Kiến trúc của mạng Style Encoder}
+\end{table}
+
+Style Encoder nhận vào ảnh thật cùng với chỉ số lớp của ảnh, và cho ra một vector phong cách có 128 chiều. Kiến trúc của mạng bao gồm phần mạng nén chung giữa tất cả các lớp ảnh mục tiêu, và phần mạng riêng sinh kết quả cho mỗi lớp. Khi tối ưu Style Encoder, chỉ có phần mạng chung và phần mạng riêng tương ứng với lớp của ảnh đầu vào được tối ưu.
+
+\subsubsection{Mapping Network}
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{c c c}
+        Lớp mạng        & Hàm kích hoạt & Đầu ra  \\
+        \hline
+        Input           &               & $ 16 $  \\
+        \hline
+        \textbf{\textit{Phần chung}}              \\
+        Fully Connected & ReLu          & $ 512 $ \\
+        Fully Connected & ReLu          & $ 512 $ \\
+        Fully Connected & ReLu          & $ 512 $ \\
+        Fully Connected & ReLu          & $ 512 $ \\
+        \hline
+        \textbf{\textit{Phần riêng}}              \\
+        Fully Connected & ReLu          & $ 512 $ \\
+        Fully Connected & ReLu          & $ 512 $ \\
+        Fully Connected & ReLu          & $ 512 $ \\
+        Fully Connected &               & $ 128 $
+    \end{tabular}
+    \caption{Kiến trúc của mạng Mapping Network}
+\end{table}
+
+Mapping Network nhận vào vector latent có 16 chiều, cùng với chỉ số của một lớp, và cho ra một vector phong cách có 128 chiều, tương ứng với vector latent và đảm bảo ảnh được biểu diễn thuộc về lớp đã chỉ định. Giống như Style Encoder, Mapping Network cũng có hai phần chung và riêng, và chỉ có phần riêng tương ứng với lớp được chỉ định được tối ưu trong quá trình học.
+
+\subsubsection{Discriminator}
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{c c c}
+        Lớp mạng   & Hàm kích hoạt & Đầu ra                        \\
+        \hline
+        Input      &               & $ 3 \times 1024 \times 1024 $ \\
+        \hline
+        Conv4x4    & Leaky ReLU    & $ 64 \times 512 \times 512 $  \\
+        Conv4x4    &               & $ 128 \times 256 \times 256 $ \\
+        Batch Norm & Leaky ReLU    & $ 128 \times 256 \times 256 $ \\
+        Conv4x4    &               & $ 256 \times 128 \times 128 $ \\
+        Batch Norm & Leaky ReLU    & $ 256 \times 128 \times 128 $ \\
+        Conv4x4    &               & $ 512 \times 127 \times 127 $ \\
+        Batch Norm & Leaky ReLU    & $ 512 \times 127 \times 127 $ \\
+        Conv4x4    & Leaky ReLU    & $ 4 \times 126 \times 126 $   \\
+        Average    & Sigmoid       & 4
+    \end{tabular}
+    \caption{Kiến trúc của mạng discriminator}
+\end{table}
+
+Discriminator nhận vào ảnh thật cùng với chỉ số lớp của ảnh, và cho ra giá trị trong khoảng $ [0, 1] $ đánh giá ảnh có phải là ảnh thật của lớp được chỉ định hay không. Như đã giới thiệu trong mục \ref{patchgan}, discriminator này sử dụng mạng CNN để phân loại thật giả từng mảng $ 70 \times 70 $ trên ảnh gốc, sau đó lấy kết quả trung bình để cho ra kết quả phân loại cuối cùng.
 
 \section{Hàm mục tiêu}
 
-\chapter{Thử nghiệm và đánh giá}
+Tất cả các hàm mục tiêu dưới đây đều được tính toán hai lần với vector phong cách $ s $ sinh ra bởi Style Encoder (nhằm tối ưu cho bài toán sinh ảnh dựa theo ảnh đối chiếu) và $ s $ sinh ra bởi Mapping Network (nhằm tối ưu cho bài toán sinh ảnh theo phong cách ngẫu nhiên).
 
-\section{Dữ liệu}
+\subsection{Hàm Minimax}
 
-\section{Tiền xử lý dữ liệu}
+Tương tự như các mô hình GAN truyền thống, ta sử dụng hàm Minimax để tối ưu các mạng thành phần:
+$$ L_{adv} =  E_{x,y} [\log(D_y(x))] + E_{x,y,y'} [\log(1 - D_{y'}(G(x,s)))] $$
+với $ x $, $ y $ là ảnh đầu vào và lớp của ảnh, $ y' $ là lớp mục tiêu, $ s $ là một vector phong cách của ảnh thuộc lớp $ y' $. Discriminator cố gắng tối đa hóa hàm mục tiêu này này (nhận diện ảnh thật/giả tốt hơn) trong khi generator cố gắng tối thiểu nó (đánh lừa discriminator tốt hơn).
 
-\section{Môi trường thử nghiệm}
+\subsection{Hàm tái tạo phong cách (style reconstruction loss)}
 
-\section{Kết quả}
+Để hướng generator sử dụng vector phong cách $ s $ khi sinh ảnh, ta sử dụng hàm thiệt hại tái tạo phong cách, biểu diễn sai số giữa phong cách được truyền vào generator và phong cách của ảnh được sinh ra:
+$$ L_{sty} = E_{x,y',s} [|s - E_{y'}(G(x, s))|] $$
+trong đó $ E_{y}(x) $ là kết quả của Style Encoder khi sinh vector phong cách của ảnh $ x $ theo lớp $ y $. Generator hướng tới tối thiểu giá trị $ L_{sty} $ bằng cách sử dụng tri thức đã được mã hóa trong $ s $ để tạo ra ảnh mới có phong cách mà Style Encoder có thể giải mã được.
+
+\subsection{Hàm đa dạng phong cách (style diversification loss)}
+
+Mục tiêu xây dựng mô hình StarGAN v2 là để sinh ra ảnh với nhiều phong cách đa dạng khác nhau. Ta mô hình hóa mục tiêu này bằng độ đo đa dạng phong cách:
+$$ E_{x,y',s_1,s_2} \left[\left|\cfrac{G(x,s_1) - G(x,s_2)}{s_1 - s_2}\right|\right] $$
+
+Với hai vector phong cách $ s_1 $ và $ s_2 $ bất kì, ta kì vọng ảnh đầu ra sử dụng hai vector này càng khác nhau khi $ s_1 $ và $ s_2 $ càng xa nhau. Tuy nhiên, khi luyện tập mô hình thực tế, mẫu số $ | s_1 - s_2 | $ thường rất nhỏ, khiến cho giá trị của độ đo này trở nên rất lớn, làm quá trình luyện tập trở nên không ổn định. Thay vào đó, ta chỉ sử dụng phần tử số hàm hàm mục tiêu:
+$$ L_{ds} = E_{x,y',s_1,s_2} \left[\left|G(x,s_1) - G(x,s_2)\right|\right] $$
+
+\subsection{Hàm cycle consistency}
+
+Hàm mục tiêu cycle consistency của StarGAN v2 giống như hàm cycle consistency được sử dụng bởi StarGAN phiên bản đầu tiên:
+$$ L_{cyc} = E_{x \in X} [|G_B(G_A(x)) - x|] + E_{y \in Y} [|G_A(G_B(y)) - y|] $$
+
+\subsection{Hàm regularization R1}
+
+Hàm regularization R1 không liên quan tới các mục tiêu của StarGAN v2. Thay vào đó, R1 giúp sự hội tụ của StarGAN v2 ổn định hơn.
+
+Nhắc lại từ mục \ref{gan}, quá trình tối ưu mô hình GAN là một trò chơi Minimax giữa generator và discriminator. Trạng thái tối ưu của mô hình GAN vì thế cũng chính là điểm cân bằng Nash giữa hai mạng này - khi khả năng sinh ảnh giả của generator ngang bằng với khả năng phân biệt ảnh thật/giả của discriminator. Khi cân bằng Nash xảy ra, generator sinh được ảnh đánh lừa được discriminator, discriminator sẽ phải dự đoán ngẫu nhiên. Sai số từ những lần dự đoán ngẫu nhiên này sẽ khiến cho discriminator bị cập nhật sai hướng và giảm chất lượng, kéo chất lượng của generator giảm tương ứng.
+
+Mescheder, Geiger và Nowozin \cite{DBLP:journals/corr/abs-1801-04406} chỉ ra rằng để mô hình GAN hội tụ ổn định hơn, ta cần ngăn cản discriminator rời khỏi điểm cân bằng Nash. Một phương pháp đơn giản để thực hiện điều này là sử dụng hàm regularization R1:
+$$ R_1 = \cfrac{1}{2} E_{x \in X_{real}}[|\nabla D(x)|^2] $$
+
+Gradient cập nhật của discriminator càng lớn, giá trị của $ R_1 $ càng lớn. Tối ưu $ R_1 $ đồng nghĩa với việc kiểm soát tốc độ cập nhật của discriminator, khiến cho discriminator khó rời khỏi trạng thái ổn định hơn.  Vì ta không thể biết được khi nào xảy ra cân bằng Nash (generator đánh lừa được discriminator), ta chỉ áp dụng hàm R1 với đầu vào discriminator là các ảnh thật, không áp dụng với dữ liệu đầu ra của generator.
+
+\subsection{Hàm mục tiêu tổng quát}
+
+Hàm mục tiêu tổng quát được tính bằng cách tính tổng hệ số của các hàm mục tiêu kể trên:
+$$ L = L_{adv} + \lambda_{sty} L_{sty} - \lambda_{ds} L_{ds} + \lambda_{cyc} L_{cyc} + \lambda_{reg} R_1  $$
+trong đó $ \lambda_{sty} $, $ \lambda_{ds} $, $ \lambda_{cyc} $ và $ \lambda_{reg} $ là các hệ số được chọn bởi người dùng. Nghiên cứu gốc khuyến khích giảm dần $ \lambda_{ds} $ qua thời gian để quá trình luyện tập ổn định hơn.
+
+\chapter{Luyện tập mô hình và đánh giá}
+
+Chương này sẽ trình bày về quá trình thu thập, tiền xử lý dữ liệu ảnh nội soi và luyện tập mô hình StarGAN v2 để giải bài toán chuyển đồi màu ảnh nội soi.
+
+\section{Thu thập và tiền xử lý dữ liệu}
+
+Bộ dữ liệu ảnh nội soi được thu thập bởi các bác sĩ của Viện nghiên cứu và đào tạo tiêu hóa gan mật IGH, thông qua hệ thống quản lý dữ liệu ảnh nội soi Polyp-Labeler. Đây là sản phẩm do em thiết kế cho bộ môn Project 3, thuộc chương trình học của trường. Chương \ref{application-polyp-labeler} sẽ giới thiệu ứng dụng của mô hình StarGAN v2 vào hệ thống này để cài đặt chức năng đổi màu ảnh nội soi.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\linewidth]{figure34.png}
+    \caption{Hệ thống quản lý dữ liệu ảnh nội soi Polyp-Labeler.}
+\end{figure}
+
+Bộ dữ liệu bao gồm 8000 ảnh nội soi đại tràng với nhiều kích cỡ khác nhau, bao gồm ảnh thuộc 4 chế độ màu BLI, FICE, LCI và WLI, mỗi chế độ có 2000 ảnh. Trước khi đưa vào mô hình để luyện tập, các file ảnh sẽ được tiền xử lý theo trình tự sau:
+\begin{enumerate}
+    \item Xoay ngẫu nhiên theo cả hai chiều kim đồng hồ, tối đa 10 độ.
+    \item Di dịch ảnh ngẫu nghiên theo cả hai chiều, tối đa 1\% kích thước ảnh.
+    \item Phóng to hoặc thu nhỏ ngẫu nhiên nội dung ảnh, tối đa 20\%.
+    \item Ngẫu nhiên lật ảnh theo chiều dọc hoặc chiều ngang.
+    \item Thay đổi kích thước ảnh thành $ 512 \times 512 $.
+    \item Biến đổi ảnh thành không gian màu YCbCr.
+    \item Chuẩn hóa các giá trị màu trong ảnh về miền $ [0, 1] $.
+\end{enumerate}
+
+Các bước từ 1 đến 4 cho phép ta gia tăng số lượng ảnh từ bộ dữ liệu ảnh ít ỏi, đồng thời cũng giúp cải thiện chất lượng của mô hình: Do ảnh nội soi được lấy từ nhiều thiết bị khác nhau, mỗi thiết bị có một giao diện đồ họa khác nhau, mô hình có thể bị overfitting vào phần giao diện đồ họa của ảnh và cho ra kết quả kém chất lượng.
+
+
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}[H]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{figure38.jpeg}
+    \end{subfigure}
+    \begin{subfigure}[H]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{figure39.jpeg}
+    \end{subfigure}
+    \caption{Hai ảnh chuyển đổi từ chế độ BLI sang WLI bằng mô hình StarGAN v2 không xoay ảnh khi tiền xử lý dữ liệu. Ảnh bên phải là ảnh bên trái sau khi loại bỏ ô vuông trắng ở góc trên bên phải. Tất cả các ảnh thuộc chế độ màu WLI đều không có chi tiết này, trong khi tất cả các ảnh thuộc chế độ BLI đều có. Loại bỏ ô vuông trắng cũng loại bỏ hiện tượng lỗi ở ảnh trái, chứng tỏ lỗi bị gây ra do mô hình không biết xử lý ô vuông trắng khi chuyển sang chế độ WLI như thế nào.}
+\end{figure}
+
+Bước 5 cho phép ảnh lọt vừa kích thước đầu vào của mô hình. Bước 6 được giải thích ở mục \ref{ycbcr-colorspace}. Bước 7 giúp ổn định quá trình luyện tập - các số thực trong khoảng $ [0, 1] $ được biểu diễn chính xác nhất trên máy tính, và phép tính trong khoảng này ít có khả năng bùng nổ thành giá trị lớn, gây tràn miền giá trị biểu diễn.
+
+\section{Môi trường luyện tập}
+
+Mô hình StarGAN v2 được cài đặt bằng ngôn ngữ Python 3.6.9, sử dụng thư viện Pytorch. Mã nguồn của mô hình được lưu trữ tại địa chỉ \href{https://github.com/tranHieuDev23/StarGAN-v2}{github.com/tranHieuDev23/StarGAN-v2}.
+
+Mô hình được tối ưu qua 40 nghìn bước lặp trên một GPU Nvidia GeForce RTX 3090 trong khoảng thời gian 1 ngày. Các hệ số được sử dụng cho quá trình luyện tập bao gồm:
+\begin{itemize}
+    \item $ \lambda_{sty} = \lambda_{ds} = \lambda_{cyc} = \lambda_{reg} = 1 $
+    \item Learning rate cho generator, Style Encoder và discriminator bằng $ 10^{-4} $.
+    \item Learning rate cho Mapping Network bằng $ 10^{-6} $.
+    \item $ \beta_1 = 0 $, $ \beta_2 = 0.99 $.
+    \item Hệ số weight decay bằng $ 10^{-4} $.
+\end{itemize}
+
+\section{Đánh giá chất lượng}
 
 \chapter{Ứng dụng thực tế - áp dụng vào hệ thống Polyp-Labeler}
+\label{application-polyp-labeler}
 
 \chapter{Kết luận và hướng phát triển}
 
 \newpage
 
-\bibliography{pericles_1542486368.bib,5109748.bib,10613481.bib,15578301.bib,S0016510708028903.bib,S1590865809001960.bib,S0016508507007950.bib,20628363.bib,24373002.bib,30291440.bib,29539651.bib,26770267.bib,31700545.bib,srivastava14a.bib,citation339446790.bib,cs230.bib,NIPS-2014-generative-adversarial-nets-Bibtex.bib,duchi2011adaptive.bib,S0893608098001166.bib,kingma2017adam.bib,pix2pix2017.bib,CycleGAN2017.bib,cyclegan.bib,DBLP.bib,starganv2.bib,s0038401113808.bib,26668791.bib,choi2020stargan.bib}
+\bibliography{pericles_1542486368.bib,5109748.bib,10613481.bib,15578301.bib,S0016510708028903.bib,S1590865809001960.bib,S0016508507007950.bib,20628363.bib,24373002.bib,30291440.bib,29539651.bib,26770267.bib,31700545.bib,srivastava14a.bib,citation339446790.bib,cs230.bib,NIPS-2014-generative-adversarial-nets-Bibtex.bib,duchi2011adaptive.bib,S0893608098001166.bib,kingma2017adam.bib,pix2pix2017.bib,CycleGAN2017.bib,cyclegan.bib,DBLP.bib,starganv2.bib,s0038401113808.bib,26668791.bib,choi2020stargan.bib,he2015deep.bib,batchnorm.bib,batchnorm_styletransfer.bib,instancenorm.bib,which_training.bib}
 
 \end{document}
