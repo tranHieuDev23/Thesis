@@ -1327,7 +1327,7 @@ trong đó:
     \item $ Tr(X) = \sum_{i=1}^{n} X_{i,i} $
 \end{itemize}
 
-Giá trị của độ đo FID càng thấp, hai tập hợp càng có đặc điểm giống nhau, với $ FID = 0 $ khi hai tập hợp hoàn toàn bằng nhau. Trên thực tế, ta không thể đạt được $ FID = 0 $, thay vào đó ta lấy giá trị độ đo FID giữa hai tập ảnh thật ngẫu nhiên làm chuẩn để đánh giá chất lượng của tập ảnh sinh ra bởi mô hình GAN.
+Giá trị của độ đo FID càng thấp, hai tập hợp càng có đặc điểm giống nhau, với $ FID = 0 $ khi hai tập hợp hoàn toàn bằng nhau. Trên thực tế, ta không thể kì vọng $ FID = 0 $, thay vào đó ta lấy giá trị độ đo FID giữa hai tập ảnh thật ngẫu nhiên làm chuẩn để đánh giá chất lượng của tập ảnh sinh ra bởi mô hình GAN.
 
 Để đánh giá chất lượng của mô hình, ta lấy ngẫu nhiên 100 ảnh từ mỗi chế độ màu. Với mỗi chế độ, ta sử dụng FID để so sánh tập hợp ảnh thật thuộc chế độ này với 3 tập hợp ảnh giả được chuyển đổi từ 3 chế độ còn lại, cùng với một bộ 100 ảnh thật thuộc cùng chế độ để lấy giá trị đối chiếu.
 
