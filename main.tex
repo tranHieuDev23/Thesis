@@ -187,7 +187,7 @@ Báo cáo đồ án được chia làm 6 chương:
     \item \textbf{Chương 1 - Tổng quan về bài toán và đặt vấn đề}, giải thích bài toán và ứng dụng của đề tài trong thực tế.
     \item \textbf{Chương 2 - Cơ sở lý thuyết và nghiên cứu liên quan}, đi qua các cơ sở lý thuyết về Machine Learning, Deep Learning, Generative Adversarial Network (GAN) cùng với các nghiên cứu có liên quan tới đề tài, trước khi giải thích lý do lựa chọn mô hình StarGAN v2.
     \item \textbf{Chương 3 - Phương pháp đề xuất}, giải thích kiến trúc mô hình StarGAN v2 và các hàm mục tiêu được sử dụng trong quá trình luyện tập mô hình.
-    \item \textbf{Chương 4 - Thử nghiệm và đánh giá}, mô tả môi trường luyện tập mô hình và kết quả đánh giá chất lượng sản phẩm.
+    \item \textbf{Chương 4 - Luyện tập mô hình và đánh giá}, mô tả môi trường luyện tập mô hình và kết quả đánh giá chất lượng sản phẩm.
     \item \textbf{Chương 5 - Ứng dụng thực tế - áp dụng vào hệ thống Polyp-Labeler}, nói về dự án Polyp-Labeler, hiện đang được sử dụng bởi các bác sĩ của Viện nghiên cứu và đào tạo tiêu hoá gan mật IGH, và quá trình ứng dụng sản phẩm của đề tài vào hệ thống của dự án.
     \item \textbf{Chương 6 - Kết luận và hướng phát triển}.
 \end{enumerate}
@@ -1512,12 +1512,71 @@ Sau khi tiếp nhận yêu cầu đổi chế độ màu, Color Changer thực h
 Để giảm thời gian xử lý truy vấn, các vector $ E_y{s} $ được tính toán sẵn khi khởi động server Color Changer, bằng cách lấy trung bình kết quả biến đổi 10 nghìn vector latent thành vector phong cách, sử dụng Mapping Network:
 $$ E_y[s] \approx \cfrac{1}{n} \sum_{i = 1}^{n} F(z_{i}, y) $$
 
-Do server của hệ thống chưa được trang bị GPU, mô hình StarGAN v2 phải thực hiện tính toán trên CPU, khiến cho quá trình tính toán diễn ra chậm - trung bình mất 6 giây để xử lý xong một truy vấn. Để hạn chế nhược điểm này, kết quả tính toán của mô hình sẽ được cache lại tại browser của người dùng. Nếu người dùng yêu cầu thực hiện chuyển đổi trên cùng một bức ảnh, với cùng các thông số source\_domain, target\_domain và psi, kết quả được cache sẽ được trả về ngay lập tức, thay vì yêu cầu người dùng phải đợi kết quả tính toán mới từ server. Trong tương lai, khi cơ sở hạ tầng của hệ thống được nâng cấp, tốc độ tính toán của service Color Changer sẽ được cải thiện đáng kể, có thể giảm xuống từ 0.12 giây/truy vấn.
+Do server của hệ thống chưa được trang bị GPU, mô hình StarGAN v2 phải thực hiện tính toán trên CPU, khiến cho quá trình tính toán diễn ra chậm - trung bình mất 6 giây để xử lý xong một truy vấn. Để hạn chế nhược điểm này, kết quả tính toán của mô hình sẽ được cache lại tại browser của người dùng. Nếu người dùng yêu cầu thực hiện chuyển đổi trên cùng một bức ảnh, với cùng các thông số source\_domain, target\_domain và psi, kết quả được cache sẽ được trả về ngay lập tức, thay vì yêu cầu người dùng phải đợi kết quả tính toán mới từ server. Trong tương lai, khi cơ sở hạ tầng của hệ thống được nâng cấp, tốc độ tính toán của service Color Changer sẽ được cải thiện đáng kể, có thể giảm xuống 0.12 giây/truy vấn.
 
 \chapter{Kết luận và hướng phát triển}
 
+Trong đề tài đồ án tốt nghiệp này, ta đã định nghĩa cụ thể bài toán chuyển đổi chế độ màu ảnh nội soi, phân tích đặc điểm dữ liệu ảnh nội soi trong thực tế, điểm qua các nghiên cứu quan trọng trong lĩnh vực học máy nói chung và học sâu nói riêng, nhằm đưa ra lựa chọn sử dụng mô hình StarGAN v2 để giải quyết bài toán. Đồ án đề xuất thực hiện hai thay đổi lên mô hình StarGAN v2 trong nghiên cứu gốc, bao gồm việc sử dụng không gian màu YCbCr để bảo toàn bố cục và sử dụng PatchGAN để cải thiện chất lượng ảnh. Cuối cùng, đồ án đánh giá chất lượng quá trình luyện tập và ứng dụng mô hình được tối ưu vào sản phẩm thực tế - hệ thống gắn nhãn dữ liệu ảnh nội soi Polyp-Labeler.
+
+Dựa trên kết quả đánh giá, ta khẳng định tính hiệu quả của mô hình StarGAN v2 trong việc cải thiện chất lượng màu của ảnh nội soi, giúp bác sĩ quan sát rõ ràng hơn các đối tượng trong ảnh, từ đó đưa ra chẩn đoán chính xác hơn. Tuy nhiên, việc cố định kênh Y khi biến đổi ảnh hạn chế khả năng cải thiện độ sáng và độ tương phản của ảnh, ngăn cản việc tái tạo lại một số tính năng của các chế độ ảnh cao cấp.
+
+Dựa trên phân tích này, hướng phát triển của đề tài sẽ xoay quanh việc giải quyết bài toán cải thiện chất lượng rọi sáng và tương phản trong khi vẫn giữ nguyên được bố cục gốc. Để thực hiện được điều này, ta có thể tham khảo các mô hình GAN chuyện dụng cho bài toán cải thiện chất lượng ảnh (Image Enhancement). Dưới đây mô tả hướng nghiên cứu của Yubin Deng, Chen Change Loy và Xiaoou Tang về mô hình EnhanceGAN \cite{DBLP:journals/corr/DengLT17} làm việc trên không giản màu CIELAB gần giống YCbCr.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=.9\linewidth]{figure44.png}
+    \caption{Mô tả kiến trúc mô hình EnhanceGAN. Nguồn ảnh: \cite{DBLP:journals/corr/DengLT17}.}
+\end{figure}
+
+EnhanceGAN không sinh ra ảnh mới như các mô hình Image Translation. Thay vào đó, mô hình này sử dụng hai tập ảnh xấu và đẹp để tối ưu mô hình sinh tham số cho các phép toán biến đổi chất lượng của ảnh mà không làm ảnh hưởng tới bộ cục nội dung. Ở đây, ta chú ý tới phép biến đổi kênh L, biểu diễn độ sáng trong không gian màu CIELAB - tương tự như kênh Y của YCbCr:
+$$
+    T_{\theta^L}(m) = \begin{cases}
+        0 =                               & \text{nếu } m \leq b             \\
+        k_1 (m - b)^{\frac{1}{p}}         & \text{nếu } b < m \leq a         \\
+        m                                 & \text{nếu } a < m \leq 1 - a     \\
+        k_2 (m - k_3)^{\frac{1}{q}} + k_3 & \text{nếu } 1 - a < m \leq 1 - b \\
+        1                                 & \text{nếu } 1 - b < m
+    \end{cases}
+$$
+với:
+\begin{itemize}
+    \item $ m $ là các giá trị thuộc kênh L, chuẩn hóa về miền $ [0, 1] $.
+    \item $ a, b \in [0, 1], b < a $.
+    \item $ p \geq 1, q \in [0, 1] $.
+    \item $ k_1 = a(a - b)^{\frac{-1}{p}} $.
+    \item $ k_2 = a(a - b)^{\frac{-1}{q}} $.
+    \item $ k_3 = 1 - a $.
+\end{itemize}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=.7\linewidth]{figure45.png}
+    \caption{Đồ thị giá trị hàm $ T_{\theta^L}(m) $ tại $ a = \cfrac{1}{3}, b = \cfrac{1}{6}, p = 3, q = \cfrac{1}{3} $.}
+\end{figure}
+
+Phép biến đổi $ T_{\theta^L}(m) $ giảm mức độ phơi sáng của các pixel có kênh L cao, và tăng mức độ phơi sáng của các pixel có kênh L thấp. Bằng cách điều chỉnh giá trị tham số $ a $, $ b $, $ p $, $ q $ hợp lý, ta có thể chỉnh sửa độ phơi sáng và tương phản của ảnh, trong khi vẫn bảo toàn được phần lớn dữ liệu bố cục của ảnh.
+
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}[H]{0.45\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{enhancegan/image.jpg}
+        \caption{Ảnh gốc}
+    \end{subfigure}
+    \begin{subfigure}[H]{0.45\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{enhancegan/transformed.jpg}
+        \caption{Ảnh sau biến đổi}
+    \end{subfigure}
+    \caption{Biến đổi kênh L của ảnh sử dụng $ T_{\theta^L}(m) $ tại $ a = \cfrac{1}{3}, b = \cfrac{1}{6}, p = 3, q = \cfrac{1}{3} $.}
+\end{figure}
+
+Tuy nhiên khi áp dụng trực tiếp vào mô hình học sâu, hàm $ T_{\theta^L}(m) $ dễ gây ra hiện tượng bùng nổ gradient, khiến cho các nơ-ron mang giá trị không hợp lệ NaN. Mã nguồn chính thức của mô hình EnhanceGAN khắc phục điều này bằng cách đặt ra giới hạn chặt cho các tham số $ a $, $ b $, $ p $, $ q $, khiến cho phép biến đổi bị bó hẹp trong bài toán tối ưu chất lượng ảnh tự nhiên và không thể áp dụng cho bài toán đổi màu ảnh y tế.
+
+Với sự phát triển không ngừng nghỉ của lĩnh vực trí tuệ nhân tạo và thị giác máy tính, hy vọng những hạn chế của các phương pháp hiện tại sẽ sớm được vượt qua trong tương lai, giúp nâng cao chất lượng của các mô hình học máy và phát triển đề tài này đến những thành tựu mới.
+
 \newpage
 
-\bibliography{pericles_1542486368.bib,5109748.bib,10613481.bib,15578301.bib,S0016510708028903.bib,S1590865809001960.bib,S0016508507007950.bib,20628363.bib,24373002.bib,30291440.bib,29539651.bib,26770267.bib,31700545.bib,srivastava14a.bib,citation339446790.bib,cs230.bib,NIPS-2014-generative-adversarial-nets-Bibtex.bib,duchi2011adaptive.bib,S0893608098001166.bib,kingma2017adam.bib,pix2pix2017.bib,CycleGAN2017.bib,cyclegan.bib,DBLP.bib,starganv2.bib,s0038401113808.bib,26668791.bib,choi2020stargan.bib,he2015deep.bib,batchnorm.bib,batchnorm_styletransfer.bib,instancenorm.bib,which_training.bib,fid.bib}
+\bibliography{pericles_1542486368.bib,5109748.bib,10613481.bib,15578301.bib,S0016510708028903.bib,S1590865809001960.bib,S0016508507007950.bib,20628363.bib,24373002.bib,30291440.bib,29539651.bib,26770267.bib,31700545.bib,srivastava14a.bib,citation339446790.bib,cs230.bib,NIPS-2014-generative-adversarial-nets-Bibtex.bib,duchi2011adaptive.bib,S0893608098001166.bib,kingma2017adam.bib,pix2pix2017.bib,CycleGAN2017.bib,cyclegan.bib,DBLP.bib,starganv2.bib,s0038401113808.bib,26668791.bib,choi2020stargan.bib,he2015deep.bib,batchnorm.bib,batchnorm_styletransfer.bib,instancenorm.bib,which_training.bib,fid.bib,enhancegan.bib}
 
 \end{document}
