@@ -10,7 +10,7 @@
 \newcolumntype{C}[1]{>{\centering\arraybackslash}p{#1}}
 \usepackage[intlimits]{amsmath}
 \usepackage{array}
-\usepackage[unicode]{hyperref}
+\usepackage[unicode,hidelinks]{hyperref}
 \usepackage{algorithm}
 \usepackage{algorithmicx}
 \makeatletter
@@ -31,31 +31,6 @@
 \usepackage{subcaption}
 \usepackage{adjustbox}
 \usepackage{diagbox}
-
-\definecolor{mGreen}{rgb}{0,0.6,0}
-\definecolor{mGray}{rgb}{0.5,0.5,0.5}
-\definecolor{mPurple}{rgb}{0.58,0,0.82}
-\definecolor{backgroundColour}{rgb}{0.95,0.95,0.92}
-
-\lstdefinestyle{PythonStyle}{
-	backgroundcolor=\color{backgroundColour},   
-	commentstyle=\color{mGreen},
-	keywordstyle=\color{magenta},
-	numberstyle=\tiny\color{mGray},
-	stringstyle=\color{mPurple},
-	basicstyle=\footnotesize,
-	breakatwhitespace=false,         
-	breaklines=true,                 
-	captionpos=b,                    
-	keepspaces=true,                 
-	numbers=left,                    
-	numbersep=5pt,                  
-	showspaces=false,                
-	showstringspaces=false,
-	showtabs=false,                  
-	tabsize=2,
-	language=Python
-}
 
 \bibliographystyle{unsrt}
 
@@ -122,9 +97,9 @@ Sử dụng mô hình StarGAN v2 để đổi chế độ màu ảnh nội soi y
 
 \textit{2. Nội dung đề tài}
 
-Ung thư đường tiêu hóa là một trong những nguyên nhân gây tử vong hàng đầu trên thế giới. May mắn thay, sự phát triển của công nghệ nội soi đường tiêu hóa giúp chúng ta có thể sớm nhận biết và điều trị các triệu chứng ung thư, đặc biệt là trong giai đoạn đầu của bệnh lý. Từ những năm 2000, các kĩ thuật tăng cường chất lượng ảnh nội soi bằng phần cứng (hardware-based image-enhanced endoscopy hay IEE) như BLI (Blue Laser Imagining) hay LCI (Linked Color Imagining) bắt đầu trở nên phổ biến, dần thay thế các kĩ thuật nội soi sử dụng đèn trắng nhuộm màu như WLI (White Light Imagining). Tuy nhiên, do những hạn chế về ngân sách và chính sách đầu tư, việc triển khai các dụng cụ nội soi tích hợp các chức năng này còn gặp nhiều khó khăn.
+Ung thư đường tiêu hóa là một trong những nguyên nhân gây tử vong hàng đầu trên thế giới. May mắn thay, sự phát triển của công nghệ nội soi đường tiêu hóa giúp chúng ta có thể sớm nhận biết và điều trị các triệu chứng ung thư, đặc biệt là trong giai đoạn đầu của bệnh lý. Từ những năm 2000, các kĩ thuật tăng cường chất lượng ảnh nội soi bằng phần cứng (hardware-based image-enhanced endoscopy hay IEE) như BLI (Blue Laser Imagining) hay LCI (Linked Color Imagining) bắt đầu trở nên phổ biến, dần thay thế các kĩ thuật nội soi sử dụng đèn trắng nhuộm màu. Tuy nhiên, do những hạn chế về ngân sách và chính sách đầu tư, việc triển khai các dụng cụ nội soi tích hợp các chức năng này còn gặp nhiều khó khăn.
 
-Đồ án này hướng tới việc đào tạo mô hình học sâu (Deep Learning) StarGAN v2 để đổi màu hình ảnh nội soi thuộc chế độ màu sắc cơ bản sang các chế độ màu sắc cao cấp, cũng như tích hợp mô hình này vào hệ thống gắn nhãn ảnh nội soi y tế Polyp-Labeler đang được triển khai trên thực tế. Qua đồ án tốt nghiệp này, em hy vọng có thể giúp các bác sĩ nội soi tiếp cận với những chức năng nội soi tiên tiến mà không bị rào cản về kinh tế ngăn cản.
+Đồ án này hướng tới việc đào tạo mô hình học sâu (Deep Learning) StarGAN v2 để đổi màu ảnh nội soi thuộc chế độ màu sắc cơ bản sang các chế độ màu sắc cao cấp, cũng như tích hợp mô hình này vào hệ thống gắn nhãn ảnh nội soi y tế Polyp-Labeler đang được triển khai trên thực tế. Qua đồ án tốt nghiệp này, em hy vọng có thể giúp các bác sĩ tiếp cận với những chức năng nội soi tiên tiến mà không bị ngăn cản bởi rào cản về kinh tế.
 
 \textit{3. Cán bộ hướng dẫn}
 
@@ -142,9 +117,9 @@ Tháng 6 năm 2021.
 \begin{center}
     \fontsize{10pt}{1}\selectfont{
         \begin{tabular}{c c c}
-            \textit{Hà Nội, ngày 5 tháng 5 năm 2021} &                           &                                \\
-            \textbf{LÃNH ĐẠO BỘ MÔN}                 & \textbf{CÁN BỘ HƯỚNG DẪN} & \textbf{SINH VIÊN THỰC HIỆN}   \\
-                                                     &                           & \textit{(Ký và ghi rõ họ tên)}
+            \textit{Hà Nội, ngày 19 tháng 5 năm 2021} &                           &                                \\
+            \textbf{LÃNH ĐẠO BỘ MÔN}                  & \textbf{CÁN BỘ HƯỚNG DẪN} & \textbf{SINH VIÊN THỰC HIỆN}   \\
+                                                      &                           & \textit{(Ký và ghi rõ họ tên)}
         \end{tabular}
     }
 \end{center}
@@ -159,34 +134,34 @@ Em cũng xin gửi lời cảm ơn tới các bác sĩ của Viện nghiên cứ
 
 \chapter{Tổng quan về bài toán và đặt vấn đề}
 
-Ung thư đường tiêu hóa là một trong những nguyên nhân gây tử vong hàng đầu trên thế giới. Chỉ tính riêng trong năm 2018, đã có hơn 1 triệu bệnh nhân được chẩn đoán ung thư dạ dày trên toàn cầu, với khoảng 783,000 ca tử vong. Ung thư dạ dày là bệnh lý ung thư phổ biến thứ 5 và gây ra tử vong nhiều thứ 3 trên thế giới \cite{https://doi.org/10.3322/caac.21492}. May mắn thay, ung thư đường tiêu hóa có thể được điều trị và chữa khỏi nếu được phát hiện kịp thời. Những tiến bộ trong công nghệ nội soi đóng vai trò quan trọng trong việc phát hiện những biểu hiện bệnh lý giai đoạn đầu, qua đó giúp các bác sĩ có thể kịp thời đưa ra pháp đồ điều trị.
+Ung thư đường tiêu hóa là một trong những nguyên nhân gây tử vong hàng đầu trên thế giới. Chỉ tính riêng trong năm 2018, đã có hơn 1 triệu bệnh nhân được chẩn đoán ung thư dạ dày trên toàn cầu, với khoảng 783,000 ca tử vong. Ung thư dạ dày là bệnh lý ung thư phổ biến thứ 5 và gây ra tử vong nhiều thứ 3 trên thế giới \cite{https://doi.org/10.3322/caac.21492}. May mắn thay, ung thư đường tiêu hóa có thể điều trị và chữa khỏi nếu được phát hiện kịp thời. Những tiến bộ trong công nghệ nội soi đóng vai trò quan trọng trong việc phát hiện những biểu hiện bệnh lý giai đoạn đầu, qua đó giúp các bác sĩ có thể kịp thời đưa ra pháp đồ điều trị.
 
-Phương pháp nội soi cơ bản nhất - nội soi sử dụng đèn trắng (White Light Imagining hay WLI) - được đưa vào sử dụng rộng rãi trong việc phát hiện ung thư trực tràng từ cuối những năm 50 của thế kỉ trước \cite{pmid26668791}. Qua thời gian, các bác sĩ nội soi bắt đầu sử dụng đèn nhuộm màu để làm rõ các thương tổn trong đường tiêu hóa và dễ dàng đưa ra chẩn đoán hơn. Phương pháp nhuộm màu lăng kính thủ công được sử dụng phổ biến vào những năm 90 của thế kỉ trước: sau khi nội soi lần một để tìm các điểm quan trọng, lăng kính được nhuộm màu bằng thuốc nhuộm dạng xịt, và bác sĩ tập trung quan sát khối u để đưa ra nhận xét cuối cùng \cite{pmid10613481}.
+Phương pháp nội soi cơ bản nhất - nội soi sử dụng đèn trắng (White Light Imagining hay WLI) - được đưa vào sử dụng rộng rãi trong việc phát hiện ung thư trực tràng từ cuối những năm 50 của thế kỉ trước \cite{pmid26668791}. Qua thời gian, các bác sĩ nội soi bắt đầu sử dụng đèn nhuộm màu để làm rõ các thương tổn trong đường tiêu hóa, giúp việc chẩn đoán dễ dàng hơn. Phương pháp nhuộm màu lăng kính thủ công được sử dụng phổ biến vào những năm 90 của thế kỉ trước: sau khi nội soi lần một để tìm các điểm quan trọng, lăng kính được nhuộm màu bằng thuốc nhuộm dạng xịt, và bác sĩ tập trung quan sát khối u để đưa ra đánh giá cuối cùng \cite{pmid10613481}.
 
-Tới những năm 2000, phương pháp này bị thay thế bởi các công nghệ đổi màu bằng phần cứng (hardware-based Image-Enhanced Endoscopy, viết tắt là IEE). Các phương pháp IEE tiện lợi hơn phương pháp nhuộm màu lăng kính vì cho phép bác sĩ có thể tăng cường chất lượng ảnh chỉ bằng một thao tác bên ngoài, thay vì phải rút ống để nhuộm màu và nội soi lại lần hai.
+Tới những năm 2000, phương pháp này bị thay thế bởi các công nghệ đổi màu bằng phần cứng (hardware-based Image-Enhanced Endoscopy, viết tắt là IEE). Các phương pháp IEE tiện lợi hơn phương pháp nhuộm màu lăng kính vì cho phép bác sĩ tăng cường chất lượng ảnh chỉ bằng thao tác ở bên ngoài, thay vì phải rút ống để nhuộm màu và nội soi lại lần hai.
 
-Các phương pháp IEE đời đầu bao gồm NBI - Narrow Band Imagining \cite{pmid15578301}, FICE - Flexible spectral Imagining Color Enhancement \cite{TOGASHI2009734} và i-Scan \cite{HOFFMAN201045}. Nhược điểm của các phương pháp thế hệ đầu này là ảnh nội soi bị tối màu và độ phân giải ảnh kém. Trong các thử nghiệm lâm sàng cỡ lớn, các phương pháp này không thật sự nâng cao xác suất chẩn đoán đúng khối u so với phương pháp đèn trắng cổ điển có độ phân giải cao \cite{REX200742} \cite{pmid20628363}.
+Các phương pháp IEE đời đầu bao gồm NBI - Narrow Band Imagining \cite{pmid15578301}, FICE - Flexible spectral Imagining Color Enhancement \cite{TOGASHI2009734} và i-Scan \cite{HOFFMAN201045}. Nhược điểm của các phương pháp này là ảnh nội soi bị tối màu và độ phân giải ảnh kém. Trong thử nghiệm lâm sàng, các phương pháp này không thật sự nâng cao xác suất chẩn đoán đúng khối u so với phương pháp đèn trắng cổ điển có độ phân giải cao \cite{REX200742} \cite{pmid20628363}.
 
-Vào năm 2013, Fujifilm Corporation cho ra công nghệ Blue Laser Imagining (BLI). BLI có thể cho ra hình ảnh có màu sắc sáng sủa và rõ ràng kể cả ở khoảng cách xa đầu dò, giúp cải thiện độ chính xác trong chẩn đoán ung thư của bác sĩ \cite{pmid24373002}. Fujifilm Corporation tiếp tục phát triển và cho ra công nghệ màu Linked Color Imagining (LCI) vào năm 2014, tích hợp cả khả năng tiền xử lý và hậu xử lý ảnh để tăng cường sự tương phản giữa khối u ác tính và niêm mạc xung quanh \cite{pmid30291440}. Nhờ những chức năng cao cấp này, ảnh nội soi sử dụng BLI và LCI giúp giảm khả năng bỏ sót tổn thương trong quá trình nội soi so với các công nghệ IEE khác.
+Vào năm 2013, Fujifilm Corporation cho ra công nghệ Blue Laser Imagining (BLI). BLI có thể cho ra hình ảnh có màu sắc sáng sủa và rõ ràng kể cả ở xa đầu dò, giúp cải thiện độ chính xác trong chẩn đoán ung thư của bác sĩ \cite{pmid24373002}. Fujifilm Corporation tiếp tục phát triển và cho ra công nghệ Linked Color Imagining (LCI) vào năm 2014, tích hợp cả khả năng tiền xử lý và hậu xử lý ảnh để tăng cường sự tương phản giữa khối u ác tính và niêm mạc xung quanh \cite{pmid30291440}. Nhờ những chức năng cao cấp này, ảnh nội soi sử dụng BLI và LCI giúp giảm đáng kể khả năng bỏ sót tổn thương trong quá trình nội soi so với các công nghệ IEE khác.
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.7\textwidth]{figure1}
-    \caption{So sánh ảnh nội soi ung thư dạ dày giai đoạn đầu. (a) và (c) là ảnh nội soi sử dụng WLI, không làm rõ khối u tuyến trong dạ dày. (b) và (d) là ảnh nội soi sử dụng LCI tại cùng vị trí làm nổi bật rõ khối u tuyến so với niêm mạc xung quanh. Nguồn ảnh: \cite{pmid31700545}.}
+    \caption{So sánh ảnh nội soi ung thư dạ dày giai đoạn đầu. (a) và (c) là ảnh nội soi sử dụng WLI, không làm rõ khối u tuyến trong dạ dày. (b) và (d) là ảnh nội soi sử dụng LCI tại cùng vị trí, làm nổi bật rõ khối u tuyến so với niêm mạc xung quanh. Nguồn ảnh: \cite{pmid31700545}.}
     \label{wli-lci}
 \end{figure}
 
-Tuy hiệu quả của các công nghệ nội soi mới này đã được chỉ ra trên thực tế, song việc triển khai các thiết bị có tích hợp các công nghệ này còn gặp nhiều khó khăn. Trong một bài báo trên tạp chí Therap Adv Gastroenterol năm 2016, nhóm nghiên cứu chỉ ra rằng phần lớn bác sĩ nội soi tại Nhật Bản vẫn chưa quen sử dụng các thiết bị được trang bị BLI - 3 năm sau khi BLI được phát triển - do các thiết bị này chưa được triển khai rộng rãi tại các cơ sở y tế \cite{pmid26770267}. Hạn chế về chi phí là rào cản lớn ngăn cản các bác sĩ nội soi có thể tiếp cận với các công nghệ mới này, đặc biệt là ở các cơ sở y tế địa phương và vùng sâu vùng xa.
+Tuy hiệu quả của các công nghệ nội soi mới này đã được kiểm chứng trên thực tế, việc triển khai các thiết bị có tích hợp công nghệ còn gặp nhiều khó khăn. Trong một bài báo trên tạp chí Therap Adv Gastroenterol năm 2016, nhóm nghiên cứu chỉ ra rằng phần lớn bác sĩ nội soi tại Nhật Bản vẫn chưa quen sử dụng các thiết bị được trang bị BLI - 3 năm sau khi BLI được phát triển - do các thiết bị này chưa được triển khai rộng rãi tại các cơ sở y tế \cite{pmid26770267}. Hạn chế về chi phí là rào cản lớn ngăn cản các bác sĩ nội soi tiếp cận với các công nghệ mới, đặc biệt là ở các cơ sở y tế địa phương và vùng sâu vùng xa.
 
-Để khắc phục hạn chế về cơ sở hạ tầng, ta có thể sử dụng phần mềm để tái tạo lại các chức năng nội soi cao cấp này. Trong thời gian gần đây, các giải pháp học máy (Machine Learning) nói chung và học sâu (Deep Learning) nói riêng đang trở nên rất phổ biến - thay vì chỉnh sửa các thông số thuật toán một cách thủ công, lập trình viên có thể cho mô hình trí tuệ nhân tạo tiếp xúc với một lượng lớn dữ liệu, và các thông số của mô hình sẽ được tối ưu tự động (\textit{"học"}) để tối đa mục tiêu của bài toán. Với thiết kế mô hình và chiến lược luyện tập mô hình hợp lý, ta có thể tạo ra những mô hình chất lượng cao.
+Để khắc phục hạn chế về cơ sở hạ tầng, ta có thể sử dụng phần mềm để tái tạo lại các chức năng nội soi cao cấp. Trong thời gian gần đây, các giải pháp học máy (Machine Learning) nói chung và học sâu (Deep Learning) nói riêng đang trở nên rất phổ biến - thay vì phải tìm ra thuật toán tối ưu một cách thủ công, lập trình viên có thể cho mô hình trí tuệ nhân tạo tiếp xúc với một lượng lớn dữ liệu, và mô hình sẽ được tối ưu tự động (\textit{"học"}) để tối đa mục tiêu của bài toán. Với thiết kế và chiến lược luyện tập hợp lý, ta có thể tạo ra những mô hình chất lượng cao, thậm chí vượt qua cả khả năng của con người.
 
-\textit{\textbf{Trong đồ án tốt nghiệp này, em hướng tới việc sử dụng mô hình học máy StarGAN v2, phát triển bởi các nhà nghiên cứu của Clova AI thuộc tập đoàn NAVER, để thực hiện chức năng đổi màu cho ảnh nội soi giữa 4 chế độ màu tiêu biểu - BLI, FICE, LCI và WLI.}}
+\textit{\textbf{Trong đồ án tốt nghiệp này, ta nghiên cứu sử dụng mô hình học máy StarGAN v2, phát triển bởi nhóm nghiên cứu Clova AI thuộc tập đoàn NAVER, để giải bài toán đổi chế độ màu cho ảnh nội soi, hỗ trợ 4 chế độ màu tiêu biểu BLI, FICE, LCI và WLI.}}
 
 Báo cáo đồ án được chia làm 6 chương:
 \begin{enumerate}
     \item \textbf{Chương 1 - Tổng quan về bài toán và đặt vấn đề}, giải thích bài toán và ứng dụng của đề tài trong thực tế.
     \item \textbf{Chương 2 - Cơ sở lý thuyết và nghiên cứu liên quan}, đi qua các cơ sở lý thuyết về Machine Learning, Deep Learning, Generative Adversarial Network (GAN) cùng với các nghiên cứu có liên quan tới đề tài, trước khi giải thích lý do lựa chọn mô hình StarGAN v2.
-    \item \textbf{Chương 3 - Phương pháp đề xuất}, giải thích kiến trúc mô hình StarGAN v2 và các hàm mục tiêu được sử dụng trong quá trình luyện tập mô hình.
+    \item \textbf{Chương 3 - Phương pháp đề xuất}, giải thích kiến trúc mô hình StarGAN v2, các hàm mục tiêu được sử dụng và các thay đổi so với nghiên cứu gốc để phù hợp với bài toán của đề tài.
     \item \textbf{Chương 4 - Luyện tập mô hình và đánh giá}, mô tả môi trường luyện tập mô hình và kết quả đánh giá chất lượng sản phẩm.
     \item \textbf{Chương 5 - Ứng dụng thực tế - áp dụng vào hệ thống Polyp-Labeler}, nói về dự án Polyp-Labeler, hiện đang được sử dụng bởi các bác sĩ của Viện nghiên cứu và đào tạo tiêu hoá gan mật IGH, và quá trình ứng dụng sản phẩm của đề tài vào hệ thống của dự án.
     \item \textbf{Chương 6 - Kết luận và hướng phát triển}.
