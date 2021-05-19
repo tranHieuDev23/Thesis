@@ -179,42 +179,42 @@ Các thuật toán học máy tiêu biểu gồm có Decision Tree, Naive Bayes,
 
 \subsection{Phân loại học máy}
 
-Các thuật toán học máy thường được chia làm ba phân loại lớn, tùy theo đặc điểm của dữ liệu mà máy được cung cấp là Supervised Learning, Unsupervised Learning và Reinforcement Learning.
+Các thuật toán học máy thường được chia làm ba phân loại lớn, dựa theo đặc điểm của dữ liệu mà máy được cung cấp là Supervised Learning, Unsupervised Learning và Reinforcement Learning.
 
 \subsubsection{Học có giám sát (Supervised Learning)}
 
-Các thuật toán học có giám sát hướng tới việc xây dựng một mô hình toán học dựa trên dữ liệu mẫu có sẵn đầu vào và đầu ra kì vọng. Bằng cách tối ưu một hoặc nhiều hàm số mục tiêu, ta xây dựng được ước lượng hàm gần đúng, có khả năng ánh xạ từ đầu vào tới đầu ra trong dữ liệu luyện tập. Với mô hình học máy phù hợp, chiến lược luyện tập hợp lý cùng với đủ dữ liệu, mô hình học máy có thể dự đoán chính xác kết quả đầu ra với đầu vào chưa gặp từ trước.
+Các thuật toán học có giám sát hướng tới việc xây dựng một mô hình toán học dựa trên dữ liệu mẫu có sẵn đầu vào và đầu ra kì vọng. Bằng cách tối ưu một hoặc nhiều hàm số mục tiêu, ta xây dựng được ước lượng hàm gần đúng, có khả năng ánh xạ từ đầu vào tới đầu ra trong dữ liệu luyện tập. Với ước lượng hàm đủ tốt, mô hình có thể dự đoán chính xác kết quả đầu ra với đầu vào chưa được gặp trước đó.
 
-Các mô hình học có giám sát có thể được phân chia nhỏ hơn thành mô hình phân loại (classification) và mô hình suy biến (regression). Mô hình phân loại có thể phân loại dữ liệu đầu vào theo một số lớp dữ liệu đã biết từ trước, trong khi mô hình suy biến hướng tới việc tính ra giá trị thực trong khoảng bất kì.
+Các mô hình học có giám sát có thể được phân chia nhỏ hơn thành mô hình phân loại (classification) và mô hình suy biến (regression). Mô hình classification cho ra kết quả phân loại dữ liệu đầu vào vào một số lớp dữ liệu xác định, trong khi mô hình regression tính ra giá trị thực trong khoảng bất kì.
 
-Các ứng dụng tiêu biểu của học có giám sát bao gồm việc nhận diện chữ viết tay, nhận diện lệnh giọng nói, dự đoán biến động giá cổ phiếu, vân vân\dots
+Các ứng dụng tiêu biểu của học máy có giám sát bao gồm nhận diện chữ viết tay, nhận diện lệnh giọng nói, dự đoán biến động giá cổ phiếu,\dots
 
 \subsubsection{Học không giám sát (Unsupervised Learning)}
 
 Các thuật toán học không giám sát nhận vào một tập dữ liệu tự do, không có đầu vào đầu ra kì vọng, và hướng tới việc tìm kiếm những xu hướng tiêu biểu trong dữ liệu.
 
-Ứng dụng quen thuộc nhất của các thuật toán học không giám sát là bài toán phân cụm dữ liệu. Giải thuật phân cụm có nhiệm vụ chia dữ liệu đầu vào thành các cụm con, sao cho các dữ liệu trong cùng một cụm có đặc điểm giống nhau, dữ liệu giữa các cụm khác nhau có đặc điểm khác nhau. Sự "giống nhau" và "khác nhau" này được đo đạc bằng các hàm số mục tiêu như khoảng cách Euler, khoảng cách Mahattan, vân vân\dots
+Ứng dụng quen thuộc nhất của các thuật toán học không giám sát là bài toán phân cụm dữ liệu. Giải thuật phân cụm có nhiệm vụ chia dữ liệu đầu vào thành các cụm con, sao cho các dữ liệu trong cùng một cụm có đặc điểm giống nhau, dữ liệu giữa các cụm khác nhau có đặc điểm khác nhau. Sự "giống nhau" và "khác nhau" này được đo đạc bằng các hàm số mục tiêu như khoảng cách Euler, khoảng cách Mahattan, \dots
 
 \subsubsection{Học tăng cường (Reinforcement Learning)}
 
-Các thuật toán học tăng cường giải quyết bài toán huấn luyện một tác tử thông minh trong một môi trường định sẵn, để tác tử đó có thể tối đa hóa một giá trị phần thưởng tích lũy qua thời gian. Môi trường học tăng cường thường được mô tả dưới dạng một chuỗi quyết định Markov (Markov Decision Process) với công thức toán học không thể định nghĩa được chính xác. Bằng cách xây dựng một ước lượng gần đúng của chuỗi quyết định, tác tử thông minh có thể dần học được cách hoạt động độc lập hiệu quả trong môi trường.
+Các thuật toán học tăng cường giải quyết bài toán huấn luyện một tác tử thông minh trong một môi trường định sẵn, để tác tử có thể tối đa hóa một giá trị phần thưởng tích lũy qua thời gian. Môi trường học tăng cường thường được mô tả dưới dạng một chuỗi quyết định Markov (Markov Decision Process) với công thức toán học không thể xác định chính xác. Bằng cách xây dựng một ước lượng gần đúng của chuỗi quyết định, tác tử thông minh có thể dần học được cách hoạt động độc lập hiệu quả trong môi trường.
 
 Xe tự lại và trí tuệ nhân tạo chơi trò chơi là các ứng dụng tiêu biểu của phương pháp học tăng cường.
 
-Trong báo cáo đồ án tốt nghiệp này, ta chủ yếu quan tâm tới các phương pháp học có giám sát. Khả năng tìm ra ước lượng hàm thỏa mãn mục tiêu đặt ra là cơ sở xây dựng nên nhiều thuật toán học máy cao cấp, trong đó có mô hình Generative Adversarial Network (GAN) được sử dụng trong đồ án tốt nghiệp này.
+Trong đề tài đồ án tốt nghiệp, ta chủ yếu quan tâm tới các phương pháp học có giám sát. Khả năng tìm ra ước lượng hàm thỏa mãn mục tiêu đặt ra là cơ sở xây dựng nên nhiều thuật toán học máy cao cấp, trong đó có mô hình Generative Adversarial Network (GAN) được sử dụng trong đồ án tốt nghiệp này.
 
 \section{Giới thiệu về mạng Nơ-ron (Neural Network)}
 
-Mạng nơ-ron (Neural Network) là một trong những thuật toán học máy có giám sát phổ biến nhất. Lấy cảm hứng từ cơ chế hoạt động của nơ-ron thần kinh trong cơ thể sinh học, mạng nơ-ron là các đồ thị tính toán cực kì phức tạp và hiệu quả trong việc ước lượng mối tương quan giữa dữ liệu đầu vào và đầu ra.
+Mạng nơ-ron (Neural Network) là một trong những thuật toán học máy có giám sát phổ biến nhất. Lấy cảm hứng từ cơ chế hoạt động của nơ-ron thần kinh sinh học, mạng nơ-ron là các đồ thị tính toán cực kì phức tạp và hiệu quả trong việc ước lượng mối tương quan giữa dữ liệu đầu vào và đầu ra.
 
 \subsection{Nơ-ron nhân tạo và mạng kết nối đầy đủ (Fully Connected Neural Network)}
 
 \subsubsection{Định nghĩa}
 
-Trong mạng nơ-ron, một nơ-ron nhận vào một số dữ liệu đầu vào $ x_i $ và cho ra một giá trị đầu ra $ y $. Nơ-ron cũng sử dụng một hàm kích hoạt (activation function) $ f(x) $, thường là phi tuyến tính, để biểu diễn sự "kích hoạt" của nơ-ron với một số trạng thái đầu vào nhất định.
+Trong mạng nơ-ron, một nơ-ron là một đỉnh của đồ thị tính toán, nhận vào một số dữ liệu đầu vào $ x_i $ và cho ra một giá trị đầu ra $ y $. Nơ-ron cũng sử dụng một hàm kích hoạt (activation function) $ f(x) $, thường là phi tuyến tính, để biểu diễn sự "kích hoạt" của nơ-ron với một số trạng thái đầu vào nhất định.
 
-Để thực hiện tính toán với một nơ-ron, ta thực hiện lấy tổng có trọng số của các giá trị đầu vào, và đưa giá trị này qua hàm kích hoạt. Tổng có trọng số này thường được bổ sung thêm một giá trị bias $ \beta $, có thể được biểu diễn như là một giá trị độc lập, hoặc như là hệ số $ w_0 $ của giá trị đầu vào hằng số $ x_0 = 1 $:
-$$ y = f(\sum_{i=1}^{n} x_i w_i + \beta) = f(\sum_{i=0}^{n} x_i w_i) $$
+Để thực hiện tính toán với một nơ-ron, ta lấy tổng có trọng số của các giá trị đầu vào, và đưa tổng này qua hàm kích hoạt. Tổng có trọng số của đầu vào thường được bổ sung thêm một giá trị bias $ \beta $, có thể được biểu diễn như là một giá trị độc lập, hoặc như là hệ số $ w_0 $ của đầu vào hằng số $ x_0 = 1 $:
+$$ y = f\left(\sum_{i=1}^{n} x_i w_i + \beta\right) = f\left(\sum_{i=0}^{n} x_i w_i\right) $$
 
 \begin{figure}[H]
     \centering
@@ -222,7 +222,7 @@ $$ y = f(\sum_{i=1}^{n} x_i w_i + \beta) = f(\sum_{i=0}^{n} x_i w_i) $$
     \caption{So sánh giữa nơ-ron thực tế và nơ-ron trong mạng đầy đủ. Nguồn ảnh: \cite{article}.}
 \end{figure}
 
-Mạng nơ-ron được tổ chức thành các lớp, mỗi lớp gồm có nhiều nơ-ron, lấy kết quả đầu ra của lớp trước làm đầu vào cho lớp sau. Lớp đầu tiên của mạng nơ-ron là các thuộc tính của dữ liệu đầu vào, lớp cuối cùng của mạng cho ra kết quả của thuật toán. Giả sử một lớp mạng nhận vào $ n $ giá trị đầu vào và cho ra $ m $ giá trị đầu ra, ta có thể biểu diễn công thức của lớp mạng đó thành:
+Khi cài đặt mạng nơ-ron, ta tổ chức nơ-ron thành các lớp, mỗi lớp gồm có nhiều nơ-ron, lấy kết quả đầu ra của lớp trước làm đầu vào cho lớp sau. Lớp đầu tiên của mạng là các thuộc tính của dữ liệu đầu vào, lớp cuối cùng của mạng cho ra kết quả của mô hình. Giả sử một lớp mạng nhận vào $ n $ giá trị đầu vào và cho ra $ m $ giá trị đầu ra, ta có thể biểu diễn công thức của lớp mạng đó thành:
 
 \begin{center}
     \begin{math}
@@ -246,34 +246,34 @@ Mạng nơ-ron được tổ chức thành các lớp, mỗi lớp gồm có nhi
     \end{math}
 \end{center}
 
-Một lớp mạng nơ-ron dạng này được gọi là lớp mạng nơ-ron đầy đủ (Fully Connected), vì khi biểu diễn trên đồ thị tính toán, mọi phần tử giữa hai lớp mạng sẽ được kết nối với nhau bằng các cạnh có trọng số $ W $. Huấn luyện mạng nơ-ron đầy đủ hướng tới việc tìm ra các giá trị trọng số $ W $ hiệu quả nhất để biểu diễn mối quan hệ giữa đầu vào và đầu ra. Mạng nơ-ron hoạt động hiệu quả nhờ việc tổng hợp tri thức cơ bản học được ở các lớp đầu để cho ra kết quả phức tạp hơn ở các lớp sau. Đây cũng là nguồn gốc của tên gọi Học sâu (Deep Learning) - các mạng nơ-ron thường có rất, rất nhiều lớp - rất "sâu".
+Một lớp mạng nơ-ron dạng này được gọi là lớp mạng nơ-ron đầy đủ (Fully Connected), vì khi biểu diễn trên đồ thị tính toán, mọi phần tử giữa hai lớp mạng sẽ được kết nối với nhau bằng các cạnh có trọng số $ W $. Huấn luyện mạng nơ-ron đầy đủ hướng tới việc tìm ra ma trận trọng số $ W $ hiệu quả nhất để biểu diễn mối quan hệ giữa đầu vào và đầu ra. Mạng nơ-ron hoạt động hiệu quả nhờ việc tổng hợp tri thức cơ bản học được ở các lớp đầu để cho ra kết quả phức tạp hơn ở các lớp sau. Đây cũng là nguồn gốc của tên gọi học sâu (Deep Learning) - các mạng nơ-ron thường có rất, rất nhiều lớp - rất "sâu".
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{figure5}
-    \caption{Kiến trúc của mạng GoogLeNet có 22 khối Convolutional, mỗi khối bao gồm một nhiều lớp.}
+    \caption{Kiến trúc của mạng GoogLeNet có 22 khối Convolutional, mỗi khối bao gồm nhiều lớp mạng.}
 \end{figure}
 
 \subsubsection{Hàm kích hoạt}
 
 Hàm kích hoạt thể hiện trạng thái kích hoạt đầu ra của nơ-ron. Hàm kích hoạt có thể là hàm tuyến tính (hàm đồng nhất $ f(x) = x $) ở lớp cuối cùng, nếu mạng được luyện tập để giải bài toán regression. Tuy nhiên, chỉ có các hàm kích hoạt phi tuyến tính mới cho phép mạng nơ-ron biểu diễn các mối quan hệ phức tạp. Điều này có thể dễ dàng chứng minh được từ công thức của mạng kết nối đầy đủ:
 
-Với hai lớp mạng $ Y_1 = f_1(W_1x) $ và $ Y_2 = f_2(W_2x) $ xếp kế tiếp nhau, $ f_1(x) $ là hàm tuyến tính có dạng $ f_1(x) = Cx $, ta có:
-$$ Y_2(x) =  f_2z_2 = f_2(W_2f_1(W_1x)) = f_2((W_2CW_1)x) $$
+Với hai lớp mạng $ Y_1 = f_1(W_1x) $ và $ Y_2 = f_2(W_2Y_1) $ xếp kế tiếp nhau, $ f_1(x) $ là hàm tuyến tính có dạng $ f_1(x) = Cx $, ta có:
+$$ Y_2(x) = f_2(W_2f_1(W_1x)) = f_2((W_2CW_1)x) $$
 
 Nói cách khác, phép tính toán qua hai lớp mạng sử dụng hàm kích hoạt tuyến tính có thể giản lược được thành một lớp duy nhất, không hề làm tăng độ phức tạp của mô hình.
 
 Một số hàm kích hoạt tiêu biểu có thể kể đến:
 \begin{itemize}
-    \item Hàm sigmoid: $ \cfrac{1}{1 + e^{-x}} $. Hàm sigmoid được sử dụng trong thuật toán logistic regression để giới hạn output trong khoảng $ (0, 1) $, thể hiện giá trị dự đoán false-true.
-    \item Hàm tanh: $ \cfrac{e^{x} + e^{-x}}{e^{x} - e^{-x}} $. Giá trị đầu ra của hàm tanh nằm trong khoảng $ (-1, 1) $, giúp ta đưa chuẩn hóa giá trị đầu ra kì vọng về 0.
-    \item Hàm ReLU: $ max\{x, 0\} $. Khác với sigmoid và tanh, hàm ReLU có công thức tính toán vô cùng đơn giản và dễ lấy đạo hàm, giúp tăng tốc quá trình luyện tập.
-    \item Hàm Leaky ReLU: $ max\{x, \alpha x\} $. Khi giá trị của $ x $ về âm, hàm ReLU cơ bản có đạo hàm bằng 0, dẫn tới việc chết gradient và ngăn cản quá trình luyện tập. Leaky ReLU là một phiên bản cải tiến giúp giải quyết vấn đề này.
+    \item Hàm sigmoid: $ \cfrac{1}{1 + e^{-x}} $. Hàm sigmoid được sử dụng trong các mô hình classification để giới hạn đầu ra trong khoảng $ (0, 1) $, thể hiện giá trị dự đoán đúng-sai.
+    \item Hàm tanh: $ \cfrac{e^{x} + e^{-x}}{e^{x} - e^{-x}} $. Giá trị đầu ra của hàm tanh nằm trong khoảng $ (-1, 1) $, giúp ta chuẩn hóa giá trị đầu ra kì vọng về 0.
+    \item Hàm ReLU: $ max\{x, 0\} $. So với hàm sigmoid và tanh, hàm ReLU có công thức tính toán vô cùng đơn giản và dễ lấy đạo hàm, giúp tăng tốc quá trình luyện tập.
+    \item Hàm Leaky ReLU: $ max\{x, \alpha x\} $. Khi giá trị của $ x $ về âm, hàm ReLU cơ bản có đạo hàm bằng 0, ngăn cản các thuật toán luyện tập sử dụng gradient cập nhật mô hình. Leaky ReLU là một phiên bản cải tiến giúp giải quyết vấn đề này. Các thuật toán cập nhật sử dụng gradient sẽ được mô tả cụ thể trong mục \ref{optimization}.
 \end{itemize}
 
 \subsection{Mạng nơ-ron tích chập (Convolutional Neural Network)}
 
-Tuy mạng nơ-ron kết nối đầy đủ có thể dễ dàng biểu diễn mối quan hệ giữa mọi nơ-ron với nhau, số lượng tham số khổng lồ khiến cho việc tính toán vô cùng khó khăn. Giữa hai lớp mạng có $ n $ và $ m $ nơ-ron, ta cần ma trận trọng số $ W $ với $ (n + 1) \times m $ phần tử. Đây là một trở ngại đặc biệt lớn đối với dữ liệu hình ảnh - một bức ảnh HD có kích thước $ 1280 \times 720 $ pixel, tương ứng với gần 1 triệu giá trị đầu vào. Xây dựng ma trận trọng số $ W $ đầy đủ cho dữ liệu đầu vào này là điều không thể.
+Tuy mạng nơ-ron kết nối đầy đủ có thể biểu diễn tốt mối quan hệ giữa mọi cặp nơ-ron với nhau, số lượng tham số khổng lồ khiến cho việc tính toán vô cùng khó khăn. Giữa hai lớp mạng có $ n $ và $ m $ nơ-ron, ta cần ma trận trọng số $ W $ với $ (n + 1) \times m $ phần tử. Đây là một trở ngại đặc biệt lớn đối với dữ liệu hình ảnh - một bức ảnh HD có kích thước $ 1280 \times 720 $ pixel, tương ứng với gần 1 triệu giá trị đầu vào. Xây dựng ma trận trọng số $ W $ đầy đủ cho dữ liệu đầu vào này là điều không thể.
 
 Quan sát dữ liệu hình ảnh, ta nhận thấy các pixel ở gần thường có quan hệ chặt chẽ với nhau hơn là các pixel ở xa. Do đó, ta không nhất thiết phải biểu diễn quan hệ giữa tất cả các pixel với nhau - chỉ cần tìm ra quan hệ giữa các cụm pixel ở gần nhau trên ảnh là đủ. Mạng nơ-ron tích chập (Convolutional Neural Network hay CNN) được xây dựng dựa trên tư tưởng này.
 
@@ -294,7 +294,7 @@ Với ma trận ảnh đen trắng kích thước $ n \times n $:
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.7\textwidth]{figure6}
-    \caption{Cơ chế hoạt động của kernel. Nguồn ảnh: \cite{CS230}}
+    \caption{Cơ chế hoạt động của kernel. Nguồn ảnh: \cite{CS230}.}
 \end{figure}
 ta định nghĩa kernel là một ma trận kích thước nhỏ $ m \times m $:
 \begin{center}
@@ -308,7 +308,7 @@ ta định nghĩa kernel là một ma trận kích thước nhỏ $ m \times m $
     \end{math}
 \end{center}
 và phép toán tích chập $ x \circledast k $ cho ra ma trận kết quả $ x' $, kích thước $ (n - m + 1) \times (n - m + 1) $, với:
-$$ x'_{u,v} = \sum_{i=0}^{m-1} \sum_{j=0}^{m-1} x_{u+i,v+j} \cdot k_{i+1,j+1} $$
+$$ x'_{u,v} = \sum_{i=0}^{m-1} \sum_{j=0}^{m-1} x_{u+i,v+j} \times k_{i+1,j+1} $$
 
 Bằng cách lựa chọn trọng số phù hợp, phép tích chập với kernel có thể thực hiện được nhiều thao tác xử lý ảnh như làm mờ, làm sắc ảnh, nhận diện cạnh,\dots Qua đó, kernel đóng vai trò như bộ lọc thông tin, tìm ra các đặc điểm hữu ích từ dữ liệu.
 
@@ -335,24 +335,24 @@ Bằng cách lựa chọn trọng số phù hợp, phép tích chập với kern
         \includegraphics[width=0.5\linewidth]{figure8.png}
         \caption{Kết quả}
     \end{subfigure}
-    \caption{Nhận diện cạnh bằng kernel}
+    \caption{Nhận diện cạnh bằng kernel.}
 \end{figure}
 
-Trên thực tế, ta thường làm việc với dữ liệu ảnh có nhiều kênh (channel), ví dụ ảnh RGB có 3 kênh biểu diễn giá trị màu đỏ - xanh lá - xanh lam. Kernel cho dữ liệu dạng này cũng có số channel tương ứng, và phép tích chập được thực hiện trên tất cả các chiều.
+Trên thực tế, ta thường làm việc với dữ liệu ảnh có nhiều kênh (channel), ví dụ như ảnh RGB có 3 kênh, biểu diễn 3 giá trị màu đỏ - xanh lá - xanh lam. Kernel cho dữ liệu dạng này cũng có nhiều channel tương ứng, và phép tích chập được thực hiện trên tất cả các chiều.
 
-Mạng CNN sử dụng các lớp tích chập (convolutional), mỗi lớp được cấu thành bởi nhiều kernel. Lớp tích chập nhận vào dữ liệu có nhiều kênh (thường là dữ liệu ảnh) và trả về kết quả cũng có nhiều kênh, mỗi kênh là kết quả tích chập với một kernel. Kết quả này có thể được sử dụng bởi các lớp tích chập hoặc kết nối đẩy đủ kế tiếp. Quá trình luyện tập hướng tới việc học ra trọng số tốt nhất cho cả các kernel và ma trận kết nối đầy đủ.
+Mạng CNN sử dụng các lớp tích chập (convolutional), mỗi lớp được cấu thành bởi nhiều kernel. Lớp tích chập nhận vào dữ liệu có nhiều kênh (thường là dữ liệu ảnh) và trả về kết quả cũng có nhiều kênh, mỗi kênh là kết quả tích chập với một kernel. Kết quả này có thể được sử dụng bởi các lớp tích chập hoặc kết nối đầy đủ kế tiếp. Quá trình luyện tập hướng tới việc học ra trọng số tốt nhất cho các kernel và các ma trận trọng số kết nối đầy đủ.
 
 Lớp tích chập có thể được tinh chỉnh bằng một số tham số:
 \begin{itemize}
     \item Kích thước các chiều và số kênh của dữ liệu đầu vào. Đối với dữ liệu ảnh RGB, ta có hai chiều rộng $ W $ và cao $ H $, số kênh $ C = 3 $. Ta thường sử dụng ảnh vuông với $ W = H $.
     \item Kích thước các chiều của kernel. Ta cũng thường sử dụng kernel vuông với kích thước hai chiều $ K $ nhỏ, không vượt quá 7.
-    \item Số lượng kernel $ C' $. Giá trị này thường là số mũ của 2, và tăng dần ở các lớp sau của mô hình.
+    \item Số lượng kernel $ C' $. Thông thường, ta đặt $ C' $ là số mũ của 2, và tăng dần ở các lớp sau của mô hình.
     \item Bước nhảy (stride) $ S $ của phép tích chập. Lớp sẽ tính tích chập của các cụm phần tử cách nhau $ S $ bước. Đối với phép tích chập cơ bản, $ S = 1 $.
-    \item Kích thước đệm (padding) $ P $ cho ma trận đầu vào. Bằng cách đệm xung quanh ma trận đầu vào (thường là bằng giá trị 0), ta có thể điều chỉnh kích cỡ ma trận đầu ra. Đối với phép tích chập cơ bản, $ P = 0 $.
+    \item Kích thước đệm (padding) $ P $ cho ma trận đầu vào. Bằng cách đệm xung quanh ma trận đầu vào (thường là bằng giá trị 0), ta có thể điều chỉnh kích cỡ của ma trận đầu ra. Đối với phép tích chập cơ bản, $ P = 0 $.
     \item Hàm kích hoạt. Do phép tích chập là phép toán tuyến tính, hàm kích hoạt đóng vai trò tương tự như đối với lớp kết nối đầy đủ.
 \end{itemize}
 
-Với các tham số trên, lớp tích chập có tất cả $ C' \times C \times K \times K $ tham số, cho ra đầu ra kích thước $ C' \times W' \times H' $, với $ W' = H' = \cfrac{W - K + 2P}{S} + 1 $. Số lượng tham số của lớp tích chập chỉ phụ thuộc vào số kênh của dữ liệu đầu vào (thường là nhỏ), giúp giảm đáng kể kích thước của mô hình mà vẫn đảm bảo thực hiện được những tính toán phức tạp.
+Với các tham số trên, lớp tích chập có tất cả $ C' \times C \times K \times K $ tham số, với đầu ra kích thước $ C' \times W' \times H' $, với $ W' = H' = \cfrac{W - K + 2P}{S} + 1 $. Số lượng tham số của lớp tích chập chỉ phụ thuộc vào số kênh của dữ liệu đầu vào (thường là nhỏ), giúp giảm đáng kể kích thước của mô hình mà vẫn đảm bảo thực hiện được những tính toán phức tạp.
 
 \subsubsection{Lớp pooling}
 
@@ -361,15 +361,16 @@ Tuy số lượng tham số của lớp tích chập rất nhỏ, song kích th�
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.7\textwidth]{figure9.jpg}
-    \caption{Cơ chế hoạt động của Max pooling và Average pooling với size 2, stride 2}
+    \caption{Cơ chế hoạt động của Max pooling và Average pooling với size 2, stride 2.}
 \end{figure}
 
-Lớp pooling tổng hợp giá trị của các vùng lân cận trên dữ liệu bằng phép lấy max hoặc phép tính trung bình thành để cho ra một kết quả đầu ra duy nhất. Lớp pooling có thể tùy chỉnh được bằng hai tham số kích thước và bước nhảy, giống như với các lớp tích chập. Một lớp pooling có kích thước $ K = 2 $, bước nhảy $ S = 2 $ sẽ giảm được một nửa kích thước mỗi chiều của dữ liệu:
-$$  W' = H' = \cfrac{W - 2}{2} + 1 = \cfrac{W}{2} $$
+Lớp pooling tổng hợp giá trị của các vùng lân cận trên dữ liệu bằng phép lấy max hoặc phép tính trung bình để cho ra một kết quả đầu ra duy nhất. Lớp pooling có thể tùy chỉnh được bằng hai tham số kích thước và bước nhảy, giống như với lớp tích chập. Một lớp pooling có kích thước $ K = 2 $, bước nhảy $ S = 2 $ sẽ giảm được một nửa kích thước mỗi chiều của dữ liệu:
+$$  W' = \cfrac{W - 2}{2} + 1 = \cfrac{W}{2} $$
 
 Lớp pooling không có tham số cần học.
 
 \subsection{Hàm mục tiêu và thuật toán huấn luyện}
+\label{optimization}
 
 \subsubsection{Bài toán huấn luyện mô hình mạng nơ-ron}
 
