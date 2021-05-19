@@ -476,7 +476,7 @@ với $ v_t $ là vector cập nhật ở bước duyệt thứ $ t $, $ \gamma 
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.5\textwidth]{figure12.png}
-    \caption{So sánh giữa việc tối ưu sử dụng thuật toán cổ điển (đường xanh dương) với tối ưu sử dụng momentum (đường xanh lá.)}
+    \caption{So sánh giữa việc tối ưu sử dụng thuật toán cổ điển (đường xanh dương) với tối ưu sử dụng momentum (đường xanh lá).}
 \end{figure}
 
 Thuật toán xuống đồi cổ điển cũng sử dụng chung một tốc độ học cho toàn bộ mạng. Nếu dữ liệu không được phân bố đều - ví dụ, nếu một số đặc tính phổ biến hơn các đặc tính khác, các trọng số liên quan sẽ không được cập nhật thường xuyên như nhau, dẫn tới việc mô hình không học được đầy đủ thông tin. Dean, J., Corrado và cộng sự khắc phục hạn chế này bằng kĩ thuật Adagrad (ADAptive GRADient) để điều chỉnh tốc độ học độc lập cho từng tham số \cite{duchi2011adaptive}:
@@ -512,19 +512,21 @@ Khả năng ước lượng hàm phức tạp với độ chính xác cao của 
 
 \subsection{Định nghĩa}
 
-GAN được đề xuất lần đầu tiên bởi Ian Goodfellow và cộng sự vào năm 2014 \cite{NIPS2014_5ca3e9b1}. Một mô hình GAN cơ bản bao gồm hai phần:
+GAN được đề xuất lần đầu tiên bởi Ian Goodfellow và cộng sự vào năm 2014 \cite{NIPS2014_5ca3e9b1}. Mô hình GAN cơ bản bao gồm hai phần:
 
 \begin{itemize}
-    \item Một mạng sinh dữ liệu (generator). Generator thường nhận vào một vector ngẫu nhiên - gọi là vector biểu diễn tiềm thức (latent vector) - và cho ra một dữ liệu giả tương ứng với vector đó.
-    \item Một mạng phân loại dữ liệu (discriminator). Discriminator thường nhận vào dữ liệu thật hoặc dữ liệu giả của generator, và cho ra kết quả phân loại dữ liệu này là thật hay giả.
+    \item Một mạng sinh dữ liệu (generator). Generator thường nhận vào một vector ngẫu nhiên - gọi là vector biểu diễn tiềm thức (vector latent) - và cho ra một dữ liệu giả tương ứng với vector đó.
+    \item Một mạng phân loại dữ liệu (discriminator). Discriminator thường nhận vào dữ liệu thật hoặc dữ liệu giả sinh bởi generator, và cho ra kết quả phân loại dữ liệu thật/giả.
 \end{itemize}
 
-Hai mạng này được tối ưu song song để chống lại nhau - Output của generator được đưa làm input của discriminator để luyện tập phân biệt thật/giả. Ngược lại, generator luyện tập để có thể sinh dữ liệu giả đánh lừa được discriminator. Ban đầu, generator chỉ có thể cho ra kết quả giả, song qua thời gian, generator dần học được cách để tạo ra dữ liệu có thể đánh lừa discriminator. Tương tự, discriminator cũng phải dần học cách đối phó với năng lực của generator. Mục tiêu cuối cùng của GAN là xây dựng được generator chất lượng cao, sinh được dữ liệu với phân bố giống với dữ liệu thật, khiến cho discriminator phải dự đoán ngẫu nhiên và đánh lừa được cả con người.
+Hai mạng này được tối ưu song song để chống lại nhau - Output của generator được đưa vào làm input của discriminator để luyện tập phân biệt thật/giả. Ngược lại, generator luyện tập để có thể sinh dữ liệu giả đánh lừa được discriminator. Ban đầu, generator chỉ có thể cho ra kết quả giả, song qua thời gian, generator dần học được cách để tạo ra dữ liệu chân thực, có thể đánh lừa discriminator. Tương tự, discriminator cũng phải dần học cách đối phó với năng lực của generator.
+
+Mục tiêu cuối cùng của GAN là xây dựng được generator chất lượng cao, sinh được dữ liệu với phân bố giống với dữ liệu thật, khiến cho discriminator phải dự đoán ngẫu nhiên và đánh lừa được cả con người.
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{figure13.png}
-    \caption{Kiến trúc GAN cơ bản}
+    \caption{Kiến trúc GAN cơ bản.}
 \end{figure}
 
 \subsection{Luyện tập mô hình GAN}
@@ -536,11 +538,11 @@ Quá trình luyện tập GAN liên tục hoán đổi giữa hai bước:
     \item Thực hiện một hoặc nhiều bước tối ưu generator, giữ nguyên các trọng số của discriminator.
 \end{enumerate}
 
+Ta giữ nguyên trọng số của generator khi tối ưu discriminator, vì mục tiêu của discriminator là học được các thiếu sót của dữ liệu giả, khác với mục tiêu của generator. Tri thức discriminator học được trong giai đoạn này không giúp cho generator hoạt động tốt lên. Ngược lại, ta giữ nguyên trọng số của discriminator khi cập nhật generator, để mô hình này có thể hội tụ tới một mục tiêu cố định.
+
 Hàm mục tiêu sử dụng để tối ưu hai thành phần của GAN có thể là các hàm mục tiêu của mô hình học có giám sát - trong bài báo giới thiệu GAN, Ian Goodfellow sử dụng hàm thiệt hại Minimax, về cơ bản là một biến thể của hàm cross entropy:
 $$ E_x[\log(D(x))] + E_z[\log(1 - D(G(z)))] $$
 với $ E_x $ là giá trị kì vọng trên toàn bộ tập dữ liệu thật, $ E_z $ là giá trị vì vọng trên toàn bộ tập dữ liệu giả, $ G(z) $ và $ D(x) $ lần lượt là kết quả đầu ra của mạng generator và discriminator. Generator cố gắng tối giảm hàm thiệt hại này, trong khi discriminator lại cố gắng tối đa; chính vì lí do đó mà hàm thiệt hại này được gọi là Minimax - đây là một trò chơi minimax giữa hai tác tử.
-
-Ta giữ nguyên trọng số của generator khi tối ưu discriminator, vì mục tiêu của discriminator là học được các thiếu sót của dữ liệu giả, khác với mục tiêu của generator. Tri thức discriminator học được trong giai đoạn này không giúp cho generator hoạt động tốt lên. Ngược lại, ta giữ nguyên trọng số của discriminator khi cập nhật generator, để mô hình này có thể hội tụ tới một mục tiêu cố định.
 
 Khác với mô hình học có giám sát hội tụ ở điểm cực tiểu địa phương, ta không thể xác định được thời điểm GAN hội tụ. Một khi generator trở nên đủ tốt để đánh lừa discriminator, discriminator buộc phải đưa ra dự đoán ngẫu nhiên để phân loại dữ liệu thật/giả. Điều này dẫn tới việc generator cũng bị cập nhật dựa trên các tri thức không có giá trị, khiến cho chất lượng đầu ra đi xuống. Do đó, GAN không thể duy trì trạng thái hội tụ lâu dài.
 
@@ -557,7 +559,7 @@ Khi xây dựng các mô hình học có giám sát, sai số có thể xuất h
     \item Sai số variance xuất hiện khi mô hình bám quá sát vào dữ liệu đầu vào. Khi variance cao, mô hình có thể không hoạt động tốt với những dữ liệu mới chưa từng gặp trước đó (overfitting).
 \end{itemize}
 
-Mô hình học máy lý tưởng có thể mô phỏng chính xác mối tương quan giữa dữ liệu đầu vào và đầu ra mẫu (bias thấp), đồng thời cũng phải hoạt động tốt với dữ liệu mới (variance thấp).
+Mô hình học máy lý tưởng cần phải mô phỏng được chính xác mối tương quan giữa dữ liệu đầu vào và đầu ra mẫu (bias thấp), đồng thời cũng phải khái quát hóa tốt với dữ liệu mới (variance thấp).
 
 \begin{figure}[H]
     \centering
@@ -581,7 +583,7 @@ Các phương pháp phòng tránh overfitting thường hướng tới (1) kiể
 
 \subsubsection{Cross-validation}
 
-Kĩ thuật cross-validation (kiểm chứng chéo) phân chia bộ dữ liệu thành hai phần - một bộ dữ liệu luyện tập (training set) và một bộ dữ liệu kiểm chứng (validation set). Mô hình sau khi đã được luyện tập trên training set sẽ được kiểm tra trên validation set để kiểm tra chất lượng với dữ liệu chưa được gặp.
+Kĩ thuật cross-validation (kiểm chứng chéo) phân chia bộ dữ liệu thành hai phần - một bộ dữ liệu luyện tập (training set) và một bộ dữ liệu kiểm chứng (validation set). Mô hình sau khi đã được luyện tập trên training set sẽ được kiểm tra trên validation set để kiểm tra chất lượng với dữ liệu mới.
 
 Để giảm thiểu nhiễu trong tập kiểm chứng, phần lớn kĩ thuật kiểm chứng chéo sẽ thực hiện nhiều vòng kiểm tra, mỗi vòng phân chia dữ liệu thành các phần khác nhau. Kết quả các vòng được tính trung bình để cho ra đánh giá cuối cùng.
 
@@ -589,11 +591,11 @@ Kĩ thuật cross-validation (kiểm chứng chéo) phân chia bộ dữ liệu 
 
 Kĩ thuật regularization bổ sung thêm hàm số regularization vào hàm mục tiêu, đánh vào độ phức tạp của mô hình. Tối ưu hàm regularization sẽ ép một số trọng số về 0 - nói cách khác, mạng nơ-ron phải chọn giữ lại những trọng số quan trọng nhất, tránh việc phức tạp hóa dẫn tới overfitting.
 
-Gọi $ W $ là vector trọng số của mạng, ta có công thức của hai hàm số regularization phổ biến:
+Gọi $ W $ là tập trọng số của mạng, ta có công thức của hai hàm regularization phổ biến:
 
 \begin{itemize}
-    \item Ridge Regression: $ \sum W_i^2 $
-    \item Lasso: $ \sum |W_i| $
+    \item Lasso, còn được gọi là L1 regularization: $ \sum |W_i| $.
+    \item Ridge Regression, còn được gọi là L2 regularization: $ \sum W_i^2 $.
 \end{itemize}
 
 \subsubsection{Dropout}
