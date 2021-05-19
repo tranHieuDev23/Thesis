@@ -374,22 +374,22 @@ Lớp pooling không có tham số cần học.
 
 \subsubsection{Bài toán huấn luyện mô hình mạng nơ-ron}
 
-Như đã chỉ ra trong các mục trên, mục tiêu của quá trình huấn luyện mạng nơ-ron là tìm ra trọng số cho các lớp mạng để mạng hoạt động tốt nhất. Gọi tập hợp trọng số của mạng nơ-ron là $ W $, ta viết lại yêu cầu này thành bài toán tối ưu:
-$$ minimize \; J(W) \; \forall \; W \in R^{n} $$
+Như đã chỉ ra ở trên, mục tiêu của việc huấn luyện mạng nơ-ron là tìm ra trọng số cho các lớp mạng để mạng có thể dự đoán kết quả chính xác nhất. Gọi tập hợp trọng số của mạng nơ-ron là $ W $, ta viết lại yêu cầu này thành bài toán tối ưu:
+$$ minimize \; J(W) \; \forall \; W \in R^{|W|} $$
 
 $ J(W) $ được gọi là hàm mục tiêu hoặc hàm thiệt hại (loss function), có chức năng đánh giá sai số của mô hình so với kết quả kì vọng. Tùy vào mục đích của bài toán mà ta lựa chọn hàm mục tiêu khác nhau. Hai hàm mục tiêu tiêu biểu có thể kể đến là:
 \begin{itemize}
     \item Sai số toàn phương trung bình (Mean Square Error hay MSE): $ \cfrac{1}{n} \sum_{i=1}^{n} (Y_i - \hat{Y}_i)^2 $, với $ n $ là kích thước bộ dữ liệu, $ Y_i $ và $ \hat{Y}_i $ là giá trị đầu ra thực tế và đầu ra của mô hình. Hàm mục tiêu này được sử dụng cho các mô hình regression.
-    \item Hàm cross entropy: $ - \sum_{i=1}^{n} \sum_{j=1}^{m} Y_{i, j} \log(\hat{Y}_{i, j}) $, với $ n $ là kích thước bộ dữ liệu, $ m $ là số lượng lớp của bài toán phân loại, $ Y_i $ và $ \hat{Y}_i $ là giá trị đầu ra thực tế và đầu ra của mô hình. Hàm mục tiêu này được sử dụng cho các mô hình phân loại.
+    \item Hàm cross entropy: $ - \sum_{i=1}^{n} \sum_{j=1}^{m} Y_{i, j} \log(\hat{Y}_{i, j}) $, với $ n $ là kích thước bộ dữ liệu, $ m $ là số lượng lớp của bài toán phân loại, $ Y_i $ và $ \hat{Y}_i $ là giá trị đầu ra thực tế và đầu ra của mô hình. Hàm mục tiêu này được sử dụng cho các mô hình classification.
 \end{itemize}
 
-Một mô hình học sâu hiện đại có thể có hàng chục triệu, thậm chí hàng trăm triệu, hàng tỷ tham số. Miền tìm kiếm của hàm mục tiêu vì thế cũng vô cùng lớn, không thể tính toán trực tiếp để giải ra giá trị cực tiểu được. Thay vào đó, ta sử dụng các thuật toán tối ưu tuần tự: xuất phát từ một lời giải ngẫu nhiên trong miền tìm kiếm, các thuật toán này sẽ dần cập nhật lời giải tốt dần lên cho tới khi hội tụ ở giá trị cực tiểu địa phương.
+Một mô hình học sâu hiện đại có thể có hàng chục triệu, thậm chí hàng trăm triệu, hàng tỷ tham số. Miền tìm kiếm của hàm mục tiêu vì thế cũng vô cùng lớn, không thể tính toán trực tiếp để giải ra giá trị cực tiểu được. Thay vào đó, ta sử dụng các thuật toán tối ưu tuần tự: xuất phát từ một lời giải ngẫu nhiên trong miền tìm kiếm, các thuật toán này sẽ cập nhật lời giải tốt dần lên cho tới khi hội tụ ở giá trị cực tiểu địa phương.
 
 \subsubsection{Thuật toán xuống đồi cổ điển}
 
-Thuật toán xuống đồi cổ điển (Stochastic Gradient Descent) là thuật toán tối ưu tuần tự cơ bản nhất - từ vị trí lời giải hiện tại, di chuyển ngược chiều gradient của hàm mục tiêu một đoạn nhỏ ("xuống đồi") để tìm lời giải mới. Tốc độ học (learning rate) $ \alpha $ quyết định độ dài bước nhảy xuống đồi và được chỉ định bởi người dùng.
+Thuật toán xuống đồi cổ điển (Stochastic Gradient Descent) là thuật toán tối ưu tuần tự cơ bản nhất - từ vị trí lời giải hiện tại, di chuyển ngược chiều gradient của hàm mục tiêu một đoạn nhỏ ("xuống đồi") để tìm lời giải mới. Hệ số tốc độ học (learning rate) $ \alpha $ quyết định độ dài bước nhảy xuống đồi và được chỉ định bởi người dùng.
 
-Để có thể tính toán nhanh gradient của hàm mục tiêu theo tất cả các tham số, ta sử dụng thuật toán dẫn truyền ngược backpropagation. Cho hai lớp mạng kế tiếp nhau $ Y_1 $ và $ Y_2 $. Vì phép nhân ma trận của mạng kết nối đầy đủ và phép tích chập của mạng CNN đều là phép toán tuyến tính, ta có thể viết lại công thức của hai lớp mạng này thành:
+Để có thể tính toán nhanh gradient của hàm mục tiêu, ta sử dụng thuật toán dẫn truyền ngược (backpropagation). Cho hai lớp mạng kế tiếp nhau $ Y_1 $ và $ Y_2 $. Vì phép nhân ma trận của mạng kết nối đầy đủ và phép tích chập của mạng CNN đều là phép toán tuyến tính, ta có thể tổng quát công thức của hai lớp mạng này thành:
 $$ Y_1 = f_1(z_1) = f_1(W_1x) $$
 $$ Y_2 = f_2(z_2) = f_2(W_2Y_1) $$
 với $ f_1(x) $ và $ f_2(x) $ là hàm kích hoạt.
@@ -405,16 +405,16 @@ và:
                                     & = \cfrac{\delta J(W)}{\delta Y_2} \times \cfrac{\delta f_2(z_2)}{\delta z_2}
 \end{align*}
 
-Giả sử $ Y_2 $ là lớp đầu ra của mô hình, ta có:
+Trong trường hợp $ Y_2 $ là lớp đầu ra của mô hình, ta có:
 \begin{itemize}
     \item $ Y_1 $ là kết quả đầu ra của lớp liền trước nó.
-    \item $ \cfrac{\delta J(W)}{\delta Y_2} $ là đạo hàm của hàm mục tiêu theo kết quả dự đoán.
+    \item $ \cfrac{\delta J(W)}{\delta Y_2} $ là đạo hàm thành phần của hàm mục tiêu theo kết quả dự đoán.
     \item $ \cfrac{\delta f_2(z_2)}{\delta z_2} $ là đạo hàm của hàm kích hoạt $ f_2(x) $ tại $ x = z_2 $.
 \end{itemize}
 
-Nói cách khác, nếu có công thức đạo hàm của hàm mục tiêu và hàm kích hoạt, ta có thể nhanh chóng tính được đạo hàm thành phần của các trọng số lớp cuối cùng.
+Nói cách khác, nếu có công thức đạo hàm của hàm mục tiêu và hàm kích hoạt, ta có thể nhanh chóng tính được đạo hàm thành phần hàm mục tiêu theo các trọng số lớp cuối cùng.
 
-Tương tự, ta có thể tính được đạo hàm thành phần của lớp liền trước, sử dụng công thức đạo hàm của hàm kích hoạt:
+Tương tự, ta có thể tính được đạo hàm thành phần theo các trọng số của lớp liền trước, sử dụng công thức đạo hàm của hàm kích hoạt:
 \begin{align*}
     \cfrac{\delta J(W)}{\delta W_l} & = \cfrac{\delta J(W)}{\delta z_l} \times \cfrac{\delta z_l}{\delta W_l} \\
                                     & = e_l \times Y_{l - 1}
@@ -424,7 +424,8 @@ với:
     e_l = \cfrac{\delta J(W)}{\delta z_l} & = \cfrac{\delta J(W)}{\delta z_{l + 1}} \times \cfrac{\delta z_{l + 1}}{\delta Y_l} \times \cfrac{\delta Y_l}{\delta z_l} \\
                                           & = e_{l + 1} \times W_{l + 1} \times \cfrac{\delta f_{l + 1}(z_l)}{\delta z_l}
 \end{align*}
-Tiếp tục như vậy, ta tính được đạo hàm thành phần cho trọng số của tất cả các lớp mạng. Tên của thuật toán backpropagation cũng giải thích cơ chế hoạt động của nó - ta tìm gradient của mạng từ lớp cuối cùng tới lớp đầu tiên, ngược với quá trình tính toán hàm mục tiêu đi từ lớp đầu tới lớp cuối.
+
+Tiếp tục như vậy, ta tính được đạo hàm thành phần theo trọng số của tất cả các lớp mạng. Tên của thuật toán backpropagation giải thích cơ chế hoạt động của chính nó - ta tìm gradient của mạng từ lớp cuối cùng tới lớp đầu tiên, ngược với quá trình tính toán hàm mục tiêu đi từ lớp đầu tiên tới lớp cuối cùng.
 
 \begin{algorithm}[H]
     \caption{Thuật toán backpropagation}
@@ -464,13 +465,13 @@ Tốc độ học của thuật toán xuống đồi ảnh hưởng trực tiế
     \caption{Ảnh hưởng của việc lựa chọn tốc độ học đối với việc huấn luyện mô hình. Từ trái qua: mô hình có tốc độ học quá nhỏ, hội tụ chậm; mô hình có tốc độ học vừa phải; mô hình có tốc độ học quá lớn, dẫn tới không thể hội tụ.}
 \end{figure}
 
-Trên thực tế, các bộ dữ liệu được dùng để tối ưu mô hình học máy có thể có kích cỡ lên tới hàng triệu, hàng chục triệu phần tử. Khả năng tính toán của phần cứng hiện tại không cho phép ta trực tiếp tính gradient cho toàn bộ bộ dữ liệu cùng một lúc. Thay vào đó, ta chia bộ dữ liệu thành các lô (batch) nhỏ, vừa bộ nhớ để tính toán. Gradient lúc này được lấy theo trung bình của lô, thay vì của toàn bộ bộ dữ liệu - điều này khiến cho lời giải không thể di chuyển thẳng theo hướng gradient thực, giá trị hàm thiệt hại không giảm liên tục, và thuật toán có thể không hội tụ chặt tới cực tiểu địa phương. Tuy nhiên, thuật toán tối ưu theo lô nhìn chung vẫn thực hiện tốt nhiệm vụ tối ưu mô hình.
+Trên thực tế, các bộ dữ liệu được sử dụng để tối ưu mô hình có thể có kích cỡ lên tới hàng triệu, hàng chục triệu phần tử. Khả năng tính toán của phần cứng hiện tại không cho phép ta trực tiếp tính gradient cho toàn bộ bộ dữ liệu cùng một lúc. Thay vào đó, ta chia bộ dữ liệu thành các lô (batch) nhỏ, vừa bộ nhớ để tính toán. Gradient lúc này được lấy theo trung bình của lô, thay vì của toàn bộ bộ dữ liệu - điều này khiến cho lời giải không thể di chuyển thẳng theo hướng gradient thực, giá trị hàm thiệt hại không giảm liên tục, và thuật toán có thể không hội tụ chặt tới cực tiểu địa phương. Tuy nhiên, thuật toán tối ưu theo lô nhìn chung vẫn thực hiện tốt nhiệm vụ tối ưu mô hình.
 
 \subsubsection{Các thuật toán tối ưu cải tiến}
 
 Thuật toán xuống đồi cổ điện sẽ gặp khó khăn nếu hàm mục tiêu chịu ảnh hưởng bởi một số biến nhiều hơn các biến khác khác, do giá trị lời giải phải liên tục di chuyển qua lại trong vùng "thung lũng", thay vì tập trung vào hướng đi có tốc độ giảm lớn nhất. Để khắc phục nhược điểm này, Ning Qian đề xuất kĩ thuật momentum (quán tính) \cite{QIAN1999145} - không sử dụng trực tiếp gradient, thay vào đó cập nhật lời giải hiện tại bằng vector:
 $$ v_t = \gamma v_{t-1} - \alpha \nabla_{W} J(W)  $$
-với $ v_t $ là vector cập nhật ở bước duyệt thứ $ t $, $ \gamma $ là hệ số momentum, thường mang giá trị trong khoảng $ [0.9, 1) $. Việc xây dựng vector cập nhật tích lũy dần như vậy giúp thuật toán có thể bám theo hướng đi tốt đã biết từ trước (quán tính) thay vì đột ngột chuyển hướng ngẫu nhiên.
+với $ v_t $ là vector cập nhật ở bước duyệt thứ $ t $, $ \gamma $ là hệ số momentum, thường mang giá trị trong khoảng $ [0.9, 1) $. Việc xây dựng vector cập nhật tích lũy dần như vậy giúp thuật toán có thể bám theo hướng đi tốt đã biết từ trước (quán tính) thay vì đột ngột chuyển hướng ngẫu nhiên. Điều này đặc biệt hữu ích khi tối ưu mô hình theo lô, giúp ta tổng hợp được hướng cập nhất tốt nhất giữa các lô khác nhau.
 
 \begin{figure}[H]
     \centering
@@ -478,7 +479,7 @@ với $ v_t $ là vector cập nhật ở bước duyệt thứ $ t $, $ \gamma 
     \caption{So sánh giữa việc tối ưu sử dụng thuật toán cổ điển (đường xanh dương) với tối ưu sử dụng momentum (đường xanh lá.)}
 \end{figure}
 
-Thuật toán xuống đồi cổ điển cũng sử dụng chung một tốc độ học cho toàn bộ mạng. Nếu dữ liệu không được phân bố đều - ví dụ, khi một số đặc tính phổ biến hơn các đặc tính khác, các trọng số liên quan sẽ không được cập nhật đều nhau, dẫn tới việc mô hình không học được đầy đủ thông tin. Dean, J., Corrado và cộng sự khắc phục hạn chế này bằng kĩ thuật Adagrad (ADAptive GRADient) để điều chỉnh tốc độ học độc lập cho từng tham số \cite{duchi2011adaptive}:
+Thuật toán xuống đồi cổ điển cũng sử dụng chung một tốc độ học cho toàn bộ mạng. Nếu dữ liệu không được phân bố đều - ví dụ, nếu một số đặc tính phổ biến hơn các đặc tính khác, các trọng số liên quan sẽ không được cập nhật thường xuyên như nhau, dẫn tới việc mô hình không học được đầy đủ thông tin. Dean, J., Corrado và cộng sự khắc phục hạn chế này bằng kĩ thuật Adagrad (ADAptive GRADient) để điều chỉnh tốc độ học độc lập cho từng tham số \cite{duchi2011adaptive}:
 
 Đặt $ g_{t, i} = \nabla_{W_i} J(W) $ tại thời điểm $ t $, $ G_{t, i} = \sum_{u = 1}^{t} g_{u, i}^2 $, ta có công thức của bước cập nhật thứ $ t + 1 $ là:
 
@@ -486,9 +487,9 @@ $$ W_{t + 1, i} = W_{t, i} - \cfrac{\alpha}{\sqrt{G_{t, i} + \epsilon}} \times g
 
 $ \epsilon $ là một giá trị dương cực nhỏ để tránh xảy ra hiện tượng chia cho 0.
 
-Từ công thức trên, dễ thấy các tham số được cập nhật thường xuyên sẽ có tổng $ G_{t, i} $ lớn hơn, khiến cho các bước cập nhật kế tiếp trở nên nhỏ và ít hiệu lực hơn. Ngược lại, nếu một tham số không được cập nhật thường xuyên, tổng $ G_{t, i} $ của nó sẽ nhỏ hơn, và tham số đó sẽ được tập trung tối ưu hơn trong các bước kế tiếp. Adagrad loại bỏ nhu cầu cần phải cập nhật tốc độ học bằng tay, thay vào đó tốc độ học được tự động tối ưu trong quá trình chạy. Nhược điểm của Adagrad là khi số lượng bước lặp càng lớn, tổng $ G_{t, i} $ càng lớn, dẫn tới triệt tiêu hoàn toàn gradient và dừng quá trình học.
+Từ công thức trên, dễ thấy các tham số được cập nhật thường xuyên sẽ có tổng $ G_{t, i} $ lớn hơn, khiến cho các bước cập nhật kế tiếp nhỏ và ít hiệu lực hơn. Ngược lại, nếu một tham số không được cập nhật thường xuyên, tổng $ G_{t, i} $ của nó sẽ nhỏ hơn, và tham số đó sẽ được tập trung tối ưu hơn trong các bước kế tiếp. Adagrad loại bỏ nhu cầu cần phải cập nhật tốc độ học bằng tay, thay vào đó tốc độ học được tự động tối ưu trong quá trình chạy. Nhược điểm của Adagrad là khi số lượng bước lặp càng lớn, tổng $ G_{t, i} $ càng lớn, dẫn tới triệt tiêu hoàn toàn gradient và dừng quá trình học.
 
-Để khắc phục nhược điểm triệt tiêu gradient, các biến thể của Adagrad chỉ điều chỉnh tốc độ học sử dụng một phần tổng bình phương gradient, thay vì sử dụng toàn bộ tổng tích lũy. Một trong những biến thể hay được sử dụng là RMSprop, được đề xuất bởi Geoff Hinton:
+Để khắc phục nhược điểm triệt tiêu gradient, các biến thể của Adagrad chỉ điều chỉnh tốc độ học sử dụng một phần tổng bình phương gradient, thay vì sử dụng toàn bộ tổng tích lũy. Một trong những biến thể hay được sử dụng là RMSprop, được đề xuất bởi Geoff Hinton \cite{slides_on_cs231n}:
 $$ E[g^2]_t = \gamma E[g^2]_{t - 1} + (1 - \gamma) g_t^2 $$
 $$ W_{t + 1, i} = W_{t, i} - \cfrac{\alpha}{\sqrt{E[g^2]_t + \epsilon}} \times g_{t, i} $$
 
