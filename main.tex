@@ -602,7 +602,7 @@ Gọi $ W $ là tập trọng số của mạng, ta có công thức của hai h
 
 Khi luyện tập mạng nơ-ron sử dụng kĩ thuật dropout, một số giá trị đầu ra sẽ bị bỏ qua (đặt về 0) một cách ngẫu nhiên với xác suất $ p $. Điều này ép các lớp trong mạng nơ-ron phải học cách tận dụng đa dạng thông tin khác nhau từ lớp trước, thay vì phụ thuộc vào một số ít thông tin cụ thể, có thể dễ dàng biến mất do dropout. Qua đó, ta giảm thiểu được hiện tượng overfitting.
 
-Việc sử dụng dropout cũng có một tác dụng phụ khác: dữ liệu đầu vào được luyện tập với nhiều cấu hình mạng ngẫu nhiên khác nhau, do đó mô hình sau luyện tập cũng sử dụng tri thức của nhiều mạng nơ-ron cùng một lúc. Kkhi số lượng lớp mạng gia tăng, số lượng cấu hình mạng con cũng gia tăng theo cấp số mũ. Điều này khiến cho sức mạnh của mạng nơ-ron được gia tăng đang kể.
+Việc sử dụng dropout cũng có một tác dụng phụ khác: dữ liệu đầu vào được luyện tập với nhiều cấu hình mạng ngẫu nhiên khác nhau, do đó mô hình sau luyện tập cũng sử dụng tri thức kết hợp của nhiều mạng nơ-ron cùng lúc. Kkhi số lượng lớp mạng gia tăng, số lượng cấu hình mạng con cũng gia tăng theo cấp số mũ. Điều này khiến cho sức mạnh của mạng nơ-ron được gia tăng đang kể.
 
 \begin{figure}[H]
     \centering
@@ -614,7 +614,7 @@ Việc sử dụng dropout cũng có một tác dụng phụ khác: dữ liệu 
 
 Chuyển chế độ màu ảnh nội soi thuộc vào lớp bài toán Image Translation - chuyển đổi từ dữ liệu ảnh này sang dữ liệu ảnh khác thỏa mãn yêu cầu nhất định. Với khả năng tự động học cách sinh dữ liệu thực tế, GAN trở thành một hướng tiếp cận hiển nhiên để xử lý các bài toán dạng này.
 
-Dưới đây điểm qua ưu điểm và nhược điểm của một số nghiên cứu về sử dụng GAN vào việc giải bài toán Image Translation, qua đó giải thích lý do lựa chọn mô hình StarGAN v2 cho đồ án tốt nghiệp này.
+Dưới đây điểm qua ưu điểm và nhược điểm của một số nghiên cứu về sử dụng GAN vào việc giải bài toán Image Translation, qua đó giải thích lý do lựa chọn mô hình StarGAN v2 cho đề tài đồ án tốt nghiệp.
 
 \subsection{Pix2pix}
 
@@ -626,11 +626,11 @@ Dưới đây điểm qua ưu điểm và nhược điểm của một số nghi
 
 Pix2pix được phát triển bởi và công bố vào năm 2017 bởi các nhà nghiên cứu của trường Đại học California \cite{pix2pix2017}. Khác với mô hình GAN cổ điển, Pix2pix không sử dụng vector latent làm đầu vào cho generator, thay vào đó sử dụng ảnh gốc. Generator sử dụng ảnh gốc để xây dựng ảnh mới có kích cỡ tương tự - giải thích tên gọi Pixel to Pixel - trong khi discriminator giữ nguyên chức năng phân loại ảnh thật/giả.
 
-Tư tưởng của Pix2pix rất đơn giản, song mô hình này có thể hoạt động hiệu quả trên nhiều bài toán Image Translation như tự động hoàn thành ảnh dựa trên nét vẽ, tô màu ảnh đen trắng, phân vùng các đối tượng trong ảnh\dots Tuy nhiên, nhược điểm của mô hình này là yêu cầu cần phải có dữ liệu hình ảnh được gắn nhãn thành cặp trước và sau biến đổi. Trong trong phần lớn trường hợp, bao gồm bài toán đổi màu ảnh nội soi, việc xây dựng bộ dữ liệu theo cặp là rất khó khăn, thậm chí không thể thực hiện được.
+Tư tưởng của Pix2pix rất đơn giản, song mô hình này có thể hoạt động hiệu quả trên nhiều bài toán Image Translation như tự động hoàn thành ảnh dựa trên nét vẽ, tô màu ảnh đen trắng, phân vùng các đối tượng trong ảnh\dots Tuy nhiên, nhược điểm của Pix2pix là yêu cầu dữ liệu luyện tập cần phải được gắn nhãn thành cặp trước và sau biến đổi. Trong phần lớn trường hợp, bao gồm bài toán đổi màu ảnh nội soi, việc xây dựng bộ dữ liệu theo cặp là rất khó khăn, thậm chí không thể thực hiện được.
 
 \subsection{CycleGAN}
 
-Cũng trong năm 2017, nhóm nghiên cứu của trường Đại học California đề xuất mô hình sinh ảnh CycleGAN, khắc phục được yêu cầu dữ liệu ảnh theo cặp của Pix2pix.
+Cũng trong năm 2017, nhóm nghiên cứu của trường Đại học California đề xuất mô hình sinh ảnh CycleGAN, khắc phục được yêu cầu dữ liệu ảnh theo cặp của Pix2pix \cite{CycleGAN2017}.
 
 \begin{figure}[H]
     \centering
@@ -638,7 +638,7 @@ Cũng trong năm 2017, nhóm nghiên cứu của trường Đại học Californ
     \caption{Một số ứng dụng của CycleGAN. Nguồn ảnh: \cite{CycleGAN2017}.}
 \end{figure}
 
-CycleGAN lấy cảm hứng từ các mô hình autoencoder - mạng nén dữ liệu với số chiều cao thành vector latent có số chiều thấp. Mô hình autoencoder được đánh giá là tốt nếu như quá trình nén đảm bảo toàn vẹn dữ liệu. Tương tự, kiến trúc CycleGAN ngoài hai generator $ G_A $ và discriminator $ D_A $ giống như Pix2pix, còn sử dụng thêm một generator $ G_B $ để biến đổi đầu ra của $ G_B $ về ảnh đầu vào gốc, cùng với một discriminator $ D_B $ để phân loại thật/giả kết quả của $ G_B $. Bằng việc tối ưu cả 4 mô hình, ta kì vọng $ G_A $ và $ G_B $ có thể học được cách biến đổi ảnh đầu vào thành ảnh mục tiêu thỏa mãn, đồng thời vẫn giữ lại được đủ thông tin cần thiết để xây dựng lại ảnh ban đầu.
+CycleGAN lấy cảm hứng từ mô hình autoencoder - mạng nén dữ liệu với số chiều cao thành vector latent có số chiều thấp. Một mô hình autoencoder được đánh giá là tốt nếu như quá trình nén đảm bảo toàn vẹn dữ liệu. Tương tự, kiến trúc CycleGAN ngoài hai generator $ G_A $ và discriminator $ D_A $ giống như Pix2pix, còn sử dụng thêm một generator $ G_B $ để biến đổi đầu ra của $ G_B $ về ảnh đầu vào gốc và một discriminator $ D_B $ để phân loại thật/giả kết quả của $ G_B $. Bằng việc tối ưu cả 4 mô hình, ta kì vọng $ G_A $ và $ G_B $ có thể học được cách biến đổi ảnh đầu vào thành ảnh mục tiêu thỏa mãn, đồng thời vẫn giữ lại được đủ thông tin cần thiết để xây dựng lại ảnh ban đầu.
 
 Khi luyện tập CycleGAN, ta sử dụng hàm mục tiêu minimax cổ điển trên cả 4 mạng:
 \begin{align*}
@@ -660,7 +660,7 @@ với $ \lambda_{cyc} $ là hệ số do người dùng lựa chọn.
     \caption{Kiến trúc các mạng và hai hàm mục tiêu của CycleGAN. Nguồn ảnh: \cite{mnistsvhntransfer}.}
 \end{figure}
 
-Ưu điểm của CycleGAN là loại bỏ rào cản về dữ liệu luyện tập - nhóm nghiên cứu liệt kê ra một loạt các bài toán mà các phương án trước CycleGAN không thể giải quyết được, bao gồm chuyển đổi phong cách ảnh, chuyển đổi đối tượng trong ảnh mà vẫn giữ nguyên tư thế, chuyển đổi mùa của ảnh chụp phong cách, sinh ảnh thực tế từ tranh vẽ,\dots Tuy nhiên, một generator của CycleGAN chỉ có thể chuyển đổi ảnh từ một lớp sang một lớp khác. Để áp dụng vào bài toán chuyển đổi 4 chế độ màu của đồ án này, ta cần luyện tập 12 mô hình - rất tốn thời gian và tài nguyên tính toán.
+Ưu điểm của CycleGAN là loại bỏ rào cản về dữ liệu luyện tập - nhóm nghiên cứu liệt kê ra một loạt các bài toán mà các phương án trước CycleGAN không thể giải quyết được, bao gồm chuyển đổi phong cách ảnh, chuyển đổi đối tượng trong ảnh mà vẫn giữ nguyên tư thế, chuyển đổi mùa của ảnh chụp phong cảnh, sinh ảnh thực tế từ tranh vẽ,\dots Tuy nhiên, generator của CycleGAN chỉ có thể chuyển đổi ảnh từ một lớp sang một lớp khác. Để áp dụng vào bài toán chuyển đổi 4 chế độ màu của đề tài, ta cần luyện tập 12 mô hình - rất tốn thời gian và tài nguyên tính toán.
 
 \subsection{StarGAN (v1)}
 
