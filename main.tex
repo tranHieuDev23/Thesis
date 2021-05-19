@@ -672,7 +672,7 @@ với $ \lambda_{cyc} $ là hệ số do người dùng lựa chọn.
 
 Phiên bản đầu tiên của StarGAN được công bố vào năm 2017 bởi nhóm nghiên cứu Clova AI, trực thuộc tập đoàn NAVER \cite{DBLP:journals/corr/abs-1711-09020}. StarGAN có thể làm việc với nhiều lớp dữ liệu ảnh cùng một lúc chỉ với một mạng generator duy nhất, qua đó giải quyết được vấn đề mở rộng của CycleGAN.
 
-Kiến trúc của StarGAN v1 gần giống với kiến trúc của CycleGAN, với một số thay đổi sau:
+Kiến trúc của StarGAN gần giống với kiến trúc của CycleGAN, với một số thay đổi:
 \begin{itemize}
     \item Mô hình không có generator và discriminator riêng cho từng lớp một, thay vào đó sử dụng chung một generator $ G $ và một discriminator $ D $.
     \item Generator nhận vào ảnh gốc, cùng với chỉ số của lớp ảnh mục tiêu và cho ra ảnh đã được biến đổi thuộc lớp đó.
@@ -681,7 +681,7 @@ Kiến trúc của StarGAN v1 gần giống với kiến trúc của CycleGAN, v
 
 StarGAN cũng sử dụng hàm mục tiêu minimax và hàm cycle consistency, tuy nhiên hàm minimax được sửa lại để tương tích với bài toán phân loại ảnh nhiều lớp.
 
-Bài báo gốc đánh giá StarGAN bằng cách khảo sát ý kiến người thật khi so sánh với các hình ảnh sinh ra bởi CycleGAN, DIAT và IcGAN. Kết quả khảo sát cho thấy StarGAN cho ra hình ảnh với độ sắc nét cao, chất lượng vượt trội hơn tất cả các mô hình còn lại. Điều này có được là nhờ ưu thế dữ liệu của StarGAN - do các mô hình còn lại chỉ được huấn luyện với từng cặp 2 lớp, generator không học được nhiều đặc điểm chung giữa tất cả các lớp. StarGAN được tiếp xúc với dữ liệu của tất cả các lớp, vì thế có thể học được kiến thức này một cách dễ dàng.
+Kết quả khảo sát trong nghiên cứu gốc cho thấy StarGAN cho ra hình ảnh với độ sắc nét cao, chất lượng vượt trội hơn các mô hình GAN đương thời. Điều này có được là nhờ ưu thế về dữ liệu luyện tập - các mô hình còn lại chỉ được tiếp xúc với dữ liệu của từng cặp 2 lớp, trong khi StarGAN sử dụng dữ liệu của tất cả các lớp. Generator của StarGAN vì thế học được nhiều đặc điểm chung một cách dễ dàng, giúp chất lượng ảnh đầu ra được cải thiện.
 
 Phiên bản StarGAN được sử dụng trong báo cáo là StarGAN v2, được công bố bởi Clova AI vào năm 2019 \cite{DBLP:journals/corr/abs-1912-01865}. Phiên bản cải tiến này nhắm tới việc đa dạng hóa khả năng sinh ảnh của mô hình StarGAN gốc - với một cặp ảnh gốc và lớp ảnh mục tiêu, StarGAN v2 cho phép sinh ra vô số ảnh khác nhau thỏa mãn điều kiện.
 
