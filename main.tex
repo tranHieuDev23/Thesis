@@ -1401,11 +1401,11 @@ Nhìn chung, tuy không chuyển đổi được tất cả các tính năng c�
     \caption{Giao diện khoanh vùng polyp của Polyp-Labeler.}
 \end{figure}
 
-Hệ thống Polyp-Labeler là một sản phẩm do em thực hiện trong bộ môn Project 3, được sử dụng để hỗ trợ cho nghiên cứu VINIF về bài toán nhận diện polyp ung thư trên ảnh nội soi. Hệ thống cho phép bác sĩ upload, quản lý và gắn nhãn dữ liệu ảnh nội soi. Chương này sẽ điểm qua về thiết kế và chức năng của hệ thống, và mô tả quá trình tích hợp mô hình StarGAN v2 vào chức năng đổi màu ảnh nội soi.
+Hệ thống Polyp-Labeler là một sản phẩm do em thực hiện trong bộ môn Project 3, được sử dụng để hỗ trợ cho nghiên cứu VINIF về bài toán nhận diện polyp ung thư trên ảnh nội soi. Hệ thống cho phép bác sĩ upload, quản lý và gắn nhãn dữ liệu ảnh nội soi. Chương này sẽ điểm qua về thiết kế và chức năng của hệ thống, đồng thời mô tả quá trình tích hợp mô hình StarGAN v2 vào chức năng đổi màu ảnh nội soi.
 
 \section{Phân tích yêu cầu}
 
-Bài toán Polyp yêu cầu nhận diện các vùng khối u có hình dáng bất kì trong ảnh chụp nội soi, đồng thời phân loại khối u được nhận diện. Do đó, hệ thống gắn nhãn dữ liệu cho bài toán này cần phải thực hiện được các chức năng sau:
+Bài toán Polyp yêu cầu nhận diện các vùng khối u có hình dạng bất kì trong ảnh chụp nội soi, đồng thời phân loại khối u được nhận diện. Do đó, hệ thống gắn nhãn dữ liệu cho bài toán này cần phải thực hiện được các chức năng sau:
 \begin{itemize}
     \item Xác thực và phân quyền cho người dùng – chỉ những người dùng nào đã đăng nhập và có đủ quyền truy cập mới được phép truy cập vào các tài nguyên của hệ thống. Vào thời điểm hiện tại, hệ thống chỉ cần cung cấp quyền truy cập cho một số ít tài khoản được tạo ra bởi một số ít quản trị viên – tất cả đều là các thành viên trong tổ nghiên cứu.
     \item Cho phép người dùng upload số lượng lớn hình ảnh lên hệ thống.
@@ -1423,9 +1423,9 @@ Cuối cùng, hệ thống cần phải dễ dàng mở rộng, có thể hoạt
 
 \section{Thiết kế hệ thống}
 
-Dự án tích hợp nhiều tính năng khác nhau – webapp, học máy, database,\dots , mỗi tính năng lại có thể được cài đặt trên một ngôn ngữ khác nhau. Để tổng hợp tất cả các công nghệ này, dự án được xây dựng theo mô hình microservice – mỗi một tính năng được xây dựng thành một service chạy độc lập riêng, liên hệ với nhau thông qua các giao thức nhẹ như HTTP hoặc gRPC. Thiết kế này có ba ưu điểm:
+Dự án tích hợp nhiều tính năng khác nhau – webapp, Machine Learning, database,\dots , mỗi tính năng lại có thể được cài đặt trên một ngôn ngữ khác nhau. Để tổng hợp tất cả các công nghệ này, dự án được xây dựng theo mô hình microservice – mỗi một tính năng được xây dựng thành một service chạy độc lập riêng, liên hệ với nhau thông qua các giao thức nhẹ như HTTP hoặc gRPC. Thiết kế này có ba ưu điểm:
 \begin{enumerate}
-    \item Mỗi service chỉ đảm nhận một tính năng duy nhất, không bị phụ thuộc chặt chẽ với nhau.
+    \item Mỗi service chỉ đảm nhận một tính năng duy nhất, không bị phụ thuộc chặt vào các service khác.
     \item Các service có thể sử dụng những tính năng và thư viện tốt nhất của ngôn ngữ của mình.
     \item Khi phát triển hoặc cập nhật một tính năng, chỉ cần khởi động service có liên quan tới tính năng đó, thay vì phải khởi động toàn bộ hệ thống.
 \end{enumerate}
@@ -1438,16 +1438,16 @@ Dự án tích hợp nhiều tính năng khác nhau – webapp, học máy, data
 
 Các service được xây dựng trong dự án bao gồm:
 \begin{itemize}
-    \item Service trung tâm App – đảm nhiệm các vai trò liên quan tới cung cấp giao diện web cho người dùng và quản lý mọi thao tác giữa người dùng và hệ thống như xác thực, upload, gắn nhãn, xác minh,\dots Service này được cài đặt bằng ngôn ngữ Typescript sử dụng thư viện Angular và Express.
+    \item Service trung tâm App – đảm nhiệm các vai trò liên quan tới cung cấp giao diện web, quản lý mọi thao tác giữa người dùng và hệ thống như xác thực, upload, gắn nhãn, xác minh,\dots Service này được cài đặt bằng ngôn ngữ Typescript sử dụng thư viện Angular và Express.
     \item Service Jobs – một hệ thống lập lịch, đảm nhiệm thực hiện một số công việc sau mỗi khoảng thời gian cố định. Bằng cách điều chỉnh Jobs, ta có thể tự động chạy nền các tác vụ nặng ở một tốc độ phù hợp, không làm quá tải hệ thống. Service này được cài đặt bằng ngôn ngữ Java sử dụng thư viện Quartz.
     \item Service Polypnet – được gọi bởi Jobs, service này sử dụng một mô hình Deep Learning có khả năng nhận diện polyp trong ảnh nội soi để tự động hóa công việc gắn nhán ảnh. Service này sử dụng API của bên thứ ba.
-    \item Service Exporter – được gọi bởi App, đảm nhiệm vai trò xuất các hình ảnh đã được upload cùng với các nhãn đã được gắn thành bộ dataset người dùng có thể download. Service này được cài đặt bằng ngôn ngữ Typescript sử dụng thư viện BullMQ và Express.
+    \item Service Exporter – được gọi bởi App, đảm nhiệm vai trò xuất các hình ảnh đã được upload cùng với các nhãn đã được gắn thành bộ dữ liệu người dùng có thể download. Service này được cài đặt bằng ngôn ngữ Typescript sử dụng thư viện Bull và Express.
     \item Service Log Exporter – được gọi bởi App, service này cho phép xuất thông tin về quá trình gắn nhãn ảnh của người dùng như số lượng polyp trong ảnh, thời gian dành ra để vẽ trung bình\dots Qua các thông số này, quản trị viên có thể đánh giá được độ khó của bộ dữ liệu. Service này được cài đặt bằng ngôn ngữ Java, sử dụng thư viện Jersey.
     \item Service Quality Exporter – được gọi bởi App, service này đảm nhiệm việc so sánh kết quả gắn nhãn giữa một người dùng được chỉ định là expert với tất cả người dùng còn lại. Quản trị viên có thể sử dụng các chỉ số này để đánh giá và cải thiện kĩ năng của bác sĩ nội soi. Service này được viết bằng ngôn ngữ Python, sử dụng thư viện Flask.
     \item Service Color Changer – được gọi bởi App, service này sử dụng một mô hình Deep Learning để chuyển đổi chế độ màu của ảnh nội soi, giúp bác sĩ có thể giả lập các tính năng của các công nghệ màu hiện đại hơn. \textbf{Mô hình StarGAN v2 được tích hợp vào service này.}
 \end{itemize}
 
-Ngoài các service trên, hệ thống cũng sử dụng một cơ sở dữ liệu PostgreSQL để lưu trữ dữ liệu về người dùng, ảnh, các polyp đã được đánh dấu,\dots và hệ thống lưu trữ dữ liệu in-memory Redis để quản lý công việc xuất bộ dataset và caching.
+Ngoài các service trên, hệ thống cũng sử dụng một cơ sở dữ liệu PostgreSQL để lưu trữ dữ liệu về người dùng, ảnh, các polyp đã được đánh dấu,\dots và hệ thống lưu trữ dữ liệu in-memory Redis để quản lý công việc xuất bộ dữ liệu và caching.
 
 \section{Tích hợp mô hình StarGAN v2}
 
@@ -1459,15 +1459,15 @@ Mô hình StarGAN v2 được tích hợp vào service Color Changer của hệ 
     \caption{Biến đổi ảnh nội soi BLI thành ảnh LCI trên hệ thống Polyp-Labeler.}
 \end{figure}
 
-Do hạn chế về bộ nhớ lưu trữ dữ liệu trên server của dự án và vì tính năng đổi chế độ màu không được sử dụng thường xuyên, service Color Changer chỉ đổi màu khi được người dùng yêu cầu. Khi người dùng click vào nút \textit{Request change} trên trình duyệt, trình duyệt gửi một truy vấn HTTP tới server của service App. Service App xác thực người dùng có quyền thực hiện truy vấn, sau đó chuyển giao yêu cầu chuyển đổi chế độ màu cho service Color Changer. Kết quả của Color Changer sẽ được App truyền lại trực tiếp để hiện thị trên giao diện đồ họa.
+Do hạn chế về bộ nhớ lưu trữ dữ liệu, và vì tính năng đổi chế độ màu không được sử dụng thường xuyên, service Color Changer chỉ đổi màu khi được người dùng yêu cầu. Khi người dùng click vào nút \textit{Request change} trên trình duyệt, trình duyệt gửi một truy vấn HTTP tới server của service App. Service App xác thực người dùng có quyền thực hiện truy vấn, sau đó chuyển giao yêu cầu chuyển đổi chế độ màu cho service Color Changer. Kết quả của Color Changer sẽ được App chuyển lại trực tiếp cho trình duyệt để hiện thị trên giao diện đồ họa.
 
 Color Changer giao tiếp với service App bằng giao thức HTTP, thông qua một server HTTP. Ta lựa chọn thư viện FastAPI để cài đặt Color Changer vì hai lý do:
 \begin{enumerate}
     \item FastAPI sử dụng ngôn ngữ Python, cho phép ta sử dụng trực tiếp mã nguồn của mô hình StarGAN v2.
-    \item FastAPI hỗ trợ cú pháp async-await, tận dụng event loop của ngôn ngữ Python để cân bằng thời gian tính toán trên CPU cho các tác vụ.
+    \item FastAPI hỗ trợ cú pháp async-await, tận dụng event loop của ngôn ngữ Python để cân bằng thời gian tính toán trên CPU cho các tác vụ. Nhờ vậy, server không cần phải đợi tác vụ nặng của truy vấn trước hoàn tất để có thể phục vụ truy vấn sau.
 \end{enumerate}
 
-Để yêu cầu chuyển đổi chế độ màu ảnh, service App gửi truy vấn tới Color Changer theo cú pháp sau:
+Để yêu cầu chuyển đổi chế độ màu ảnh, service App gửi truy vấn HTTP tới Color Changer theo cú pháp:
 \begin{table}[H]
     \centering
     \begin{tabular}{l l l}
@@ -1489,15 +1489,15 @@ Color Changer giao tiếp với service App bằng giao thức HTTP, thông qua 
 
 Mã chế độ màu dành cho hai biến source\_domain và target\_domain là các số nguyên từ 0 tới 3, lần lượt tương ứng với các chế độ BLI, FICE, LCI và WLI.
 
-Sau khi tiếp nhận yêu cầu đổi chế độ màu, Color Changer thực hiện các bước xử lý sau:
+Sau khi tiếp nhận truy vấn, Color Changer thực hiện các bước xử lý sau:
 \begin{enumerate}
     \item Đọc image\_file, chuyển đổi ảnh về không gian màu YCbCr và chỉnh kích cỡ về $ 1024 \times 1024 $.
-    \item Nếu $ \psi = 1 $, đặt giá trị vector phong cách mục tiêu $ s = E_y{s} $, với $ E_y{s} $ là vector phong cách trung bình của chế độ ảnh mục tiêu.\\ Nếu $ 0 < \psi 1 $, đặt $ s = \psi E_y{s} + (1 - \psi) s_x $, với $ s_x $ là vector phong cách của ảnh gốc.
+    \item Nếu $ \psi = 1 $, đặt giá trị vector phong cách mục tiêu $ s = E_y [s] $, với $ E_y [s] $ là vector phong cách trung bình của chế độ ảnh mục tiêu.\\ Nếu $ 0 < \psi < 1 $, đặt $ s = \psi E_y{s} + (1 - \psi) s_x $, với $ s_x $ là vector phong cách của ảnh gốc.
     \item Sinh ảnh mới $ x' $ từ ảnh gốc, sử dụng vector phong cách $ s $.
     \item Ảnh mới được chỉnh về bằng kích cỡ của ảnh gốc, và trả về dưới dạng file JPEG.
 \end{enumerate}
 
-Để giảm thời gian xử lý truy vấn, các vector $ E_y{s} $ được tính toán sẵn khi khởi động server Color Changer, bằng cách lấy trung bình kết quả biến đổi 10 nghìn vector latent thành vector phong cách, sử dụng Mapping Network:
+Để giảm thời gian xử lý truy vấn, các vector $ E_y [s] $ được tính toán sẵn khi khởi động server Color Changer, bằng cách lấy trung bình kết quả biến đổi 10 nghìn vector latent thành vector phong cách, sử dụng Mapping Network:
 $$ E_y[s] \approx \cfrac{1}{n} \sum_{i = 1}^{n} F(z_{i}, y) $$
 
 Do server của hệ thống chưa được trang bị GPU, mô hình StarGAN v2 phải thực hiện tính toán trên CPU, khiến cho quá trình tính toán diễn ra chậm - trung bình mất 6 giây để xử lý xong một truy vấn. Để hạn chế nhược điểm này, kết quả tính toán của mô hình sẽ được cache lại tại browser của người dùng. Nếu người dùng yêu cầu thực hiện chuyển đổi trên cùng một bức ảnh, với cùng các thông số source\_domain, target\_domain và psi, kết quả được cache sẽ được trả về ngay lập tức, thay vì yêu cầu người dùng phải đợi kết quả tính toán mới từ server. Trong tương lai, khi cơ sở hạ tầng của hệ thống được nâng cấp, tốc độ tính toán của service Color Changer sẽ được cải thiện đáng kể, có thể giảm xuống 0.12 giây/truy vấn.
