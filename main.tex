@@ -748,7 +748,7 @@ LCI là chế độ màu khó tái tạo lại nhất trong cả 4 chế độ. 
 
 \chapter{Phương pháp đề xuất}
 
-Để giải quyết bài toán chuyển đổi chế độ màu ảnh y tế, đồ án này sử dụng mô hình học sâu StarGAN v2, được công bố bởi nhóm nghiên cứu Clova AI vào năm 2019 \cite{choi2020stargan}. Chương này đi sâu vào giải thích tư tưởng của nghiên cứu gốc, những thay đổi để phù hợp với yêu cầu của đề tài, kiến trúc cụ thể của các mạng và các hàm mục tiêu được sử dụng.
+Để giải quyết bài toán chuyển đổi chế độ màu ảnh y tế, đồ án này sử dụng mô hình học sâu StarGAN v2, được công bố bởi nhóm nghiên cứu Clova AI vào năm 2019 \cite{DBLP:journals/corr/abs-1912-01865}. Chương này đi sâu vào giải thích tư tưởng của nghiên cứu gốc, những thay đổi để phù hợp với yêu cầu của đề tài, kiến trúc cụ thể của các mạng và các hàm mục tiêu được sử dụng.
 
 \section{Tư tưởng thiết kế}
 
@@ -757,7 +757,7 @@ StarGAN v2 là bản cập nhật của mô hình StarGAN năm 2017, bổ sung t
 \begin{figure}[H]
     \centering
     \includegraphics[width=\linewidth]{figure22.jpg}
-    \caption{Một số ví dụ về kết quả sinh ảnh của StarGAN v2 trên bộ ảnh người nổi tiếng (CelebA-HQ) và bộ ảnh động vật (AFHQ). Nguồn ảnh: \cite{choi2020stargan}.}
+    \caption{Một số ví dụ về kết quả sinh ảnh của StarGAN v2 trên bộ ảnh người nổi tiếng (CelebA-HQ) và bộ ảnh động vật (AFHQ). Nguồn ảnh: \cite{DBLP:journals/corr/abs-1912-01865}.}
 \end{figure}
 
 Thay vì chỉ định lớp ảnh mục tiêu cụ thể, StarGAN v2 sử dụng vector mô tả phong cách. Với ảnh đầu vào $ x $ và vector phong cách $ s $ thuộc lớp ảnh $ y $, generator $ G $ cần phải học được cách sinh ảnh mới $ x' $ theo phong cách được chỉ định, nhằm đánh lừa discriminator $ D $ phân loại $ x' $ về đúng lớp mục tiêu $ y $.
@@ -773,7 +773,7 @@ $$ E_y[s] \approx \cfrac{1}{n} \sum_{i = 1}^{n} E(x_{y, i}, y) \approx \cfrac{1}
 \begin{figure}[H]
     \centering
     \includegraphics[width=\linewidth]{figure23.png}
-    \caption{Kiến trúc mạng của StarGAN v2. Từ trái qua: generator, mapping network, style encoder và discriminator. Nguồn ảnh: \cite{choi2020stargan}.}
+    \caption{Kiến trúc mạng của StarGAN v2. Từ trái qua: generator, mapping network, style encoder và discriminator. Nguồn ảnh: \cite{DBLP:journals/corr/abs-1912-01865}.}
 \end{figure}
 
 Khả năng biểu diễn phong cách của ảnh dưới dạng vector cũng cho phép mạng StarGAN v2 điều khiển mức độ chuyển đổi ảnh: với $ s_{x} $ là vector phong cách của ảnh gốc, $ s' $ là vector phong cách mục tiêu, ta có thể chuyển đổi ảnh một phần tới vector phong cách:
