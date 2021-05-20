@@ -1504,9 +1504,9 @@ Do server của hệ thống chưa được trang bị GPU, mô hình StarGAN v2
 
 \chapter{Kết luận và hướng phát triển}
 
-Trong đề tài đồ án tốt nghiệp này, ta đã định nghĩa cụ thể bài toán chuyển đổi chế độ màu ảnh nội soi, phân tích đặc điểm dữ liệu ảnh nội soi trong thực tế, điểm qua các nghiên cứu quan trọng trong lĩnh vực học máy nói chung và học sâu nói riêng, nhằm đưa ra lựa chọn sử dụng mô hình StarGAN v2 để giải quyết bài toán. Đồ án đề xuất thực hiện hai thay đổi lên mô hình StarGAN v2 trong nghiên cứu gốc, bao gồm việc sử dụng không gian màu YCbCr để bảo toàn bố cục và sử dụng PatchGAN để cải thiện chất lượng ảnh. Cuối cùng, đồ án đánh giá chất lượng quá trình luyện tập và ứng dụng mô hình được tối ưu vào sản phẩm thực tế - hệ thống gắn nhãn dữ liệu ảnh nội soi Polyp-Labeler.
+Trong báo cáo đồ án tốt nghiệp này, ta đã định nghĩa cụ thể bài toán chuyển đổi chế độ màu ảnh nội soi, phân tích đặc điểm dữ liệu ảnh nội soi trong thực tế, điểm qua các nghiên cứu quan trọng trong lĩnh vực học máy nói chung và học sâu nói riêng, nhằm đưa ra lựa chọn sử dụng mô hình StarGAN v2 để giải quyết bài toán. Đồ án đề xuất thực hiện hai thay đổi lên mô hình StarGAN v2 trong nghiên cứu gốc, bao gồm việc sử dụng không gian màu YCbCr để bảo toàn bố cục và sử dụng PatchGAN để cải thiện chất lượng ảnh. Cuối cùng, đồ án đánh giá chất lượng quá trình luyện tập và ứng dụng mô hình được tối ưu vào sản phẩm thực tế - hệ thống gắn nhãn dữ liệu ảnh nội soi Polyp-Labeler.
 
-Dựa trên kết quả đánh giá, ta khẳng định tính hiệu quả của mô hình StarGAN v2 trong việc cải thiện chất lượng màu của ảnh nội soi, giúp bác sĩ quan sát rõ ràng hơn các đối tượng trong ảnh, từ đó đưa ra chẩn đoán chính xác hơn. Tuy nhiên, việc cố định kênh Y khi biến đổi ảnh hạn chế khả năng cải thiện độ sáng và độ tương phản của ảnh, ngăn cản việc tái tạo lại một số tính năng của các chế độ ảnh cao cấp.
+Dựa trên kết quả đánh giá, ta khẳng định tính hiệu quả của mô hình StarGAN v2 trong việc cải thiện chất lượng màu của ảnh nội soi, giúp bác sĩ quan sát rõ ràng hơn các đối tượng trong ảnh, từ đó đưa ra chẩn đoán chính xác hơn. Tuy nhiên, việc cố định kênh Y khi biến đổi ảnh hạn chế khả năng cải thiện độ sáng và độ tương phản, ngăn cản việc tái tạo lại một số tính năng của các chế độ ảnh cao cấp.
 
 Dựa trên phân tích này, hướng phát triển của đề tài sẽ xoay quanh việc giải quyết bài toán cải thiện chất lượng rọi sáng và tương phản trong khi vẫn giữ nguyên được bố cục gốc. Để thực hiện được điều này, ta có thể tham khảo các mô hình GAN chuyện dụng cho bài toán cải thiện chất lượng ảnh (Image Enhancement). Dưới đây mô tả hướng nghiên cứu của Yubin Deng, Chen Change Loy và Xiaoou Tang về mô hình EnhanceGAN \cite{DBLP:journals/corr/DengLT17} làm việc trên không giản màu CIELAB gần giống YCbCr.
 
@@ -1516,10 +1516,10 @@ Dựa trên phân tích này, hướng phát triển của đề tài sẽ xoay 
     \caption{Mô tả kiến trúc mô hình EnhanceGAN. Nguồn ảnh: \cite{DBLP:journals/corr/DengLT17}.}
 \end{figure}
 
-EnhanceGAN không sinh ra ảnh mới như các mô hình Image Translation. Thay vào đó, mô hình này sử dụng hai tập ảnh xấu và đẹp để tối ưu mô hình sinh tham số cho các phép toán biến đổi chất lượng của ảnh mà không làm ảnh hưởng tới bộ cục nội dung. Ở đây, ta chú ý tới phép biến đổi kênh L, biểu diễn độ sáng trong không gian màu CIELAB - tương tự như kênh Y của YCbCr:
+EnhanceGAN không sinh ra ảnh mới như các mô hình Image Translation. Thay vào đó, mô hình này sử dụng hai tập ảnh xấu và đẹp để tối ưu mô hình sinh tham số cho các phép toán biến đổi chất lượng của ảnh, không làm ảnh hưởng tới bộ cục nội dung. Ở đây, ta chú ý tới phép biến đổi kênh L, biểu diễn độ sáng trong không gian màu CIELAB - tương tự như kênh Y của YCbCr:
 $$
     T_{\theta^L}(m) = \begin{cases}
-        0 =                               & \text{nếu } m \leq b             \\
+        0                                 & \text{nếu } m \leq b             \\
         k_1 (m - b)^{\frac{1}{p}}         & \text{nếu } b < m \leq a         \\
         m                                 & \text{nếu } a < m \leq 1 - a     \\
         k_2 (m - k_3)^{\frac{1}{q}} + k_3 & \text{nếu } 1 - a < m \leq 1 - b \\
@@ -1529,7 +1529,7 @@ $$
 với:
 \begin{itemize}
     \item $ m $ là các giá trị thuộc kênh L, chuẩn hóa về miền $ [0, 1] $.
-    \item $ a, b \in [0, 1], b < a $.
+    \item $ a, b \in [0, 1], b \leq a $.
     \item $ p \geq 1, q \in [0, 1] $.
     \item $ k_1 = a(a - b)^{\frac{-1}{p}} $.
     \item $ k_2 = a(a - b)^{\frac{-1}{q}} $.
@@ -1542,7 +1542,7 @@ với:
     \caption{Đồ thị giá trị hàm $ T_{\theta^L}(m) $ tại $ a = \cfrac{1}{3}, b = \cfrac{1}{6}, p = 3, q = \cfrac{1}{3} $.}
 \end{figure}
 
-Phép biến đổi $ T_{\theta^L}(m) $ giảm mức độ phơi sáng của các pixel có kênh L cao, và tăng mức độ phơi sáng của các pixel có kênh L thấp. Bằng cách điều chỉnh giá trị tham số $ a $, $ b $, $ p $, $ q $ hợp lý, ta có thể chỉnh sửa độ phơi sáng và tương phản của ảnh, trong khi vẫn bảo toàn được phần lớn dữ liệu bố cục của ảnh.
+Phép biến đổi $ T_{\theta^L}(m) $ giảm mức độ phơi sáng của các pixel có kênh L cao, và tăng mức độ phơi sáng của các pixel có kênh L thấp. Bằng cách điều chỉnh giá trị tham số $ a $, $ b $, $ p $, $ q $ hợp lý, ta có thể chỉnh sửa độ phơi sáng và tương phản của ảnh, trong khi vẫn bảo toàn được phần lớn dữ liệu bố cục.
 
 \begin{figure}[H]
     \centering
@@ -1559,7 +1559,7 @@ Phép biến đổi $ T_{\theta^L}(m) $ giảm mức độ phơi sáng của cá
     \caption{Biến đổi kênh L của ảnh sử dụng $ T_{\theta^L}(m) $ tại $ a = \cfrac{1}{3}, b = \cfrac{1}{6}, p = 3, q = \cfrac{1}{3} $.}
 \end{figure}
 
-Tuy nhiên khi áp dụng trực tiếp vào mô hình học sâu, hàm $ T_{\theta^L}(m) $ dễ gây ra hiện tượng bùng nổ gradient, khiến cho các nơ-ron mang giá trị không hợp lệ NaN. Mã nguồn chính thức của mô hình EnhanceGAN khắc phục điều này bằng cách đặt ra giới hạn chặt cho các tham số $ a $, $ b $, $ p $, $ q $, khiến cho phép biến đổi bị bó hẹp trong bài toán tối ưu chất lượng ảnh tự nhiên và không thể áp dụng cho bài toán đổi màu ảnh y tế.
+Tuy nhiên, khi áp dụng trực tiếp vào mô hình học sâu, hàm $ T_{\theta^L}(m) $ dễ gây ra hiện tượng bùng nổ gradient, khiến cho các nơ-ron mang giá trị không hợp lệ NaN. Mã nguồn chính thức của mô hình EnhanceGAN khắc phục điều này bằng cách đặt ra giới hạn chặt cho các tham số $ a $, $ b $, $ p $, $ q $, bó hẹp phép biến đổi trong bài toán tăng cường chất lượng ảnh tự nhiên và không thể áp dụng cho bài toán đổi màu ảnh y tế.
 
 Với sự phát triển không ngừng nghỉ của lĩnh vực trí tuệ nhân tạo và thị giác máy tính, hy vọng những hạn chế của các phương pháp hiện tại sẽ sớm được vượt qua trong tương lai, giúp nâng cao chất lượng của các mô hình học máy và phát triển đề tài này đến những thành tựu mới.
 
