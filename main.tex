@@ -270,7 +270,7 @@ Một số hàm kích hoạt tiêu biểu có thể kể đến:
     \item Hàm sigmoid: $ \cfrac{1}{1 + e^{-x}} $. Hàm sigmoid được sử dụng trong các mô hình classification để giới hạn đầu ra trong khoảng $ (0, 1) $, thể hiện giá trị dự đoán đúng-sai.
     \item Hàm tanh: $ \cfrac{e^{x} + e^{-x}}{e^{x} - e^{-x}} $. Giá trị đầu ra của hàm tanh nằm trong khoảng $ (-1, 1) $, giúp ta chuẩn hóa giá trị đầu ra kì vọng về 0.
     \item Hàm ReLU: $ max\{x, 0\} $. So với hàm sigmoid và tanh, hàm ReLU có công thức tính toán vô cùng đơn giản và dễ lấy đạo hàm, giúp tăng tốc quá trình huấn luyện.
-    \item Hàm Leaky ReLU: $ max\{x, \alpha x\} $. Khi giá trị của $ x $ về âm, hàm ReLU cơ bản có đạo hàm bằng 0, ngăn cản các thuật toán huấn luyện sử dụng gradient cập nhật mô hình. Leaky ReLU là một phiên bản cải tiến giúp giải quyết vấn đề này. Các thuật toán cập nhật sử dụng gradient sẽ được mô tả cụ thể trong mục \ref{optimization}.
+    \item Hàm Leaky ReLU: $ max\{x, \alpha x\} $. Khi giá trị của $ x $ về âm, hàm ReLU cơ bản có đạo hàm bằng 0, ngăn cản các thuật toán huấn luyện sử dụng gradient cập nhật mô hình. Leaky ReLU là một phiên bản cải tiến giúp giải quyết vấn đề này. Các thuật toán huấn luyện sử dụng gradient sẽ được mô tả cụ thể trong mục \ref{optimization}.
 \end{itemize}
 
 \subsection{Mạng nơ-ron tích chập (Convolutional Neural Network)}
