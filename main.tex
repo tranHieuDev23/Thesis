@@ -32,6 +32,7 @@
 \usepackage{adjustbox}
 \usepackage{diagbox}
 \usepackage[nottoc,notlot,notlof]{tocbibind}
+\usepackage{multicol}
 
 \bibliographystyle{unsrt}
 
@@ -67,63 +68,100 @@
 
 \vspace{1.0cm}
 \begin{center}
-    \textbf{{Hà Nội, tháng 5/2021}}\\
+    \textbf{{Hà Nội, tháng 6/2021}}\\
 \end{center}
 
-% \newpage
+\newpage
 
-% \begin{center}
-%     \fontsize{8pt}{1}\selectfont{
-%         \begin{tabular}{c c}
-%             BỘ GIÁO DỤC \& ĐÀO TẠO                   & \textbf{CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM} \\
-%             \textbf{TRƯỜNG ĐẠI HỌC BÁCH KHOA HÀ NỘI} & \textbf{Độc lập - Tự do - Hạnh phúc}
-%         \end{tabular}
-%     }
-% \end{center}
+\begin{center}
+    \fontsize{8pt}{1}\selectfont{
+        \begin{tabular}{c c}
+            BỘ GIÁO DỤC \& ĐÀO TẠO                   & \textbf{CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM} \\
+            \textbf{TRƯỜNG ĐẠI HỌC BÁCH KHOA HÀ NỘI} & \textbf{Độc lập - Tự do - Hạnh phúc}
+        \end{tabular}
+    }
+\end{center}
 
-% \vspace{1.0cm}
-% \begin{center}
-%     \large\textbf{NHIỆM VỤ \\
-%         ĐỒ ÁN TỐT NGHIỆP}
-% \end{center}
+\vspace{0.3cm}
+\begin{center}
+    \large\textbf{NHIỆM VỤ ĐỒ ÁN TỐT NGHIỆP}
+\end{center}
 
-% \vspace{0.5cm}
-% \justify
-% Họ và tên sinh viên: Trần Minh Hiếu \\
-% Khóa: K62, Viện: Công nghệ Thông tin và Truyền thông, Lớp: Chương trình Tài Năng
+\section*{Thông tin sinh viên}
 
-% \textit{1. Tên đề tài}
+\begin{multicols}{2}
+    \begin{itemize}
+        \item \textbf{Họ và tên}: Trần Minh Hiếu
+        \item \textbf{Email}: \href{mailto:tranhieu23.code@outlook.com}{tranhieu23.code@outlook.com}
+        \item \textbf{Điện thoại liên lạc}: 0983907233
+        \item \textbf{Lớp}: Chương trình Tài Năng - Công nghệ thông tin - K62
+        \item \textbf{Hệ đào tạo}: Đại học chính quy
+        \item \textbf{Đồ án tốt nghiệp được thực hiện tại}: Bộ môn Khoa học Máy tính, viện Công nghệ Thông tin và Truyền thông
+        \item \textbf{Thời gian thực hiện}: Từ 21/02/2021 tới 01/06/2021
+    \end{itemize}
+\end{multicols}
 
-% Tăng cường dữ liệu ảnh nội soi y tế sử dụng mô hình sinh đa miền StarGAN v2.
+\section*{Thông tin đề tài}
 
-% \textit{2. Nội dung đề tài}
+\subsection*{Mục đích của đồ án tốt nghiệp}
 
-% Ung thư đường tiêu hóa là một trong những nguyên nhân gây tử vong hàng đầu trên thế giới. May mắn thay, sự phát triển của công nghệ nội soi đường tiêu hóa giúp chúng ta có thể sớm nhận biết và điều trị các triệu chứng ung thư, đặc biệt là trong giai đoạn đầu của bệnh lý. Từ những năm 2000, các kĩ thuật tăng cường chất lượng ảnh nội soi bằng phần cứng (hardware-based image-enhanced endoscopy hay IEE) như BLI (Blue Laser Imagining) hay LCI (Linked Color Imagining) bắt đầu trở nên phổ biến, dần thay thế các kĩ thuật nội soi sử dụng đèn trắng nhuộm màu. Tuy nhiên, do những hạn chế về ngân sách và chính sách đầu tư, việc triển khai các dụng cụ nội soi tích hợp các chức năng này còn gặp nhiều khó khăn.
+Tăng cường dữ liệu ảnh nội soi y tế, sử dụng mô hình sinh đa miền StarGAN v2.
 
-% Đồ án này hướng tới việc đào tạo mô hình học sâu (Deep Learning) StarGAN v2 để đổi màu ảnh nội soi thuộc chế độ màu sắc cơ bản sang các chế độ màu sắc cao cấp, cũng như tích hợp mô hình này vào hệ thống gắn nhãn ảnh nội soi y tế Polyp-Labeler đang được triển khai trên thực tế. Qua đồ án tốt nghiệp này, em hy vọng có thể giúp các bác sĩ tiếp cận với những chức năng nội soi tiên tiến mà không bị ngăn cản bởi rào cản về kinh tế.
+\subsection*{Nhiệm vụ cụ thể của đồ án}
 
-% \textit{3. Cán bộ hướng dẫn}
+\begin{enumerate}
+    \item Huấn luyện mô hình học sâu (Deep Learning) StarGAN v2 để biến đổi ảnh nội soi thuộc chế độ màu sắc cơ bản sang các chế độ màu sắc cao cấp.
+    \item Tích hợp mô hình vào hệ thống gắn nhãn ảnh nội soi y tế Polyp-Labeler đang được triển khai trên thực tế.
+\end{enumerate}
 
-% TS. Đinh Viết Sang, giảng viên bộ môn Khoa học Máy tính, viện Công nghệ Thông tin và Truyền thông, trường Đại học Bách khoa Hà Nội.
+\section*{Lời cam đoan của sinh viên}
 
-% \textit{4. Thời gian giao đề tài}
+Tôi - Trần Minh Hiếu - cam kết đồ án tốt nghiệp là sản phẩm của bản thân tôi dưới sự hướng dẫn của \textit{TS. Đinh Viết Sang}.
 
-% Tháng 2 năm 2021.
+Các kết quả trong đồ án là hoàn toàn trung thực, không hề sao chép đạo văn của bất cứ công trình nghiên cứu nào khác.
 
-% \textit{5. Thời gian hoàn thành}
+\vspace{0.5cm}
+\begin{flushright}
+    \begin{tabular}{c}
+        \textit{Hà Nội, ngày 1 tháng 6 năm 2021} \\
+        \textbf{SINH VIÊN THỰC HIỆN}             \\
+        \\
+        \\
+        \\
+        \\
+        \\
+        \textit{Trần Minh Hiếu}
+    \end{tabular}
+\end{flushright}
 
-% Tháng 6 năm 2021.
+\newpage
 
-% \vspace{1cm}
-% \begin{center}
-%     \fontsize{10pt}{1}\selectfont{
-%         \begin{tabular}{c c c}
-%             \textit{Hà Nội, ngày 19 tháng 5 năm 2021} &                           &                                \\
-%             \textbf{LÃNH ĐẠO BỘ MÔN}                  & \textbf{CÁN BỘ HƯỚNG DẪN} & \textbf{SINH VIÊN THỰC HIỆN}   \\
-%                                                       &                           & \textit{(Ký và ghi rõ họ tên)}
-%         \end{tabular}
-%     }
-% \end{center}
+\subsection*{Xác nhận của giáo viên hướng dẫn về mức độ hoàn thành và cho phép bảo vệ:}
+
+\dotfill
+
+\noindent
+\dotfill
+
+\noindent
+\dotfill
+
+\noindent
+\dotfill
+
+\vspace{0.5cm}
+\begin{flushright}
+    \begin{tabular}{c}
+        \textit{Hà Nội, ngày 1 tháng 6 năm 2021} \\
+        \textbf{Giáo viên hướng dẫn}             \\
+        \\
+        \\
+        \\
+        \\
+        \\
+        \textit{TS. Đinh Viết Sang}
+    \end{tabular}
+\end{flushright}
 
 \chapter*{Lời cảm ơn}
 
