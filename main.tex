@@ -171,6 +171,10 @@ Em cũng xin gửi lời cảm ơn tới các bác sĩ của Viện nghiên cứ
 
 \tableofcontents
 
+\listoffigures
+
+\listoftables
+
 \chapter{Tổng quan về bài toán và đặt vấn đề}
 
 Ung thư đường tiêu hóa là một trong những nguyên nhân gây tử vong hàng đầu trên thế giới. Chỉ tính riêng trong năm 2018, đã có hơn 1 triệu bệnh nhân được chẩn đoán ung thư dạ dày trên toàn cầu, với khoảng 783,000 ca tử vong. Ung thư dạ dày là bệnh lý ung thư phổ biến thứ 5 và gây ra tử vong nhiều thứ 3 trên thế giới \cite{https://doi.org/10.3322/caac.21492}. May mắn thay, ung thư đường tiêu hóa có thể điều trị và chữa khỏi nếu được phát hiện kịp thời. Những tiến bộ trong công nghệ nội soi đóng vai trò quan trọng trong việc phát hiện những biểu hiện bệnh lý giai đoạn đầu, qua đó giúp các bác sĩ có thể kịp thời đưa ra pháp đồ điều trị.
@@ -1054,7 +1058,9 @@ Kiến trúc cụ thể của một khối Residual được mô tả dưới đ
 
 \begin{table}[H]
     \centering
+    \caption{Kiến trúc một khối Residual trong mô hình StarGAN v2.}
     \begin{subtable}[H]{.48\textwidth}
+        \caption{Nén}
         \begin{adjustbox}{width=\textwidth}
             \begin{tabular}{c c c}
                 Lớp mạng        & Hàm kích hoạt & Đầu ra                                          \\
@@ -1076,9 +1082,9 @@ Kiến trúc cụ thể của một khối Residual được mô tả dưới đ
                 Add             &               & $ C' \times \cfrac{W}{2}  \times \cfrac{W}{2} $ \\
             \end{tabular}
         \end{adjustbox}
-        \caption{Nén}
     \end{subtable}
     \begin{subtable}[H]{.48\textwidth}
+        \caption{Giải nén}
         \begin{adjustbox}{width=\textwidth}
             \begin{tabular}{c c c}
                 Lớp mạng    & Hàm kích hoạt & Đầu ra                      \\
@@ -1100,9 +1106,7 @@ Kiến trúc cụ thể của một khối Residual được mô tả dưới đ
                 Add         &               & $ C' \times 2W  \times 2W $ \\
             \end{tabular}
         \end{adjustbox}
-        \caption{Giải nén}
     \end{subtable}
-    \caption{Kiến trúc một khối Residual trong mô hình StarGAN v2.}
 \end{table}
 
 \subsection{Kiến trúc các mạng thành phần}
@@ -1113,6 +1117,7 @@ Generator được xây dựng theo phong cách của mạng autoencoder: Đầu
 
 \begin{table}[H]
     \centering
+    \caption{Kiến trúc của mạng Generator.}
     \begin{tabular}{c c c}
         Lớp mạng          & Hàm kích hoạt & Đầu ra                         \\
         \hline
@@ -1138,7 +1143,6 @@ Generator được xây dựng theo phong cách của mạng autoencoder: Đầu
         Instance Norm     & Leaky ReLU    & $ 32 \times 1024 \times 1024 $ \\
         Conv1x1           &               & $ 2 \times 1024 \times 1024 $  \\
     \end{tabular}
-    \caption{Kiến trúc của mạng Generator.}
 \end{table}
 
 \subsubsection{Style Encoder}
@@ -1147,6 +1151,7 @@ Style Encoder nhận vào ảnh thật cùng với chỉ số lớp của ảnh,
 
 \begin{table}[H]
     \centering
+    \caption{Kiến trúc của mạng Style Encoder.}
     \begin{tabular}{c c c}
         Lớp mạng        & Hàm kích hoạt & Đầu ra                         \\
         \hline
@@ -1168,7 +1173,6 @@ Style Encoder nhận vào ảnh thật cùng với chỉ số lớp của ảnh,
         \textbf{\textit{Phần riêng}}                                     \\
         Fully Connected &               & 128
     \end{tabular}
-    \caption{Kiến trúc của mạng Style Encoder.}
 \end{table}
 
 \subsubsection{Mapping Network}
@@ -1177,6 +1181,7 @@ Mapping Network nhận vào vector latent có 16 chiều, cùng với chỉ số
 
 \begin{table}[H]
     \centering
+    \caption{Kiến trúc của mạng Mapping Network.}
     \begin{tabular}{c c c}
         Lớp mạng        & Hàm kích hoạt & Đầu ra  \\
         \hline
@@ -1194,7 +1199,6 @@ Mapping Network nhận vào vector latent có 16 chiều, cùng với chỉ số
         Fully Connected & ReLu          & $ 512 $ \\
         Fully Connected &               & $ 128 $
     \end{tabular}
-    \caption{Kiến trúc của mạng Mapping Network.}
 \end{table}
 
 \subsubsection{Discriminator}
@@ -1203,6 +1207,7 @@ Discriminator nhận vào ảnh thật cùng với chỉ số lớp của ảnh,
 
 \begin{table}[H]
     \centering
+    \caption{Kiến trúc của mạng Discriminator.}
     \begin{tabular}{c c c}
         Lớp mạng   & Hàm kích hoạt & Đầu ra                        \\
         \hline
@@ -1219,7 +1224,6 @@ Discriminator nhận vào ảnh thật cùng với chỉ số lớp của ảnh,
         Flatten    &               & $ 4 \times 15876 $            \\
         Average    & Sigmoid       & 4
     \end{tabular}
-    \caption{Kiến trúc của mạng Discriminator.}
 \end{table}
 
 \section{Hàm mục tiêu}
@@ -1397,6 +1401,7 @@ Quan sát kết quả chuyển đổi ảnh từ mỗi chế độ màu sang cá
 
 \begin{table}[H]
     \centering
+    \caption{Kết quả biến đổi giữa các chế độ màu với nhau.}
     \begin{tabular}{c | c | c | c | c}
         \multirow{2}{*}{\diagbox[height=5.83\line]{Mục                                                                                                                                                                                                                                                \\tiêu}{Ảnh\\đầu\\vào}} & BLI                                                                  & FICE                                                                  & LCI                                                                  & WLI                                                                  \\
              & \includegraphics[width=0.18\textwidth]{transform/BLI_original.jpeg} & \includegraphics[width=0.18\textwidth]{transform/FICE_original.jpeg} & \includegraphics[width=0.18\textwidth]{transform/LCI_original.jpeg} & \includegraphics[width=0.18\textwidth]{transform/WLI_original.jpeg} \\
@@ -1406,7 +1411,6 @@ Quan sát kết quả chuyển đổi ảnh từ mỗi chế độ màu sang cá
         LCI  & \includegraphics[width=0.18\textwidth]{transform/BLI2LCI.jpeg}      & \includegraphics[width=0.18\textwidth]{transform/FICE2LCI.jpeg}      &                                                                     & \includegraphics[width=0.18\textwidth]{transform/WLI2LCI.jpeg}      \\
         WLI  & \includegraphics[width=0.18\textwidth]{transform/BLI2WLI.jpeg}      & \includegraphics[width=0.18\textwidth]{transform/FICE2WLI.jpeg}      & \includegraphics[width=0.18\textwidth]{transform/LCI2WLI.jpeg}      &                                                                     \\
     \end{tabular}
-    \caption{Kết quả biến đổi giữa các chế độ màu với nhau.}
 \end{table}
 
 Nhìn chung, tuy không chuyển đổi được tất cả các tính năng của các chế độ màu cao cấp, mô hình StarGAN v2 có thể giúp tăng cường chất lượng và độ tương phản màu sắc của ảnh nội soi, giúp bác sĩ nội soi quan sát tốt hơn các đối tượng trong ảnh và đưa ra chẩn đoán chính xác hơn.
@@ -1509,6 +1513,7 @@ Color Changer giao tiếp với service App bằng giao thức HTTP, thông qua 
 Để yêu cầu chuyển đổi chế độ màu ảnh, service App gửi truy vấn HTTP tới Color Changer theo cú pháp:
 \begin{table}[H]
     \centering
+    \caption{Cú pháp truy vấn HTTP gửi tới Color Changer.}
     \begin{tabular}{l l l}
         \multicolumn{3}{l}{POST /api/change-color}                                                                                        \\
         \hline
@@ -1523,7 +1528,6 @@ Color Changer giao tiếp với service App bằng giao thức HTTP, thông qua 
         target\_domain                        & int                                       & Mã chế độ ảnh mục tiêu.                       \\
         psi                                   & float                                     & Giá trị của tham số $ \psi $.
     \end{tabular}
-    \caption{Cú pháp truy vấn HTTP gửi tới Color Changer.}
 \end{table}
 
 Mã chế độ màu dành cho hai biến source\_domain và target\_domain là các số nguyên từ 0 tới 3, lần lượt tương ứng với các chế độ BLI, FICE, LCI và WLI.
