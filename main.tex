@@ -1,6 +1,6 @@
 \documentclass[12pt]{extreport}
 \usepackage[utf8]{vietnam}
-\usepackage[left=3.50cm, right=2.00cm, top=1.27cm, bottom=1.27cm]{geometry}
+\usepackage[left=3.50cm, right=2.00cm, top=1.27cm, bottom=1.27cm, includehead, includefoot]{geometry}
 \usepackage{fancybox,graphicx}
 \usepackage{mathrsfs} 
 \usepackage{amsfonts}
@@ -38,19 +38,16 @@
 
 
 \begin{document}
-
 \thispagestyle{empty}
-\thisfancypage{
-    \setlength{\fboxsep}{0pt}
-    \fbox}{}
+\thisfancypage{}{\fbox}
 
 \begin{center}
     {\fontsize{13pt}{1}\selectfont\textbf{TRƯỜNG ĐẠI HỌC BÁCH KHOA HÀ NỘI}}
     \\
     {\fontsize{13pt}{1}\selectfont\textbf{VIỆN CÔNG NGHỆ THÔNG TIN VÀ TRUYỀN THÔNG}}
     \\
-    \textbf{--------------------  o0o  ---------------------}\\[3cm]
-    \includegraphics[scale=0.2]{bk-rgb.jpg} \\[3cm]
+    \textbf{--------------------  o0o  ---------------------}\\[2cm]
+    \includegraphics[scale=0.2]{bk-rgb.jpg} \\[2cm]
     \textbf{\large{ĐỒ ÁN TỐT NGHIỆP}}\\[1cm]
     \textbf{\large{Tăng cường dữ liệu ảnh nội soi y tế\\sử dụng mô hình sinh đa miền StarGAN v2 cải tiến}}\\[1cm]
     Trần Minh Hiếu - 20170075 \\
@@ -72,6 +69,7 @@
 \end{center}
 
 \newpage
+\pagenumbering{arabic}
 
 \vspace{0.3cm}
 \begin{center}
@@ -182,7 +180,7 @@ Vào năm 2013, Fujifilm Corporation cho ra công nghệ Blue Laser Imagining (B
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.7\textwidth]{figure1}
+    \includegraphics[width=0.8\textwidth]{figure1}
     \caption{So sánh ảnh nội soi ung thư dạ dày giai đoạn đầu. (a) và (c) là ảnh nội soi sử dụng WLI, không làm rõ khối u tuyến trong dạ dày. (b) và (d) là ảnh nội soi sử dụng LCI tại cùng vị trí, làm nổi bật rõ khối u tuyến so với niêm mạc xung quanh. Nguồn ảnh: \cite{pmid31700545}.}
     \label{wli-lci}
 \end{figure}
@@ -397,7 +395,7 @@ Tuy số lượng tham số của lớp tích chập rất nhỏ, song kích th�
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.7\textwidth]{figure9.jpg}
+    \includegraphics[width=0.8\textwidth]{figure9.jpg}
     \caption{Cơ chế hoạt động của Max pooling và Average pooling với size 2, stride 2.}
 \end{figure}
 
@@ -471,6 +469,8 @@ với:
 \end{align}
 
 Tiếp tục như vậy, ta tính được đạo hàm thành phần theo trọng số của tất cả các lớp mạng. Tên của thuật toán backpropagation giải thích cơ chế hoạt động của chính nó - ta tìm gradient của mạng từ lớp cuối cùng tới lớp đầu tiên, ngược với quá trình tính toán hàm mục tiêu đi từ lớp đầu tiên tới lớp cuối cùng.
+
+Dưới đây mô tả các bước của thuật toán backpropagation, cùng với thuật toán Stochastic Gradient Descent sử dụng backpropagation để tính giá trị gradient:
 
 \begin{algorithm}[H]
     \caption{Thuật toán backpropagation}
@@ -618,7 +618,7 @@ Mô hình học máy lý tưởng cần phải mô phỏng được chính xác 
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.7\textwidth]{figure2}
+    \includegraphics[width=0.8\textwidth]{figure2}
     \caption{Với cùng một bộ dữ liệu, mô hình có độ thiên lệch cao không thể mô phỏng chính xác mối quan hệ giữa đầu vào và đầu ra. Mô hình có phương sai cao quá phức tạp và dễ sai khi gặp phải dữ liệu mới. Mô hình ở giữa ở mức độ cân bằng chấp nhận được.}
 \end{figure}
 
@@ -656,13 +656,13 @@ Gọi $ W $ là tập trọng số của mạng, ta có công thức của hai h
 
 Khi huấn luyện mạng nơ-ron sử dụng kĩ thuật dropout, một số giá trị đầu ra sẽ bị bỏ qua (đặt về 0) một cách ngẫu nhiên với xác suất $ p $. Điều này ép các lớp trong mạng nơ-ron phải học cách tận dụng đa dạng thông tin khác nhau từ lớp trước, thay vì phụ thuộc vào một số ít thông tin cụ thể, có thể dễ dàng biến mất do dropout. Qua đó, ta giảm thiểu được hiện tượng overfitting.
 
-Việc sử dụng dropout cũng có một tác dụng phụ khác: mô hình được huấn luyện với nhiều cấu hình mạng ngẫu nhiên khác nhau, do đó quá trình tính toán với dữ liệu mới cũng sử dụng tri thức kết hợp của nhiều mạng nơ-ron cùng lúc. Khi số lượng lớp mạng gia tăng, số lượng cấu hình mạng cũng gia tăng theo cấp số mũ. Điều này khiến cho sức mạnh của mạng nơ-ron được gia tăng đang kể.
-
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.7\textwidth]{figure3}
     \caption{Mô hình trước và sau khi áp dụng dropout. Nguồn ảnh: \cite{JMLR:v15:srivastava14a}.}
 \end{figure}
+
+Việc sử dụng dropout cũng có một tác dụng phụ khác: mô hình được huấn luyện với nhiều cấu hình mạng ngẫu nhiên khác nhau, do đó quá trình tính toán với dữ liệu mới cũng sử dụng tri thức kết hợp của nhiều mạng nơ-ron cùng lúc. Khi số lượng lớp mạng gia tăng, số lượng cấu hình mạng cũng gia tăng theo cấp số mũ. Điều này khiến cho sức mạnh của mạng nơ-ron được gia tăng đang kể.
 
 \section{Các nghiên cứu có liên quan}
 
@@ -684,13 +684,13 @@ Tư tưởng của Pix2pix rất đơn giản, song mô hình này có thể ho�
 
 \subsection{CycleGAN}
 
-Cũng trong năm 2017, nhóm nghiên cứu của trường Đại học California đề xuất mô hình sinh ảnh CycleGAN, khắc phục được yêu cầu dữ liệu ảnh theo cặp của Pix2pix \cite{CycleGAN2017}.
-
 \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{figure15}
     \caption{Một số ứng dụng của CycleGAN. Nguồn ảnh: \cite{CycleGAN2017}.}
 \end{figure}
+
+Cũng trong năm 2017, nhóm nghiên cứu của trường Đại học California đề xuất mô hình sinh ảnh CycleGAN, khắc phục được yêu cầu dữ liệu ảnh theo cặp của Pix2pix \cite{CycleGAN2017}.
 
 CycleGAN lấy cảm hứng từ mô hình autoencoder - mạng nén dữ liệu với số chiều cao thành vector latent có số chiều thấp. Một mô hình autoencoder được đánh giá là tốt nếu như quá trình nén đảm bảo toàn vẹn dữ liệu. Tương tự, kiến trúc CycleGAN ngoài hai Generator $ G_A $ và Discriminator $ D_A $ giống như Pix2pix, còn sử dụng thêm một Generator $ G_B $ để biến đổi đầu ra của $ G_B $ về ảnh đầu vào gốc và một Discriminator $ D_B $ để phân loại thật/giả kết quả của $ G_B $. Bằng việc tối ưu cả 4 mô hình, ta kì vọng $ G_A $ và $ G_B $ có thể học được cách biến đổi ảnh đầu vào thành ảnh mục tiêu thỏa mãn, đồng thời vẫn giữ lại được đủ thông tin cần thiết để xây dựng lại ảnh ban đầu.
 
@@ -751,14 +751,14 @@ BLI thừa hưởng cơ chế hoạt động của Narrow Band Imagining (NBI) -
 
 Khác với NBI, BLI sử dụng hai đèn laser ở bước sóng 410 $ \pm $ 10 nm và 450 $ \pm $ 10 nm thay cho đèn xenon của NBI. Ngoài tác dụng làm nổi mạch máu, laser 450 nm cũng có tác dụng kích thích phosphor ở đầu ống nội soi để cung cấp ánh sáng trắng. Bằng cách điều chỉnh cường độ của hai đèn laser, bác sĩ có thể lựa chọn giữa quan sát tổng quát các mạch máu ở xa và sâu, hoặc ưu tiên quan sát kĩ các tổn thương ở bề mặt \cite{pmid26770267}.
 
-Do được chiếu sáng bằng hai đèn xanh dương và xanh lục, ảnh nội soi sử dụng BLI thường có màu trắng - xám, ít sắc đỏ. Mạch máu có màu sắc tương phản rõ ràng so với niêm mạc xung quanh.
-
 \begin{figure}[H]
     \centering
     \centering
-    \includegraphics[width=\linewidth]{figure19.jpg}
+    \includegraphics[width=0.8\linewidth]{figure19.jpg}
     \caption{So sánh ảnh nội soi WLI và BLI tại cùng một vị trí. Nguồn ảnh: \cite{fujifilm}.}
 \end{figure}
+
+Do được chiếu sáng bằng hai đèn xanh dương và xanh lục, ảnh nội soi sử dụng BLI thường có màu trắng - xám, ít sắc đỏ. Mạch máu có màu sắc tương phản rõ ràng so với niêm mạc xung quanh.
 
 \subsection{Flexible spectral Imagining Color Enhancement - (FICE)}
 
@@ -766,7 +766,7 @@ Khác với BLI là kĩ thuật tiền xử lý ảnh nội soi (thay đổi mô
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.9\linewidth]{figure20.png}
+    \includegraphics[width=0.8\linewidth]{figure20.png}
     \caption{So sánh ảnh nội soi (a) WLI và (b) FICE tại cùng một vị trí. Nguồn ảnh: \cite{s0038401113808}.}
 \end{figure}
 
@@ -779,7 +779,7 @@ LCI sử dụng cả kĩ thuật tiền xử lý như NBI và BLI và hậu xử
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.9\linewidth]{figure21.jpg}
+    \includegraphics[width=0.8\linewidth]{figure21.jpg}
     \caption{Hai bước xử lý của LCI. (a) Rọi sáng bằng một số tần số ánh sáng nhất định. Ánh sáng tím bị hấp thụ bởi các khối u ung thư, nhưng không bị hấp thụ bởi niêm mạc bị viêm bình thường. (b) Các màu sắc gần giống nhau được tăng độ tương phản. Nguồn ảnh: \cite{pmid31700545}.}
 \end{figure}
 
@@ -797,15 +797,15 @@ LCI là chế độ màu khó tái tạo lại nhất trong cả 4 chế độ. 
 
 Để giải quyết bài toán chuyển đổi chế độ màu ảnh y tế, đồ án này sử dụng mô hình học sâu StarGAN v2, được công bố bởi nhóm nghiên cứu Clova AI vào năm 2019 \cite{DBLP:journals/corr/abs-1912-01865}. Chương này đi sâu vào giải thích tư tưởng của nghiên cứu gốc, những cải tiến để phù hợp với yêu cầu của đề tài, kiến trúc cụ thể của các mạng và các hàm mục tiêu được sử dụng.
 
-\section{Tư tưởng thiết kế}
-
-StarGAN v2 là bản cập nhật của mô hình StarGAN năm 2017, bổ sung thêm khả năng đa dạng hóa kết quả: với cùng một lớp mục tiêu, StarGAN v2 có thể sinh ra vô số ảnh thỏa mãn có phong cách khác nhau.
-
 \begin{figure}[H]
     \centering
     \includegraphics[width=\linewidth]{figure22.jpg}
     \caption{Một số ví dụ về kết quả sinh ảnh của StarGAN v2 trên bộ ảnh người nổi tiếng (CelebA-HQ) và bộ ảnh động vật (AFHQ). Nguồn ảnh: \cite{DBLP:journals/corr/abs-1912-01865}.}
 \end{figure}
+
+\section{Tư tưởng thiết kế}
+
+StarGAN v2 là bản cập nhật của mô hình StarGAN năm 2017, bổ sung thêm khả năng đa dạng hóa kết quả: với cùng một lớp mục tiêu, StarGAN v2 có thể sinh ra vô số ảnh thỏa mãn có phong cách khác nhau.
 
 Thay vì chỉ định lớp ảnh mục tiêu cụ thể, StarGAN v2 sử dụng vector mô tả phong cách. Với ảnh đầu vào $ x $ và vector phong cách $ s $ thuộc lớp ảnh $ y $, Generator $ G $ cần phải học được cách sinh ảnh mới $ x' $ theo phong cách được chỉ định, nhằm đánh lừa Discriminator $ D $ phân loại $ x' $ về đúng lớp mục tiêu $ y $.
 
@@ -881,13 +881,13 @@ Nhóm nghiên cứu Clova AI sử dung StarGAN v2 để giải hai bài toán v�
 
 Giống như CycleGAN và StarGAN phiên bản 1, Generator của StarGAN v2 lấy cảm hứng từ mạng autoencoder: ảnh nguyên bản được đưa qua qua một loạt các lớp convolutional để nén thành dữ liệu nén có kích thước nhỏ, sau đó đi qua một loạt các lớp convolutional để giải nén thành ảnh đầu ra. Quá trình nén dữ liệu từ không gian nhiều chiều xuống không gian ít chiều hơn dù có tốt tới đâu cũng không tránh khỏi mất mát thông tin, khiến cho ảnh đầu ra không thể giống hệt ảnh đầu vào. Sai số này không phải là vấn đề lớn đối với bài toán sinh ảnh người và vật, song lại là không thể chấp nhận được đối với các lĩnh vực cần độ chính xác cao như chẩn đoán nội soi.
 
-Để giải quyết vấn đề này, thay vì để Generator chịu trách nhiệm sinh toàn bộ ảnh, ta chỉ yêu cầu Generator sinh ra phong cách, rồi kết hợp phong cách này cùng với bố cục gốc để cho ra ảnh mới. Để bảo toàn bố cục gốc, ta có thể sử dụng không gian màu YCbCr.
-
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.9\linewidth]{figure28.png}
     \caption{Sai số khi sử dụng StarGAN v2 để biến đổi toàn bộ ảnh gốc (hàng đầu tiên) thành ảnh mới (hàng dưới cùng) sử dụng phong cách của ảnh đối chiếu (hàng giữa).}
 \end{figure}
+
+Để giải quyết vấn đề này, thay vì để Generator chịu trách nhiệm sinh toàn bộ ảnh, ta chỉ yêu cầu Generator sinh ra phong cách, rồi kết hợp phong cách này cùng với bố cục gốc để cho ra ảnh mới. Để bảo toàn bố cục gốc, ta có thể sử dụng không gian màu YCbCr.
 
 Không gian màu là các mô hình toán học mô tả màu sắc, thường dưới dạng bộ 3 hoặc bộ 4 kênh giá trị thành phần. Các thiết bị điện tử chủ yếu sử dụng không gian màu RGB, biểu diễn màu sắc dưới dạng bộ 3 số đại diện cho cường độ của ba màu đỏ - xanh lá - xanh lam. RGB có thể biểu diễn phần lớn màu sắc mà con người có thể phân biệt, rất tiện lợi cho các tác vụ đồ họa. Tuy nhiên, từ giá trị của một kênh màu đơn lẻ không thể mô tả được bố cục của ảnh.
 
@@ -895,22 +895,22 @@ Không gian màu là các mô hình toán học mô tả màu sắc, thường d
     \centering
     \begin{subfigure}[H]{\textwidth}
         \centering
-        \includegraphics[width=0.3\linewidth]{figure24.png}
+        \includegraphics[width=0.21\linewidth]{figure24.png}
         \caption{Hình ảnh gốc}
     \end{subfigure}
     \begin{subfigure}[H]{0.3\textwidth}
         \centering
-        \includegraphics[width=\linewidth]{figure25.png}
+        \includegraphics[width=0.7\linewidth]{figure25.png}
         \caption{Kênh R}
     \end{subfigure}
     \begin{subfigure}[H]{0.3\textwidth}
         \centering
-        \includegraphics[width=\linewidth]{figure26.png}
+        \includegraphics[width=0.7\linewidth]{figure26.png}
         \caption{Kênh G}
     \end{subfigure}
     \begin{subfigure}[H]{0.3\textwidth}
         \centering
-        \includegraphics[width=\linewidth]{figure27.png}
+        \includegraphics[width=0.7\linewidth]{figure27.png}
         \caption{Kênh B}
     \end{subfigure}
     \caption{Biểu diễn giá trị các kênh màu của ảnh RGB.}
@@ -935,8 +935,6 @@ Không gian màu YCbCr biểu diễn màu sắc bằng 3 kênh Y đại diện c
     \end{bmatrix}
 \end{equation}
 với $ K_R + K_G + K_B = 1 $ là bộ 3 hệ số phụ thuộc vào phiên bản không gian màu RGB được sử dụng.
-
-Như có thể thấy trong hình \ref{figure_ycbcr}, kênh Y lưu trữ toàn bộ thông tin về nội dung ảnh. Đây chính là cơ sở để ta giải bài toàn bảo toàn bố cục của ảnh: giữ nguyên giá trị kênh Y, chỉ dùng Generator để sinh ra giá trị của hai kênh còn lại. Với phương pháp này, ta có thể thay đổi màu sắc của ảnh nội soi, trong khi vẫn bảo toàn được toàn bộ thông tin bố cục.
 
 \begin{figure}[H]
     \centering
@@ -964,6 +962,8 @@ Như có thể thấy trong hình \ref{figure_ycbcr}, kênh Y lưu trữ toàn b
     \label{figure_ycbcr}
 \end{figure}
 
+Như có thể thấy trong hình \ref{figure_ycbcr}, kênh Y lưu trữ toàn bộ thông tin về nội dung ảnh. Đây chính là cơ sở để ta giải bài toàn bảo toàn bố cục của ảnh: giữ nguyên giá trị kênh Y, chỉ dùng Generator để sinh ra giá trị của hai kênh còn lại. Với phương pháp này, ta có thể thay đổi màu sắc của ảnh nội soi, trong khi vẫn bảo toàn được toàn bộ thông tin bố cục.
+
 Tuy nhiên, phương án này khiến ta không thể chỉnh sửa được độ sáng hay độ tương phản của ảnh, do các đặc điểm này được quyết định chủ yếu bởi kênh Y. Điều này khiến cho chất lượng ảnh đầu ra không tốt bằng chất lượng ảnh thực tế.
 
 \subsection{PatchGAN}
@@ -972,6 +972,16 @@ Tuy nhiên, phương án này khiến ta không thể chỉnh sửa được đ�
 Thông thường, Discriminator của GAN cho ra một kết quả phân loại thật/giả duy nhất cho toàn bộ ảnh. Thiết kế này hoạt động khá tốt trong phần lớn trường hợp, khi ta cần phải quan sát toàn bộ ảnh để có thể đưa ra kết quả đúng. Tuy nhiên, kích thước ảnh đầu vào lớn có thể kiến model bỏ qua các chi tiết lỗi nhỏ như nhiễu hay nổ màu, khiến cho chất lượng ảnh đầu ra không được như ý muốn.
 
 Trong trường hợp của bài toán đổi màu ảnh nội soi, ta không cần phải sử dụng toàn bộ ảnh để phân loại thật - giả: chỉ cần dựa trên màu sắc và độ tương phản, ta có thể đoán được chế độ màu của ảnh. Lợi dụng đặc điểm này, ta có thể sử dụng Discriminator PatchGAN để giảm bớt các chi tiết lỗi nhỏ.
+
+PatchGAN là mô hình Discriminator được đề xuất trong nghiên cứu Pix2pix \cite{pix2pix2017}, sử dụng mạng convolutional để phân loại ảnh theo từng mảng (patch) nhỏ. Kết quả trung bình của tất cả các mảng sẽ được sử dụng làm kết quả phân loại cuối cùng.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{figure37.png}
+    \caption{Minh họa mạng Discriminator PatchGAN. Đầu ra của lớp convolutional cuối cùng có kích thước $ C_y \times W_y \times W_y $, trong đó $ C_y $ bằng với số lớp ảnh của bài toán. Mỗi một ô trên dữ liệu đầu ra này tương ứng với kết quả phân loại một vùng nhỏ trên ảnh gốc.}
+\end{figure}
+
+Vì làm việc vùng ảnh nhỏ, PatchGAN nhạy cảm với các tiểu tiết bị lỗi trên ảnh hơn các mạng Discriminator bình thường, đặc biệt là khi kích thước ảnh lớn, lượng dữ liệu toàn cục nhiều.
 
 \begin{figure}[H]
     \centering
@@ -987,16 +997,6 @@ Trong trường hợp của bài toán đổi màu ảnh nội soi, ta không c�
     \end{subfigure}
     \caption{So sánh kết quả chuyển đổi ảnh nội soi BLI sang WLI của mô hình StarGAN v2 sử dụng Discriminator gốc và sử dụng Discriminator PatchGAN. Discriminator gốc bỏ qua các điểm đốm xanh ở góc trên bên phải, trong khi PatchGAN bắt và loại bỏ được lỗi này.}
 \end{figure}
-
-PatchGAN là mô hình Discriminator được đề xuất trong nghiên cứu Pix2pix \cite{pix2pix2017}, sử dụng mạng convolutional để phân loại ảnh theo từng mảng (patch) nhỏ. Kết quả trung bình của tất cả các mảng sẽ được sử dụng làm kết quả phân loại cuối cùng.
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=\linewidth]{figure37.png}
-    \caption{Minh họa mạng Discriminator PatchGAN. Đầu ra của lớp convolutional cuối cùng có kích thước $ C_y \times W_y \times W_y $, trong đó $ C_y $ bằng với số lớp ảnh của bài toán. Mỗi một ô trên dữ liệu đầu ra này tương ứng với kết quả phân loại một vùng nhỏ trên ảnh gốc.}
-\end{figure}
-
-Vì làm việc vùng ảnh nhỏ, PatchGAN nhạy cảm với các tiểu tiết bị lỗi trên ảnh hơn các mạng Discriminator bình thường, đặc biệt là khi kích thước ảnh lớn, lượng dữ liệu toàn cục nhiều.
 
 \section{Thiết kế các thành phần mạng nơ-ron}
 
@@ -1317,7 +1317,7 @@ Bộ dữ liệu ảnh nội soi được thu thập bởi các bác sĩ của V
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.7\linewidth]{figure34.png}
+    \includegraphics[width=0.8\linewidth]{figure34.png}
     \caption{Hệ thống quản lý dữ liệu ảnh nội soi Polyp-Labeler.}
 \end{figure}
 
@@ -1371,13 +1371,14 @@ Ta đánh giá chất lượng của mô hình GAN trên hai phương diện - �
 
 \subsection{Đánh giá định lượng}
 
+Khác với quá trình học máy có giám sát, giá trị của hàm mục tiêu không nói lên nhiều về trạng thái hội tụ của mô hình. Dễ thấy từ hình \ref{loss-graph}, hàm mục tiêu hầu như không thay đổi kể từ khoảng 20 nghìn bước lặp, song chất lượng ảnh đầu ra ở các bước lặp vẫn có sự khác biệt đáng kể. Để đánh giá chất lượng của mô hình, ta cần sử dụng một hàm đo hiệu quả hơn, so sánh được không gian xác suất giữa dữ liệu thật và dữ liệu giả sinh bởi Generator.
+
 \begin{figure}[H]
     \centering
-    \includegraphics[width=\linewidth]{figure40.png}
+    \includegraphics[width=0.8\linewidth]{figure40.png}
     \caption{Giá trị hàm mục tiêu của các mạng thành phần qua thời gian.}
+    \label{loss-graph}
 \end{figure}
-
-Khác với quá trình học máy có giám sát, giá trị của hàm mục tiêu không nói lên nhiều về trạng thái hội tụ của mô hình. Dễ thấy từ đồ thị ở trên, hàm mục tiêu hầu như không thay đổi kể từ khoảng 20 nghìn bước lặp, song chất lượng ảnh đầu ra ở các bước lặp vẫn có sự khác biệt đáng kể. Để đánh giá chất lượng của mô hình, ta cần sử dụng một hàm đo hiệu quả hơn, so sánh được không gian xác suất giữa dữ liệu thật và dữ liệu giả sinh bởi Generator.
 
 Như đã chỉ ra trong mục \ref{convolutional-layer}, mạng CNN có khả năng nhận dạng và mã hóa các đặc điểm trên ảnh, và các lớp về sau có thể tổng hợp các thông tin phức tạp hơn từ kết quả của các lớp trước. Điều này khiến cho mạng CNN có khả năng mã hóa các đặc điểm nhận dạng hình học của dữ liệu ảnh, rất hữu ích cho nhiều ứng dụng sử dụng học máy, trong đó có độ đo Khoảng cách Nhận diện Frechet (Frechet Inception Distance hay FID) \cite{DBLP:journals/corr/HeuselRUNKH17}.
 
@@ -1396,25 +1397,25 @@ Giá trị của độ đo FID càng thấp, hai tập hợp càng có đặc đ
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=\linewidth]{fid/FID_BLI.png}
+    \includegraphics[width=0.8\linewidth]{fid/FID_BLI.png}
     \caption{Giá trị độ đo FID qua các bước lặp khi chuyển đổi ảnh sang chế độ BLI.}
 \end{figure}
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=\linewidth]{fid/FID_FICE.png}
+    \includegraphics[width=0.8\linewidth]{fid/FID_FICE.png}
     \caption{Giá trị độ đo FID qua các bước lặp khi chuyển đổi ảnh sang chế độ FICE.}
 \end{figure}
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=\linewidth]{fid/FID_LCI.png}
+    \includegraphics[width=0.8\linewidth]{fid/FID_LCI.png}
     \caption{Giá trị độ đo FID qua các bước lặp khi chuyển đổi ảnh sang chế độ LCI.}
 \end{figure}
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=\linewidth]{fid/FID_WLI.png}
+    \includegraphics[width=0.8\linewidth]{fid/FID_WLI.png}
     \caption{Giá trị độ đo FID qua các bước lặp khi chuyển đổi ảnh sang chế độ WLI.}
 \end{figure}
 
@@ -1423,13 +1424,6 @@ Qua việc theo dõi độ đo FID, ta nhận thấy mô hình hoạt động t�
 Sau khi lấy trung bình giá trị FID trên tất cả các lớp ảnh, mô hình ở bước lặp thứ 48 nghìn được lựa chọn để sử dụng, vì giá trị độ đo FID của mô hình này là tốt nhất.
 
 \subsection{Đánh giá định tính}
-
-Quan sát kết quả chuyển đổi ảnh từ mỗi chế độ màu sang các chế độ còn lại, ta nhận thấy:
-\begin{itemize}
-    \item Mô hình làm tốt việc tái tạo màu sắc của các chế độ BLI, FICE và WLI. Riêng đối với LCI, ảnh bị pha màu vàng không tự nhiên - ảnh LCI thường có màu đỏ giống WLI, với các mạch máu nổi lên màu tím. Ảnh màu vàng có xuất hiện, nhưng chỉ chiếm khoảng 15\% số lượng. Điều này giải thích lý do vì sao độ đo FID của lớp ảnh LCI là cao nhất trong cả 4 lớp.
-    \item Vì kênh Y của ảnh được giữ cố định, bố cục của ảnh hoàn toàn được đảm bảo, song các đặc điểm về độ sáng và độ tương phản không được cải thiện nhiều khi chuyển sang các chế độ ảnh cao cấp. Độ tương phản chủ yếu được tăng cường bởi sự tương phản của các mảng màu trong ảnh.
-    \item Vẫn còn hiện tượng nhiễu xuất hiện dưới dạng bóng tròn mờ trên ảnh, song không đáng kể.
-\end{itemize}
 
 \begin{table}[H]
     \centering
@@ -1444,6 +1438,13 @@ Quan sát kết quả chuyển đổi ảnh từ mỗi chế độ màu sang cá
         WLI  & \includegraphics[width=0.18\textwidth]{transform/BLI2WLI.jpeg}      & \includegraphics[width=0.18\textwidth]{transform/FICE2WLI.jpeg}      & \includegraphics[width=0.18\textwidth]{transform/LCI2WLI.jpeg}      &                                                                     \\
     \end{tabular}
 \end{table}
+
+Quan sát kết quả chuyển đổi ảnh từ mỗi chế độ màu sang các chế độ còn lại, ta nhận thấy:
+\begin{itemize}
+    \item Mô hình làm tốt việc tái tạo màu sắc của các chế độ BLI, FICE và WLI. Riêng đối với LCI, ảnh bị pha màu vàng không tự nhiên - ảnh LCI thường có màu đỏ giống WLI, với các mạch máu nổi lên màu tím. Ảnh màu vàng có xuất hiện, nhưng chỉ chiếm khoảng 15\% số lượng. Điều này giải thích lý do vì sao độ đo FID của lớp ảnh LCI là cao nhất trong cả 4 lớp.
+    \item Vì kênh Y của ảnh được giữ cố định, bố cục của ảnh hoàn toàn được đảm bảo, song các đặc điểm về độ sáng và độ tương phản không được cải thiện nhiều khi chuyển sang các chế độ ảnh cao cấp. Độ tương phản chủ yếu được tăng cường bởi sự tương phản của các mảng màu trong ảnh.
+    \item Vẫn còn hiện tượng nhiễu xuất hiện dưới dạng bóng tròn mờ trên ảnh, song không đáng kể.
+\end{itemize}
 
 Nhìn chung, tuy không chuyển đổi được tất cả các tính năng của các chế độ màu cao cấp, mô hình StarGAN v2 có thể giúp tăng cường chất lượng và độ tương phản màu sắc của ảnh nội soi, giúp bác sĩ nội soi quan sát tốt hơn các đối tượng trong ảnh và đưa ra chẩn đoán chính xác hơn.
 
@@ -1499,7 +1500,7 @@ với:
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=.7\linewidth]{figure45.png}
+    \includegraphics[width=0.8\linewidth]{figure45.png}
     \caption{Đồ thị giá trị hàm $ T_{\theta^L}(m) $ tại $ a = \cfrac{1}{3}, b = \cfrac{1}{6}, p = 3, q = \cfrac{1}{3} $.}
 \end{figure}
 
@@ -1507,12 +1508,12 @@ Phép biến đổi $ T_{\theta^L}(m) $ giảm mức độ phơi sáng của cá
 
 \begin{figure}[H]
     \centering
-    \begin{subfigure}[H]{0.45\textwidth}
+    \begin{subfigure}[H]{0.48\textwidth}
         \centering
         \includegraphics[width=\linewidth]{enhancegan/image.jpg}
         \caption{Ảnh gốc}
     \end{subfigure}
-    \begin{subfigure}[H]{0.45\textwidth}
+    \begin{subfigure}[H]{0.48\textwidth}
         \centering
         \includegraphics[width=\linewidth]{enhancegan/transformed.jpg}
         \caption{Ảnh sau biến đổi}
@@ -1529,7 +1530,7 @@ Hướng phát triển của đề tài trong tương lai có thể áp dụng t
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.7\linewidth]{figure43.png}
+    \includegraphics[width=0.8\linewidth]{figure43.png}
     \caption{Giao diện khoanh vùng polyp của Polyp-Labeler.}
 \end{figure}
 
@@ -1564,7 +1565,7 @@ Dự án tích hợp nhiều tính năng khác nhau – webapp, Machine Learning
 
 \begin{figure}[h]
     \centering
-    \includegraphics[width=0.85\linewidth]{figure41.png}
+    \includegraphics[width=\linewidth]{figure41.png}
     \caption{Tổng quan các service của Polyp-Labeler và cách chúng liên lạc với nhau.}
 \end{figure}
 
@@ -1587,7 +1588,7 @@ Mô hình StarGAN v2 được tích hợp vào service Color Changer của hệ 
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.7\linewidth]{figure42png.png}
+    \includegraphics[width=0.8\linewidth]{figure42png.png}
     \caption{Biến đổi ảnh nội soi BLI thành ảnh LCI trên hệ thống Polyp-Labeler.}
 \end{figure}
 
